@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchLanguageTooltip => 'Switch Language (ID / EN)';
 
   @override
-  String get phaseBadge => 'v0.5.0 • PHASE 4';
+  String get phaseBadge => 'v0.6.0 • PHASE 5';
 
   @override
   String get navHome => 'Home';
@@ -660,4 +660,123 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shareInvoiceActionBtn => 'Share Invoice Image (PNG)';
+
+  @override
+  String get reportSectionTitle => 'MONTHLY CHARTS & REPORTS';
+
+  @override
+  String get monthlyComparisonTitle =>
+      'Pure Consumption vs Funds Held (6 Months)';
+
+  @override
+  String get legendPureExpense => 'Pure Expense';
+
+  @override
+  String get legendReceivablesOut => 'Held by Friends (Receivables)';
+
+  @override
+  String get categoryBreakdownTitle => 'Expense Breakdown by Category';
+
+  @override
+  String get emptyReportChartText =>
+      'No pure expense data recorded in the selected month.';
+
+  @override
+  String get securitySectionTitle => 'SECURITY & DUE DATE REMINDERS';
+
+  @override
+  String get appLockToggleTitle => 'App Lock (6-Digit PIN & Biometrics)';
+
+  @override
+  String get appLockToggleSubtitle =>
+      'Protect your financial ledger when opening the app.';
+
+  @override
+  String get changePinAction => 'Change PIN';
+
+  @override
+  String get setupPinTitle => 'Set 6-Digit Security PIN';
+
+  @override
+  String get enterPinSubtitle => 'Enter your 6-digit secret PIN.';
+
+  @override
+  String get pinSetSuccessMsg =>
+      'Security PIN saved and App Lock is now active.';
+
+  @override
+  String get pinDisabledMsg => 'App Lock disabled.';
+
+  @override
+  String get lockScreenTitle => 'KasKita is Locked';
+
+  @override
+  String get lockScreenSubtitle =>
+      'Enter your 6-digit PIN or use Biometrics to unlock.';
+
+  @override
+  String get unlockWithBiometricBtn => 'Unlock with Biometrics';
+
+  @override
+  String get dueReminderToggleTitle => 'Due Date Reminders (09:00 AM)';
+
+  @override
+  String get dueReminderToggleSubtitle =>
+      'Schedule local notifications 1 day before and on the due date.';
+
+  @override
+  String get rescheduleRemindersBtn => 'Sync Reminders Now';
+
+  @override
+  String remindersScheduledMsg(int count) {
+    return '$count due-date reminders scheduled successfully.';
+  }
+
+  @override
+  String get dataBackupSectionTitle => 'LOCAL BACKUP & DATA EXPORT';
+
+  @override
+  String get exportBackupJsonBtn => 'Backup (.JSON)';
+
+  @override
+  String get exportBackupDbBtn => 'Backup (.DB)';
+
+  @override
+  String get restoreBackupBtn => 'Restore Backup (.JSON / .DB)';
+
+  @override
+  String get exportCsvBtn => 'Export Report (.CSV)';
+
+  @override
+  String get backupExportedMsg =>
+      'Backup file created and ready to save or share.';
+
+  @override
+  String get backupRestoredMsg =>
+      'Data restored successfully! All ledgers have been synced.';
+
+  @override
+  String get otaSectionTitle => 'APP UPDATES & ABOUT';
+
+  @override
+  String get currentVersionLabel => 'Installed Version';
+
+  @override
+  String get checkUpdateBtn => 'Check for Updates (GitHub OTA)';
+
+  @override
+  String get checkingUpdateMsg => 'Checking latest GitHub release...';
+
+  @override
+  String updateAvailableTitle(String version) {
+    return 'Update Available ($version)';
+  }
+
+  @override
+  String alreadyLatestVersionMsg(String version) {
+    return 'You are already on the latest version ($version).';
+  }
+
+  @override
+  String get downloadUpdateBtn => 'Download / Open Release';
 }

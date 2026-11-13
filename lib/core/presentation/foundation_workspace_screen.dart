@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../features/debts/presentation/debt_directory_tab_view.dart';
 import '../../features/debts/providers/debt_provider.dart';
+import '../../features/reports/providers/report_provider.dart';
+import '../../features/settings/presentation/summary_settings_tab_view.dart';
+import '../../features/settings/providers/settings_provider.dart';
 import '../../features/transactions/presentation/widgets/calendar_ledger_view.dart';
 import '../../features/transactions/presentation/widgets/daily_transaction_group_card.dart';
 import '../../features/transactions/presentation/widgets/monthly_ledger_view.dart';
@@ -45,6 +48,8 @@ class _FoundationWorkspaceScreenState
     await ref.read(transactionsProvider.notifier).refresh();
     await ref.read(debtsDirectoryProvider.notifier).refresh();
     await ref.read(ledgerOverviewProvider.notifier).refreshOverview();
+    ref.invalidate(reportsProvider);
+    await ref.read(settingsProvider.notifier).refresh();
   }
 
   Future<void> _handleLoadDemoData() async {
@@ -128,7 +133,7 @@ class _FoundationWorkspaceScreenState
                 final Locale nextLocale = langCode == 'id'
                     ? const Locale('en')
                     : const Locale('id');
-                ref.read(appLocaleProvider.notifier).state = nextLocale;
+                ref.read(settingsProvider.notifier).saveLocale(nextLocale);
               },
               icon: const Icon(LucideIcons.languages, size: 16),
               label: Text(
@@ -143,7 +148,7 @@ class _FoundationWorkspaceScreenState
               final ThemeMode next = currentTheme == ThemeMode.dark
                   ? ThemeMode.light
                   : ThemeMode.dark;
-              ref.read(themeModeProvider.notifier).state = next;
+              ref.read(settingsProvider.notifier).saveThemeMode(next);
             },
             icon: Icon(
               AppColors.isDark(context) ? LucideIcons.sun : LucideIcons.moon,
@@ -157,19 +162,12 @@ class _FoundationWorkspaceScreenState
         children: <Widget>[
           _buildHomeTab(context, overviewAsync, transactionsAsync, l10n),
           const DebtDirectoryTabView(),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: EmptyStateView(
-                icon: LucideIcons.chartPie,
-                title: l10n.tabSummaryPlaceholderTitle,
-                subtitle: l10n.tabSummaryPlaceholderSubtitle,
-              ),
-            ),
-          ),
+          const SummarySettingsTabView(),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: _selectedTabIndex == 2
+          ? null
+          : FloatingActionButton.extended(
         onPressed: () => TransactionFormSheet.show(context),
         backgroundColor: AppColors.accent(context),
         foregroundColor:

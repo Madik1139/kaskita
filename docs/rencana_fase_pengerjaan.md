@@ -100,7 +100,7 @@ flowchart LR
 
 ---
 
-### Fase 5: Laporan Grafik, Notifikasi Jatuh Tempo, PIN/Biometrik, Backup, & Update OTA (`v0.6.0`)
+### Fase 5: Laporan Grafik, Notifikasi Jatuh Tempo, PIN/Biometrik, Backup, & Update OTA (`v0.6.0`) — **[SELESAI]**
 **Fokus:** Membangun modul `lib/features/reports/` dan `lib/features/settings/` (Tab 3).
 1. **Visualisasi Grafik Bulanan (`fl_chart`):**
    * Diagram batang perbandingan **Pengeluaran Konsumsi Murni** vs **Uang Tertahan di Teman (Piutang)** per bulan.

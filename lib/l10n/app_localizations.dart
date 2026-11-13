@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @phaseBadge.
   ///
   /// In id, this message translates to:
-  /// **'v0.5.0 • FASE 4'**
+  /// **'v0.6.0 • FASE 5'**
   String get phaseBadge;
 
   /// No description provided for @navHome.
@@ -1278,6 +1278,216 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Bagikan Gambar Struk (PNG)'**
   String get shareInvoiceActionBtn;
+
+  /// No description provided for @reportSectionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'GRAFIK & LAPORAN BULANAN'**
+  String get reportSectionTitle;
+
+  /// No description provided for @monthlyComparisonTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Konsumsi Murni vs Uang Tertahan (6 Bulan)'**
+  String get monthlyComparisonTitle;
+
+  /// No description provided for @legendPureExpense.
+  ///
+  /// In id, this message translates to:
+  /// **'Konsumsi Murni'**
+  String get legendPureExpense;
+
+  /// No description provided for @legendReceivablesOut.
+  ///
+  /// In id, this message translates to:
+  /// **'Tertahan di Teman (Piutang)'**
+  String get legendReceivablesOut;
+
+  /// No description provided for @categoryBreakdownTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Rincian Pengeluaran per Kategori'**
+  String get categoryBreakdownTitle;
+
+  /// No description provided for @emptyReportChartText.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum ada data pengeluaran konsumsi pada bulan terpilih.'**
+  String get emptyReportChartText;
+
+  /// No description provided for @securitySectionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'KEAMANAN & PENGINGAT JATUH TEMPO'**
+  String get securitySectionTitle;
+
+  /// No description provided for @appLockToggleTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Kunci Aplikasi (PIN 6 Digit & Biometrik)'**
+  String get appLockToggleTitle;
+
+  /// No description provided for @appLockToggleSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Lindungi catatan keuangan saat aplikasi dibuka.'**
+  String get appLockToggleSubtitle;
+
+  /// No description provided for @changePinAction.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah PIN'**
+  String get changePinAction;
+
+  /// No description provided for @setupPinTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Atur PIN Keamanan 6 Digit'**
+  String get setupPinTitle;
+
+  /// No description provided for @enterPinSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Masukkan 6 digit angka PIN rahasia Anda.'**
+  String get enterPinSubtitle;
+
+  /// No description provided for @pinSetSuccessMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'PIN keamanan berhasil disimpan dan Kunci Aplikasi aktif.'**
+  String get pinSetSuccessMsg;
+
+  /// No description provided for @pinDisabledMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Kunci Aplikasi dinonaktifkan.'**
+  String get pinDisabledMsg;
+
+  /// No description provided for @lockScreenTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'KasKita Terkunci'**
+  String get lockScreenTitle;
+
+  /// No description provided for @lockScreenSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Masukkan PIN 6 digit atau gunakan Sidik Jari / Wajah untuk membuka.'**
+  String get lockScreenSubtitle;
+
+  /// No description provided for @unlockWithBiometricBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka dengan Biometrik'**
+  String get unlockWithBiometricBtn;
+
+  /// No description provided for @dueReminderToggleTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengingat Otomatis Jatuh Tempo (09.00)'**
+  String get dueReminderToggleTitle;
+
+  /// No description provided for @dueReminderToggleSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Jadwalkan notifikasi lokal H-1 dan Hari-H tagihan aktif.'**
+  String get dueReminderToggleSubtitle;
+
+  /// No description provided for @rescheduleRemindersBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Sinkronkan Pengingat Sekarang'**
+  String get rescheduleRemindersBtn;
+
+  /// No description provided for @remindersScheduledMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'{count} pengingat jatuh tempo berhasil dijadwalkan.'**
+  String remindersScheduledMsg(int count);
+
+  /// No description provided for @dataBackupSectionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'CADANGKAN & EKSPOR DATA LOKAL'**
+  String get dataBackupSectionTitle;
+
+  /// No description provided for @exportBackupJsonBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Cadangkan (.JSON)'**
+  String get exportBackupJsonBtn;
+
+  /// No description provided for @exportBackupDbBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Cadangkan (.DB)'**
+  String get exportBackupDbBtn;
+
+  /// No description provided for @restoreBackupBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Pulihkan Cadangan (.JSON / .DB)'**
+  String get restoreBackupBtn;
+
+  /// No description provided for @exportCsvBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Ekspor Laporan (.CSV)'**
+  String get exportCsvBtn;
+
+  /// No description provided for @backupExportedMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'File cadangan berhasil dibuat dan siap disimpan/dibagikan.'**
+  String get backupExportedMsg;
+
+  /// No description provided for @backupRestoredMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Data berhasil dipulihkan! Seluruh buku kas telah disinkronkan.'**
+  String get backupRestoredMsg;
+
+  /// No description provided for @otaSectionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'PEMBARUAN APLIKASI & TENTANG'**
+  String get otaSectionTitle;
+
+  /// No description provided for @currentVersionLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Versi Terpasang'**
+  String get currentVersionLabel;
+
+  /// No description provided for @checkUpdateBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Cek Pembaruan (GitHub OTA)'**
+  String get checkUpdateBtn;
+
+  /// No description provided for @checkingUpdateMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Memeriksa rilis terbaru di GitHub...'**
+  String get checkingUpdateMsg;
+
+  /// No description provided for @updateAvailableTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Pembaruan Tersedia ({version})'**
+  String updateAvailableTitle(String version);
+
+  /// No description provided for @alreadyLatestVersionMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Anda sudah menggunakan versi terbaru ({version}).'**
+  String alreadyLatestVersionMsg(String version);
+
+  /// No description provided for @downloadUpdateBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Unduh / Buka Rilis'**
+  String get downloadUpdateBtn;
 }
 
 class _AppLocalizationsDelegate

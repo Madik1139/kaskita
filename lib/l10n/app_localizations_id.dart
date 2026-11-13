@@ -39,7 +39,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get switchLanguageTooltip => 'Ganti Bahasa (ID / EN)';
 
   @override
-  String get phaseBadge => 'v0.5.0 • FASE 4';
+  String get phaseBadge => 'v0.6.0 • FASE 5';
 
   @override
   String get navHome => 'Beranda';
@@ -663,4 +663,123 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get shareInvoiceActionBtn => 'Bagikan Gambar Struk (PNG)';
+
+  @override
+  String get reportSectionTitle => 'GRAFIK & LAPORAN BULANAN';
+
+  @override
+  String get monthlyComparisonTitle =>
+      'Konsumsi Murni vs Uang Tertahan (6 Bulan)';
+
+  @override
+  String get legendPureExpense => 'Konsumsi Murni';
+
+  @override
+  String get legendReceivablesOut => 'Tertahan di Teman (Piutang)';
+
+  @override
+  String get categoryBreakdownTitle => 'Rincian Pengeluaran per Kategori';
+
+  @override
+  String get emptyReportChartText =>
+      'Belum ada data pengeluaran konsumsi pada bulan terpilih.';
+
+  @override
+  String get securitySectionTitle => 'KEAMANAN & PENGINGAT JATUH TEMPO';
+
+  @override
+  String get appLockToggleTitle => 'Kunci Aplikasi (PIN 6 Digit & Biometrik)';
+
+  @override
+  String get appLockToggleSubtitle =>
+      'Lindungi catatan keuangan saat aplikasi dibuka.';
+
+  @override
+  String get changePinAction => 'Ubah PIN';
+
+  @override
+  String get setupPinTitle => 'Atur PIN Keamanan 6 Digit';
+
+  @override
+  String get enterPinSubtitle => 'Masukkan 6 digit angka PIN rahasia Anda.';
+
+  @override
+  String get pinSetSuccessMsg =>
+      'PIN keamanan berhasil disimpan dan Kunci Aplikasi aktif.';
+
+  @override
+  String get pinDisabledMsg => 'Kunci Aplikasi dinonaktifkan.';
+
+  @override
+  String get lockScreenTitle => 'KasKita Terkunci';
+
+  @override
+  String get lockScreenSubtitle =>
+      'Masukkan PIN 6 digit atau gunakan Sidik Jari / Wajah untuk membuka.';
+
+  @override
+  String get unlockWithBiometricBtn => 'Buka dengan Biometrik';
+
+  @override
+  String get dueReminderToggleTitle => 'Pengingat Otomatis Jatuh Tempo (09.00)';
+
+  @override
+  String get dueReminderToggleSubtitle =>
+      'Jadwalkan notifikasi lokal H-1 dan Hari-H tagihan aktif.';
+
+  @override
+  String get rescheduleRemindersBtn => 'Sinkronkan Pengingat Sekarang';
+
+  @override
+  String remindersScheduledMsg(int count) {
+    return '$count pengingat jatuh tempo berhasil dijadwalkan.';
+  }
+
+  @override
+  String get dataBackupSectionTitle => 'CADANGKAN & EKSPOR DATA LOKAL';
+
+  @override
+  String get exportBackupJsonBtn => 'Cadangkan (.JSON)';
+
+  @override
+  String get exportBackupDbBtn => 'Cadangkan (.DB)';
+
+  @override
+  String get restoreBackupBtn => 'Pulihkan Cadangan (.JSON / .DB)';
+
+  @override
+  String get exportCsvBtn => 'Ekspor Laporan (.CSV)';
+
+  @override
+  String get backupExportedMsg =>
+      'File cadangan berhasil dibuat dan siap disimpan/dibagikan.';
+
+  @override
+  String get backupRestoredMsg =>
+      'Data berhasil dipulihkan! Seluruh buku kas telah disinkronkan.';
+
+  @override
+  String get otaSectionTitle => 'PEMBARUAN APLIKASI & TENTANG';
+
+  @override
+  String get currentVersionLabel => 'Versi Terpasang';
+
+  @override
+  String get checkUpdateBtn => 'Cek Pembaruan (GitHub OTA)';
+
+  @override
+  String get checkingUpdateMsg => 'Memeriksa rilis terbaru di GitHub...';
+
+  @override
+  String updateAvailableTitle(String version) {
+    return 'Pembaruan Tersedia ($version)';
+  }
+
+  @override
+  String alreadyLatestVersionMsg(String version) {
+    return 'Anda sudah menggunakan versi terbaru ($version).';
+  }
+
+  @override
+  String get downloadUpdateBtn => 'Unduh / Buka Rilis';
 }

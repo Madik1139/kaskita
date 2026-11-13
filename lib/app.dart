@@ -4,6 +4,8 @@ import 'core/constants/app_constants.dart';
 import 'core/presentation/foundation_workspace_screen.dart';
 import 'core/providers/app_preferences_provider.dart';
 import 'core/theme/app_theme.dart';
+import 'features/settings/presentation/widgets/pin_lock_and_setup_views.dart';
+import 'features/settings/providers/settings_provider.dart';
 import 'l10n/app_localizations.dart';
 
 class KasKitaApp extends ConsumerWidget {
@@ -11,6 +13,8 @@ class KasKitaApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(settingsProvider);
+    final bool isLocked = ref.watch(isAppLockedProvider);
     final ThemeMode themeMode = ref.watch(themeModeProvider);
     final Locale currentLocale = ref.watch(appLocaleProvider);
 
@@ -23,7 +27,9 @@ class KasKitaApp extends ConsumerWidget {
       locale: currentLocale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const FoundationWorkspaceScreen(),
+      home: isLocked
+          ? const PinLockOverlay()
+          : const FoundationWorkspaceScreen(),
     );
   }
 }

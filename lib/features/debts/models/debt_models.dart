@@ -218,3 +218,4 @@ class ContactDetailStateModel extends Equatable {
         paymentHistory,
       ];
 }
+

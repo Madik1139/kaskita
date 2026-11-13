@@ -142,3 +142,4 @@ class DebtSmartAlertBanners extends ConsumerWidget {
     );
   }
 }
+

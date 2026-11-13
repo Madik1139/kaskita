@@ -194,3 +194,4 @@ class DebtSettlementHelper {
     await TransactionRepository.recalculateContactBalance(txn, contactId);
   }
 }
+

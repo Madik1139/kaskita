@@ -10,7 +10,7 @@
   "close": "Tutup",
   "switchThemeTooltip": "Ganti Tema Terang / Gelap",
   "switchLanguageTooltip": "Ganti Bahasa (ID / EN)",
-  "phaseBadge": "v0.5.0 • FASE 4",
+  "phaseBadge": "v0.6.0 • FASE 5",
   "navHome": "Beranda",
   "navDebtBook": "Buku Hutang",
   "navSummary": "Ringkasan",
@@ -323,5 +323,61 @@
   "invoiceUnpaidListTitle": "RINCIAN TAGIHAN BELUM LUNAS:",
   "invoiceRecentPaymentsTitle": "RIWAYAT PEMBAYARAN TERAKHIR:",
   "invoiceFooterText": "Dibuat otomatis melalui aplikasi KasKita",
-  "shareInvoiceActionBtn": "Bagikan Gambar Struk (PNG)"
+  "shareInvoiceActionBtn": "Bagikan Gambar Struk (PNG)",
+  "reportSectionTitle": "GRAFIK & LAPORAN BULANAN",
+  "monthlyComparisonTitle": "Konsumsi Murni vs Uang Tertahan (6 Bulan)",
+  "legendPureExpense": "Konsumsi Murni",
+  "legendReceivablesOut": "Tertahan di Teman (Piutang)",
+  "categoryBreakdownTitle": "Rincian Pengeluaran per Kategori",
+  "emptyReportChartText": "Belum ada data pengeluaran konsumsi pada bulan terpilih.",
+  "securitySectionTitle": "KEAMANAN & PENGINGAT JATUH TEMPO",
+  "appLockToggleTitle": "Kunci Aplikasi (PIN 6 Digit & Biometrik)",
+  "appLockToggleSubtitle": "Lindungi catatan keuangan saat aplikasi dibuka.",
+  "changePinAction": "Ubah PIN",
+  "setupPinTitle": "Atur PIN Keamanan 6 Digit",
+  "enterPinSubtitle": "Masukkan 6 digit angka PIN rahasia Anda.",
+  "pinSetSuccessMsg": "PIN keamanan berhasil disimpan dan Kunci Aplikasi aktif.",
+  "pinDisabledMsg": "Kunci Aplikasi dinonaktifkan.",
+  "lockScreenTitle": "KasKita Terkunci",
+  "lockScreenSubtitle": "Masukkan PIN 6 digit atau gunakan Sidik Jari / Wajah untuk membuka.",
+  "unlockWithBiometricBtn": "Buka dengan Biometrik",
+  "dueReminderToggleTitle": "Pengingat Otomatis Jatuh Tempo (09.00)",
+  "dueReminderToggleSubtitle": "Jadwalkan notifikasi lokal H-1 dan Hari-H tagihan aktif.",
+  "rescheduleRemindersBtn": "Sinkronkan Pengingat Sekarang",
+  "remindersScheduledMsg": "{count} pengingat jatuh tempo berhasil dijadwalkan.",
+  "@remindersScheduledMsg": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dataBackupSectionTitle": "CADANGKAN & EKSPOR DATA LOKAL",
+  "exportBackupJsonBtn": "Cadangkan (.JSON)",
+  "exportBackupDbBtn": "Cadangkan (.DB)",
+  "restoreBackupBtn": "Pulihkan Cadangan (.JSON / .DB)",
+  "exportCsvBtn": "Ekspor Laporan (.CSV)",
+  "backupExportedMsg": "File cadangan berhasil dibuat dan siap disimpan/dibagikan.",
+  "backupRestoredMsg": "Data berhasil dipulihkan! Seluruh buku kas telah disinkronkan.",
+  "otaSectionTitle": "PEMBARUAN APLIKASI & TENTANG",
+  "currentVersionLabel": "Versi Terpasang",
+  "checkUpdateBtn": "Cek Pembaruan (GitHub OTA)",
+  "checkingUpdateMsg": "Memeriksa rilis terbaru di GitHub...",
+  "updateAvailableTitle": "Pembaruan Tersedia ({version})",
+  "@updateAvailableTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "alreadyLatestVersionMsg": "Anda sudah menggunakan versi terbaru ({version}).",
+  "@alreadyLatestVersionMsg": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "downloadUpdateBtn": "Unduh / Buka Rilis"
 }

@@ -13,7 +13,7 @@
   paper: "a4",
   margin: (x: 2.0cm, y: 2.2cm),
   header: align(right)[
-    #text(size: 8.5pt, fill: rgb("#686B73"))[KasKita – Buku Panduan Pengguna & Layout Antarmuka (v0.5.0)]
+    #text(size: 8.5pt, fill: rgb("#686B73"))[KasKita – Buku Panduan Pengguna & Layout Antarmuka (v0.6.0)]
   ],
   footer: context [
     #line(length: 100%, stroke: 0.5pt + rgb("#E4E2DD"))
@@ -441,8 +441,46 @@ Pada *Tab 2 (Buku Hutang)*, setiap teman hanya memiliki **satu angka Saldo Bersi
 // ============================================================================
 = Laporan Bulanan, Keamanan, Backup, & Update OTA
 
-Di *Tab 3 (Ringkasan & Pengaturan)*, Anda dapat memantau kesehatan finansial sekaligus mengamankan data lokal Anda:
-1. *Grafik Konsumsi Murni vs Uang Tertahan di Teman:* Membandingkan pengeluaran pribadi Anda dengan nominal uang yang sedang dipinjam teman setiap bulannya.
-2. *Kunci Aplikasi (PIN 6 Digit & Biometrik):* Lindungi privasi catatan kas Anda dengan sidik jari/wajah atau PIN terenkripsi.
-3. *Backup & Restore Lokal (`.json` / `.db`) & Ekspor `.csv`:* Cadangkan seluruh database ke penyimpanan HP atau pulihkan kapan saja saat berganti perangkat.
-4. *Cek Pembaruan Otomatis (OTA via GitHub Releases):* Ketuk menu *Cek Pembaruan Aplikasi* untuk memeriksa dan mengunduh versi terbaru KasKita secara langsung tanpa kehilangan data catatan keuangan Anda.
+Di *Tab 3 (Ringkasan & Pengaturan)*, Anda dapat memantau kesehatan finansial, mengatur keamanan & notifikasi pengingat, serta mencadangkan data lokal Anda:
+
+1. *Grafik 6 Bulan: Konsumsi Murni vs Uang Tertahan:* Diagram batang interaktif yang membandingkan pengeluaran pribadi murni Anda dengan nominal uang yang masih dipinjam teman setiap bulan.
+2. *Rincian Pengeluaran per Kategori:* Daftar persentase dan total nominal pengeluaran murni pada bulan terpilih agar Anda tahu pos pengeluaran terbesar.
+3. *Kunci Aplikasi (PIN 6 Digit & Biometrik) + Pengingat Jatuh Tempo:* Lindungi privasi catatan kas Anda dengan PIN 6 digit (tersimpan aman di Secure Storage) serta sidik jari/wajah, dan aktifkan pengingat otomatis *H-1* & *Hari-H pukul 09:00* untuk hutang/piutang bertenggat waktu.
+4. *Backup & Restore Lokal (`.json` / `.db`) & Ekspor `.csv`:* Cadangkan seluruh database ke penyimpanan perangkat, ekspor laporan transaksi `.csv` untuk Excel/Google Sheets, atau pulihkan data kapan saja tanpa kehilangan riwayat.
+5. *Cek Pembaruan Otomatis (OTA via GitHub Releases):* Ketuk menu *Cek Pembaruan Aplikasi* untuk memeriksa rilis terbaru KasKita dan mengunduhnya secara langsung tanpa menghapus data keuangan Anda.
+
+#v(6pt)
+#block(
+  width: 100%,
+  fill: rgb("#EFECE6"),
+  stroke: 1.2pt + rgb("#141518"),
+  radius: 8pt,
+  inset: 10pt,
+  [
+    #block(fill: rgb("#141518"), width: 100%, inset: 5pt, radius: 3pt)[
+      #text(fill: white, weight: "bold", size: 8pt)[Preview Tab 3: Ringkasan & Pengaturan (v0.6.0)]
+    ]
+    #v(6pt)
+    #grid(
+      columns: (1fr, 1fr),
+      gutter: 8pt,
+      block(fill: white, stroke: 0.8pt + rgb("#E4E2DD"), inset: 6pt, radius: 4pt, width: 100%)[
+        #text(size: 8pt, weight: "bold")[Grafik 6 Bulan & Kategori]\
+        #text(size: 7pt, fill: rgb("#C83349"))[■ Konsumsi Murni: Rp 1.450.000]\
+        #text(size: 7pt, fill: rgb("#0D7A5F"))[■ Uang di Teman: Rp 350.000]\
+        #v(3pt)
+        #line(length: 100%, stroke: 0.5pt + rgb("#E4E2DD"))
+        #v(3pt)
+        #text(size: 7pt)[• Makan & Minum (62% • Rp 900.000)]\
+        #text(size: 7pt)[• Transportasi (38% • Rp 550.000)]
+      ],
+      block(fill: white, stroke: 0.8pt + rgb("#E4E2DD"), inset: 6pt, radius: 4pt, width: 100%)[
+        #text(size: 8pt, weight: "bold")[Keamanan, Backup & OTA]\
+        #text(size: 7pt)[• Kunci Aplikasi (PIN & Biometrik): *Aktif*]\
+        #text(size: 7pt)[• Pengingat Jatuh Tempo (09:00): *Aktif*]\
+        #text(size: 7pt, fill: rgb("#0F5247"))[[Backup JSON] [Backup DB] [Ekspor CSV]]\
+        #text(size: 7pt, fill: rgb("#1D4ED8"))[[Pulihkan Cadangan] [Cek Update OTA]]
+      ],
+    )
+  ]
+)
