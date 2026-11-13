@@ -25,3 +25,10 @@ Sebelum menulis widget baru di dalam `lib/features/*/presentation/widgets/`, per
 * Apakah ini input angka? -> Gunakan `CustomNumpad`.
 * Jika widget baru berpotensi dipakai di $\ge 2$ fitur berbeda, letakkan langsung di `lib/core/widgets/`, bukan di dalam folder fitur lokal.
 
+## 3. Aturan Konfigurasi Build Platform (Android / Gradle)
+* Karena proyek menggunakan `flutter_local_notifications` (`>= 22.x`) dan `local_auth`, file `android/app/build.gradle.kts` **wajib** selalu mengaktifkan:
+  * `isCoreLibraryDesugaringEnabled = true` di dalam blok `compileOptions`
+  * `multiDexEnabled = true` di dalam blok `defaultConfig`
+  * `coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")` di dalam blok `dependencies`
+* `MainActivity.kt` wajib mewarisi `FlutterFragmentActivity` agar autentikasi biometrik (`local_auth`) berjalan tanpa *crash*.
+

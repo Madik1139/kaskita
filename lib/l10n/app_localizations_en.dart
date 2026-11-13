@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchLanguageTooltip => 'Switch Language (ID / EN)';
 
   @override
-  String get phaseBadge => 'v0.4.0 • PHASE 3';
+  String get phaseBadge => 'v0.5.0 • PHASE 4';
 
   @override
   String get navHome => 'Home';
@@ -483,4 +483,181 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nonConsumptionBookBadge => 'Debt Ledger (Not Expense)';
+
+  @override
+  String get debtHeaderReceivablesLabel => 'Total Receivables (Owed to You)';
+
+  @override
+  String get debtHeaderPayablesLabel => 'Total Payables (You Owe)';
+
+  @override
+  String get lendingCapBarTitle => 'Receivable Lending Cap';
+
+  @override
+  String get editLendingCapTitle => 'Set Receivable Lending Cap';
+
+  @override
+  String get editLendingCapSubtitle =>
+      'Show an automatic warning when total active receivables exceed this limit.';
+
+  @override
+  String get filterAllContacts => 'All';
+
+  @override
+  String get filterTheyOweMe => 'They Owe Me';
+
+  @override
+  String get filterIOweThem => 'I Owe Them';
+
+  @override
+  String get filterOverdue => 'Overdue';
+
+  @override
+  String get addContactBtn => '+ Contact';
+
+  @override
+  String get addContactTitle => 'Add New Contact';
+
+  @override
+  String get contactPhoneNoteLabel => 'WhatsApp / Short Note (Optional)';
+
+  @override
+  String get contactPhoneNoteHint => 'e.g. 0812-xxxx / Office Friend';
+
+  @override
+  String get contactSavedMsg => 'Contact saved successfully.';
+
+  @override
+  String get emptyContactsTitle => 'Debt Ledger is Empty';
+
+  @override
+  String get emptyContactsSubtitle =>
+      'Record a new loan or split expense via + Quick Record, or add a friend contact.';
+
+  @override
+  String get contactStatusTheyOwe => 'RECEIVABLE • Owes You';
+
+  @override
+  String get contactStatusIOwe => 'PAYABLE • You Owe';
+
+  @override
+  String get contactStatusSettled => 'SETTLED • Net Balance Rp 0';
+
+  @override
+  String openDebtsCountLabel(int count) {
+    return '$count active items';
+  }
+
+  @override
+  String get contactDetailTitle => 'Contact Debt Ledger Details';
+
+  @override
+  String get settleOrPayBtn => 'Settle / Pay';
+
+  @override
+  String get shareInvoiceBtn => 'Invoice Image';
+
+  @override
+  String get activeDebtsSectionTitle => 'UNPAID ITEMS';
+
+  @override
+  String get paymentHistorySectionTitle => 'INSTALLMENT & PAYMENT HISTORY';
+
+  @override
+  String get noActiveDebtsText => 'No active unpaid items for this contact.';
+
+  @override
+  String get noPaymentHistoryText =>
+      'No installment or settlement history yet.';
+
+  @override
+  String initialAndRemainingLabel(String initial, String remaining) {
+    return 'Initial: $initial • Remaining: $remaining';
+  }
+
+  @override
+  String get settlementSheetTitleReceivable => 'Collect Receivable Installment';
+
+  @override
+  String get settlementSheetTitlePayable => 'Pay Your Payable Installment';
+
+  @override
+  String get settlementMethodCash => 'Cash / Wallet';
+
+  @override
+  String get settlementMethodItemTreat => 'Item / Treat';
+
+  @override
+  String get allocationModeFifo => 'Automatic FIFO (Oldest First)';
+
+  @override
+  String get allocationModeSpecific => 'Select Specific Item';
+
+  @override
+  String get recordTreatAsExpenseToggle => 'Record as daily personal expense?';
+
+  @override
+  String get recordTreatAsExpenseSubtitle =>
+      'If checked, the treat value is recorded in your expense report without deducting wallet balance.';
+
+  @override
+  String payFullRemainingChip(String amount) {
+    return 'Pay Full ($amount)';
+  }
+
+  @override
+  String get settlementSuccessMsg =>
+      'Settlement / installment recorded successfully.';
+
+  @override
+  String get cancelPaymentConfirmTitle => 'Cancel This Installment?';
+
+  @override
+  String get cancelPaymentConfirmSubtitle =>
+      'Remaining debt and wallet balance (if cash) will be restored.';
+
+  @override
+  String get paymentCancelledMsg =>
+      'Installment cancelled and balances restored.';
+
+  @override
+  String get autoNettingBannerTitle =>
+      'Opposite Balance Detected (Auto-Netting)!';
+
+  @override
+  String autoNettingBannerSubtitle(String contact, String oppositeAmount) {
+    return '$contact has an opposite balance of $oppositeAmount. Offset directly without moving cash?';
+  }
+
+  @override
+  String get applyAutoNettingBtn => 'Apply Auto-Netting';
+
+  @override
+  String get invoiceHeaderTitle => 'KASKITA • DEBT LEDGER STATEMENT';
+
+  @override
+  String invoicePrintedDate(String date) {
+    return 'Printed Date: $date';
+  }
+
+  @override
+  String get invoiceContactName => 'Contact Name';
+
+  @override
+  String get invoiceStatusLabel => 'Status';
+
+  @override
+  String get invoiceRemainingTotal => 'NET REMAINING BALANCE';
+
+  @override
+  String get invoiceUnpaidListTitle => 'UNPAID ITEMS BREAKDOWN:';
+
+  @override
+  String get invoiceRecentPaymentsTitle => 'RECENT PAYMENT HISTORY:';
+
+  @override
+  String get invoiceFooterText => 'Generated automatically via KasKita App';
+
+  @override
+  String get shareInvoiceActionBtn => 'Share Invoice Image (PNG)';
 }

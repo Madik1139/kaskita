@@ -212,3 +212,4 @@ class SplitExpenseSection extends StatelessWidget {
     );
   }
 }
+

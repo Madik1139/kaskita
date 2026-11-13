@@ -9,6 +9,8 @@ import '../../../../core/widgets/custom_numpad.dart';
 import '../../../../core/widgets/tabular_currency_text.dart';
 import '../../../../core/widgets/tactile_card.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../debts/presentation/widgets/debt_smart_alert_banners.dart';
+import '../../../debts/providers/debt_provider.dart';
 import '../../../wallets/models/category_model.dart';
 import '../../../wallets/models/wallet_model.dart';
 import '../../../wallets/presentation/widgets/wallet_transfer_sheet.dart';
@@ -170,6 +172,7 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
               dueDate: _dueDate,
             );
       }
+      await ref.read(debtsDirectoryProvider.notifier).refresh();
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -200,6 +203,7 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
       await ref.read(transactionsProvider.notifier).deleteTransaction(
             editing.id,
           );
+      await ref.read(debtsDirectoryProvider.notifier).refresh();
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -385,6 +389,53 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
               contactNameController: _contactNameController,
               dueDate: _dueDate,
               onPickDueDate: () => _pickDate(isDueDate: true),
+            ),
+            DebtSmartAlertBanners(
+              trxType: _trxType,
+              isSplitTalangan: _isSplitTalangan,
+              totalWalletAmount: _totalWalletAmount,
+              friendShareAmount: _friendShareAmount,
+              selectedContact: contacts
+                  .where((ContactOptionModel c) => c.id == _contactId)
+                  .firstOrNull,
+              onApplyAutoNetting: () async {
+                if (_contactId == null || _isSubmitting) {
+                  return;
+                }
+                setState(() => _isSubmitting = true);
+                try {
+                  await ref
+                      .read(debtsDirectoryProvider.notifier)
+                      .recordDebtWithAutoNetting(
+                        contactId: _contactId!,
+                        newDebtType: _trxType == 'DEBT_IN'
+                            ? 'PAYABLE'
+                            : 'RECEIVABLE',
+                        amount: _totalWalletAmount,
+                        date: _trxDate,
+                        note: _noteController.text,
+                        dueDate: _dueDate,
+                      );
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(l10n.settlementSuccessMsg)),
+                    );
+                  }
+                } catch (error) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(AppException.resolveError(error, l10n)),
+                      ),
+                    );
+                  }
+                } finally {
+                  if (mounted) {
+                    setState(() => _isSubmitting = false);
+                  }
+                }
+              },
             ),
             const SizedBox(height: 8),
             TextField(

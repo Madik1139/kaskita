@@ -213,3 +213,4 @@ class ContactOptionModel extends Equatable {
   @override
   List<Object?> get props => <Object?>[id, name, netBalance, trustBadge];
 }
+

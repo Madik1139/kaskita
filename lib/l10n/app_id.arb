@@ -10,7 +10,7 @@
   "close": "Tutup",
   "switchThemeTooltip": "Ganti Tema Terang / Gelap",
   "switchLanguageTooltip": "Ganti Bahasa (ID / EN)",
-  "phaseBadge": "v0.4.0 • FASE 3",
+  "phaseBadge": "v0.5.0 • FASE 4",
   "navHome": "Beranda",
   "navDebtBook": "Buku Hutang",
   "navSummary": "Ringkasan",
@@ -229,5 +229,99 @@
   "trxTypeDebtIn": "Hutang Masuk",
   "trxTypeReceivableSettle": "Terima Cicilan",
   "trxTypePayableSettle": "Bayar Hutang",
-  "nonConsumptionBookBadge": "Buku Hutang (Bukan Konsumsi)"
+  "nonConsumptionBookBadge": "Buku Hutang (Bukan Konsumsi)",
+  "debtHeaderReceivablesLabel": "Total Piutang di Teman",
+  "debtHeaderPayablesLabel": "Total Hutang Saya",
+  "lendingCapBarTitle": "Batas Rem Piutang (Lending Cap)",
+  "editLendingCapTitle": "Atur Batas Rem Piutang",
+  "editLendingCapSubtitle": "Munculkan peringatan otomatis saat total uang yang tertahan di teman melewati batas ini.",
+  "filterAllContacts": "Semua",
+  "filterTheyOweMe": "Mereka Hutang",
+  "filterIOweThem": "Saya Hutang",
+  "filterOverdue": "Jatuh Tempo",
+  "addContactBtn": "+ Kontak",
+  "addContactTitle": "Tambah Kontak Teman",
+  "contactPhoneNoteLabel": "No. WhatsApp / Catatan Singkat (Opsional)",
+  "contactPhoneNoteHint": "Contoh: 0812-xxxx / Teman Kantor",
+  "contactSavedMsg": "Kontak berhasil disimpan.",
+  "emptyContactsTitle": "Buku Hutang Masih Kosong",
+  "emptyContactsSubtitle": "Catat pinjaman/talangan baru melalui tombol + Catat Cepat, atau tambahkan kontak teman.",
+  "contactStatusTheyOwe": "PIUTANG • Berhutang ke Anda",
+  "contactStatusIOwe": "HUTANG • Anda Berhutang",
+  "contactStatusSettled": "LUNAS • Saldo Bersih Rp 0",
+  "openDebtsCountLabel": "{count} tagihan aktif",
+  "@openDebtsCountLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contactDetailTitle": "Rincian Buku Hutang Kontak",
+  "settleOrPayBtn": "Bayar / Cicil",
+  "shareInvoiceBtn": "Struk Gambar",
+  "activeDebtsSectionTitle": "TAGIHAN BELUM LUNAS",
+  "paymentHistorySectionTitle": "RIWAYAT CICILAN & PELUNASAN",
+  "noActiveDebtsText": "Tidak ada tagihan aktif untuk kontak ini.",
+  "noPaymentHistoryText": "Belum ada riwayat cicilan atau pelunasan.",
+  "initialAndRemainingLabel": "Awal: {initial} • Sisa: {remaining}",
+  "@initialAndRemainingLabel": {
+    "placeholders": {
+      "initial": {
+        "type": "String"
+      },
+      "remaining": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementSheetTitleReceivable": "Terima Pembayaran / Cicilan Piutang",
+  "settlementSheetTitlePayable": "Bayar / Cicil Hutang Anda",
+  "settlementMethodCash": "Tunai / Dompet",
+  "settlementMethodItemTreat": "Barang / Traktiran",
+  "allocationModeFifo": "Otomatis FIFO (Terlama Dulu)",
+  "allocationModeSpecific": "Pilih Tagihan Spesifik",
+  "recordTreatAsExpenseToggle": "Catat sebagai konsumsi pengeluaran harian?",
+  "recordTreatAsExpenseSubtitle": "Jika dicentang, nilai traktiran masuk ke laporan konsumsi tanpa memotong saldo dompet.",
+  "payFullRemainingChip": "Lunasi Sisa ({amount})",
+  "@payFullRemainingChip": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "settlementSuccessMsg": "Pelunasan / cicilan berhasil dicatat.",
+  "cancelPaymentConfirmTitle": "Batalkan Cicilan Ini?",
+  "cancelPaymentConfirmSubtitle": "Sisa tagihan dan saldo dompet (jika tunai) akan dikembalikan seperti semula.",
+  "paymentCancelledMsg": "Cicilan berhasil dibatalkan dan saldo dikembalikan.",
+  "autoNettingBannerTitle": "Deteksi Saldo Silang (Auto-Netting)!",
+  "autoNettingBannerSubtitle": "{contact} memiliki saldo berlawanan sebesar {oppositeAmount}. Potong langsung tanpa memindahkan uang?",
+  "@autoNettingBannerSubtitle": {
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      },
+      "oppositeAmount": {
+        "type": "String"
+      }
+    }
+  },
+  "applyAutoNettingBtn": "Gunakan Auto-Netting",
+  "invoiceHeaderTitle": "KASKITA • CATATAN BUKU HUTANG",
+  "invoicePrintedDate": "Tanggal Cetak: {date}",
+  "@invoicePrintedDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceContactName": "Nama Kontak",
+  "invoiceStatusLabel": "Status",
+  "invoiceRemainingTotal": "SISA TAGIHAN BERSIH",
+  "invoiceUnpaidListTitle": "RINCIAN TAGIHAN BELUM LUNAS:",
+  "invoiceRecentPaymentsTitle": "RIWAYAT PEMBAYARAN TERAKHIR:",
+  "invoiceFooterText": "Dibuat otomatis melalui aplikasi KasKita",
+  "shareInvoiceActionBtn": "Bagikan Gambar Struk (PNG)"
 }

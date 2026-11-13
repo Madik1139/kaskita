@@ -216,3 +216,4 @@ class TransactionsNotifier extends AsyncNotifier<TransactionsPeriodState> {
     await _syncAllLedgers();
   }
 }
+

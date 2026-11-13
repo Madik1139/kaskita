@@ -13,7 +13,7 @@
   paper: "a4",
   margin: (x: 2.0cm, y: 2.2cm),
   header: align(right)[
-    #text(size: 8.5pt, fill: rgb("#686B73"))[KasKita – Buku Panduan Pengguna & Layout Antarmuka (v0.4.0)]
+    #text(size: 8.5pt, fill: rgb("#686B73"))[KasKita – Buku Panduan Pengguna & Layout Antarmuka (v0.5.0)]
   ],
   footer: context [
     #line(length: 100%, stroke: 0.5pt + rgb("#E4E2DD"))

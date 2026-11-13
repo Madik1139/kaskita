@@ -1,6 +1,6 @@
 # KasKita – Aplikasi Pencatat Keuangan & Buku Hutang Mandiri (Offline-First)
 
-**Versi Saat Ini:** `0.4.0+4` (Fase 3 Selesai: Input Satu Pintu `< 5 Detik`, Talangan Teman, Rollback Edit/Hapus, & Beranda Gaya *Money Manager*)  
+**Versi Saat Ini:** `0.5.0+5` (Fase 4 Selesai: Buku Hutang Pintar, Cicilan FIFO, *Auto-Netting*, Lunas Traktiran, Rem Piutang, & Struk Gambar PNG)  
 **Platform:** Android & iOS (Flutter)  
 **Penyimpanan:** 100% Lokal / *Standalone* (`SQLite`)
 
@@ -68,7 +68,7 @@ typst compile docs/user_manual.typ docs/user_manual.pdf
 - [x] Lapisan Inti (`core/`): Tema Light/Dark, DatabaseHelper SQLite (`DemoDataSeeder`), CI/CD GitHub Actions, & Komponen Reusable (`TactileCard`, `CustomNumpad`, `TabularCurrencyText`, `StatusBadge`, `EmptyStateView`)
 - [x] Fitur Dompet (`wallets/`): Onboarding Saldo Awal, Multi-Dompet, Kategori Kustom, & Transfer Antar Dompet
 - [x] Fitur Transaksi (`transactions/`): Input Satu Pintu (`+`), Talangan Teman (*Split Expense*), Rollback Edit/Hapus, & Riwayat Kas Harian/Kalender/Bulanan
-- [ ] Fitur Buku Hutang (`debts/`): Kontak, Cicilan FIFO, *Auto-Netting*, Lunas via Traktiran, Rem Piutang, & *Clean Invoice Receipt*
+- [x] Fitur Buku Hutang (`debts/`): Kontak, Cicilan FIFO, *Auto-Netting*, Lunas via Traktiran, Rem Piutang, & *Clean Invoice Receipt*
 - [ ] Fitur Laporan & Pengaturan (`reports/` & `settings/`): Grafik Bulanan, Notifikasi Jatuh Tempo, PIN/Biometrik, & Backup/Restore (`.db`/`.json`/`.csv`)
 
 ---
@@ -77,6 +77,7 @@ typst compile docs/user_manual.typ docs/user_manual.pdf
 
 | Versi | Tanggal | Ringkasan Perubahan |
 | :--- | :--- | :--- |
+| **`0.5.0+5`** | 13 Nov 2026 | **Fase 4 Selesai:** Implementasi modul `lib/features/debts/` (Tab 2 *Buku Hutang*), **Direktori Kontak** dengan satu angka **Saldo Bersih ($B_{\text{kontak}}$)** dan evaluasi otomatis **Trust Badge (`GOOD`, `LATE`, `WARNING`)**, **Halaman Detail Kontak** dengan **Pelunasan/Cicilan Otomatis FIFO** maupun **Pilih Tagihan Spesifik**, pembatalan cicilan (*rollback*), **Saling Silang Saldo Otomatis (*Auto-Netting*)**, **Lunas via Barang/Traktiran (`ITEM_TREAT`)** beserta opsi catat ke konsumsi harian, **Indikator & Banner Peringatan Rem Piutang (*Lending Cap*)**, **Bagikan Struk Tagihan Bersih (*Clean Invoice Receipt* PNG)** via `RepaintBoundary` & `share_plus`, serta penambahan *unit/widget test* Fase 4 (`flutter test` lulus 100% - 17/17 test). |
 | **`0.4.0+4`** | 13 Nov 2026 | **Fase 3 Selesai:** Implementasi modul `lib/features/transactions/`, **Input Satu Pintu (`< 5 Detik`)** dengan 5 mode (`Pengeluaran`, `Pemasukan`, `Piutang`, `Hutang`, `Transfer`), fitur **"Sekalian Talangi Teman" (*Inline Split Expense*)** beserta tombol **Bagi Rata (50:50)**, **Tampilan Beranda Gaya *Money Manager (Realbyte)*** (Navigasi Periode, Ringkasan 3 Kolom, Sub-Tab `Harian`, `Kalender` interaktif dengan `TableCalendar`, dan `Bulanan` dengan rincian mingguan *expandable*), **Edit & Hapus Transaksi dengan Rollback Otomatis** serta proteksi kunci jika sudah ada cicilan, dan penambahan *unit test* Fase 3 (`flutter test` lulus 100% - 13/13 test). |
 | **`0.3.0+3`** | 13 Nov 2026 | **Fase 2 Selesai:** Implementasi modul `lib/features/wallets/` (Model, Repository, Riverpod Provider, dan UI Bottom Sheets), **Onboarding Saldo Awal Dompet Tunai**, **Manajemen Multi-Dompet (`CASH`, `BANK`, `EWALLET`)**, **Transfer Antar Dompet (`trx_type = 'TRANSFER'`)** atomik tanpa mengotori konsumsi murni, **Kelola Kategori Kustom**, **Filter Pill Dompet Interaktif pada Kartu Buku Kas Terpadu**, kerangka navigasi 3 Tab (`Beranda`, `Buku Hutang`, `Ringkasan`), serta penambahan *unit test* Fase 2 (`flutter test` lulus 100% - 10/10 test). |
 | **`0.2.0+2`** | 13 Nov 2026 | **Fase 1 Selesai:** Instalasi seluruh library standar industri, konfigurasi `AndroidManifest.xml` & `FlutterFragmentActivity`, workflow CI/CD GitHub Actions (`.github/workflows/ci_and_release.yml`), penambahan visualisasi layout layar di `docs/user_manual.typ`, implementasi **Lokalisasi 2 Bahasa (`id` & `en`) beserta Pesan Error Terlokalisasi (`AppException`)**, `DatabaseHelper` SQLite (7 tabel + `DemoDataSeeder`), tema *Light/Dark* (`AppColors` & `AppTheme`), 5 komponen reusable di `lib/core/widgets/`, serta *unit/widget test* (`flutter test` lulus 100% - 7/7 test). |

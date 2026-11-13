@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @phaseBadge.
   ///
   /// In id, this message translates to:
-  /// **'v0.4.0 • FASE 3'**
+  /// **'v0.5.0 • FASE 4'**
   String get phaseBadge;
 
   /// No description provided for @navHome.
@@ -960,6 +960,324 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Buku Hutang (Bukan Konsumsi)'**
   String get nonConsumptionBookBadge;
+
+  /// No description provided for @debtHeaderReceivablesLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Total Piutang di Teman'**
+  String get debtHeaderReceivablesLabel;
+
+  /// No description provided for @debtHeaderPayablesLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Total Hutang Saya'**
+  String get debtHeaderPayablesLabel;
+
+  /// No description provided for @lendingCapBarTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Batas Rem Piutang (Lending Cap)'**
+  String get lendingCapBarTitle;
+
+  /// No description provided for @editLendingCapTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Atur Batas Rem Piutang'**
+  String get editLendingCapTitle;
+
+  /// No description provided for @editLendingCapSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Munculkan peringatan otomatis saat total uang yang tertahan di teman melewati batas ini.'**
+  String get editLendingCapSubtitle;
+
+  /// No description provided for @filterAllContacts.
+  ///
+  /// In id, this message translates to:
+  /// **'Semua'**
+  String get filterAllContacts;
+
+  /// No description provided for @filterTheyOweMe.
+  ///
+  /// In id, this message translates to:
+  /// **'Mereka Hutang'**
+  String get filterTheyOweMe;
+
+  /// No description provided for @filterIOweThem.
+  ///
+  /// In id, this message translates to:
+  /// **'Saya Hutang'**
+  String get filterIOweThem;
+
+  /// No description provided for @filterOverdue.
+  ///
+  /// In id, this message translates to:
+  /// **'Jatuh Tempo'**
+  String get filterOverdue;
+
+  /// No description provided for @addContactBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'+ Kontak'**
+  String get addContactBtn;
+
+  /// No description provided for @addContactTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Tambah Kontak Teman'**
+  String get addContactTitle;
+
+  /// No description provided for @contactPhoneNoteLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'No. WhatsApp / Catatan Singkat (Opsional)'**
+  String get contactPhoneNoteLabel;
+
+  /// No description provided for @contactPhoneNoteHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Contoh: 0812-xxxx / Teman Kantor'**
+  String get contactPhoneNoteHint;
+
+  /// No description provided for @contactSavedMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Kontak berhasil disimpan.'**
+  String get contactSavedMsg;
+
+  /// No description provided for @emptyContactsTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Buku Hutang Masih Kosong'**
+  String get emptyContactsTitle;
+
+  /// No description provided for @emptyContactsSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Catat pinjaman/talangan baru melalui tombol + Catat Cepat, atau tambahkan kontak teman.'**
+  String get emptyContactsSubtitle;
+
+  /// No description provided for @contactStatusTheyOwe.
+  ///
+  /// In id, this message translates to:
+  /// **'PIUTANG • Berhutang ke Anda'**
+  String get contactStatusTheyOwe;
+
+  /// No description provided for @contactStatusIOwe.
+  ///
+  /// In id, this message translates to:
+  /// **'HUTANG • Anda Berhutang'**
+  String get contactStatusIOwe;
+
+  /// No description provided for @contactStatusSettled.
+  ///
+  /// In id, this message translates to:
+  /// **'LUNAS • Saldo Bersih Rp 0'**
+  String get contactStatusSettled;
+
+  /// No description provided for @openDebtsCountLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'{count} tagihan aktif'**
+  String openDebtsCountLabel(int count);
+
+  /// No description provided for @contactDetailTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Rincian Buku Hutang Kontak'**
+  String get contactDetailTitle;
+
+  /// No description provided for @settleOrPayBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Bayar / Cicil'**
+  String get settleOrPayBtn;
+
+  /// No description provided for @shareInvoiceBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Struk Gambar'**
+  String get shareInvoiceBtn;
+
+  /// No description provided for @activeDebtsSectionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'TAGIHAN BELUM LUNAS'**
+  String get activeDebtsSectionTitle;
+
+  /// No description provided for @paymentHistorySectionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'RIWAYAT CICILAN & PELUNASAN'**
+  String get paymentHistorySectionTitle;
+
+  /// No description provided for @noActiveDebtsText.
+  ///
+  /// In id, this message translates to:
+  /// **'Tidak ada tagihan aktif untuk kontak ini.'**
+  String get noActiveDebtsText;
+
+  /// No description provided for @noPaymentHistoryText.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum ada riwayat cicilan atau pelunasan.'**
+  String get noPaymentHistoryText;
+
+  /// No description provided for @initialAndRemainingLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Awal: {initial} • Sisa: {remaining}'**
+  String initialAndRemainingLabel(String initial, String remaining);
+
+  /// No description provided for @settlementSheetTitleReceivable.
+  ///
+  /// In id, this message translates to:
+  /// **'Terima Pembayaran / Cicilan Piutang'**
+  String get settlementSheetTitleReceivable;
+
+  /// No description provided for @settlementSheetTitlePayable.
+  ///
+  /// In id, this message translates to:
+  /// **'Bayar / Cicil Hutang Anda'**
+  String get settlementSheetTitlePayable;
+
+  /// No description provided for @settlementMethodCash.
+  ///
+  /// In id, this message translates to:
+  /// **'Tunai / Dompet'**
+  String get settlementMethodCash;
+
+  /// No description provided for @settlementMethodItemTreat.
+  ///
+  /// In id, this message translates to:
+  /// **'Barang / Traktiran'**
+  String get settlementMethodItemTreat;
+
+  /// No description provided for @allocationModeFifo.
+  ///
+  /// In id, this message translates to:
+  /// **'Otomatis FIFO (Terlama Dulu)'**
+  String get allocationModeFifo;
+
+  /// No description provided for @allocationModeSpecific.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih Tagihan Spesifik'**
+  String get allocationModeSpecific;
+
+  /// No description provided for @recordTreatAsExpenseToggle.
+  ///
+  /// In id, this message translates to:
+  /// **'Catat sebagai konsumsi pengeluaran harian?'**
+  String get recordTreatAsExpenseToggle;
+
+  /// No description provided for @recordTreatAsExpenseSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Jika dicentang, nilai traktiran masuk ke laporan konsumsi tanpa memotong saldo dompet.'**
+  String get recordTreatAsExpenseSubtitle;
+
+  /// No description provided for @payFullRemainingChip.
+  ///
+  /// In id, this message translates to:
+  /// **'Lunasi Sisa ({amount})'**
+  String payFullRemainingChip(String amount);
+
+  /// No description provided for @settlementSuccessMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Pelunasan / cicilan berhasil dicatat.'**
+  String get settlementSuccessMsg;
+
+  /// No description provided for @cancelPaymentConfirmTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Batalkan Cicilan Ini?'**
+  String get cancelPaymentConfirmTitle;
+
+  /// No description provided for @cancelPaymentConfirmSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Sisa tagihan dan saldo dompet (jika tunai) akan dikembalikan seperti semula.'**
+  String get cancelPaymentConfirmSubtitle;
+
+  /// No description provided for @paymentCancelledMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Cicilan berhasil dibatalkan dan saldo dikembalikan.'**
+  String get paymentCancelledMsg;
+
+  /// No description provided for @autoNettingBannerTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Deteksi Saldo Silang (Auto-Netting)!'**
+  String get autoNettingBannerTitle;
+
+  /// No description provided for @autoNettingBannerSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'{contact} memiliki saldo berlawanan sebesar {oppositeAmount}. Potong langsung tanpa memindahkan uang?'**
+  String autoNettingBannerSubtitle(String contact, String oppositeAmount);
+
+  /// No description provided for @applyAutoNettingBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Gunakan Auto-Netting'**
+  String get applyAutoNettingBtn;
+
+  /// No description provided for @invoiceHeaderTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'KASKITA • CATATAN BUKU HUTANG'**
+  String get invoiceHeaderTitle;
+
+  /// No description provided for @invoicePrintedDate.
+  ///
+  /// In id, this message translates to:
+  /// **'Tanggal Cetak: {date}'**
+  String invoicePrintedDate(String date);
+
+  /// No description provided for @invoiceContactName.
+  ///
+  /// In id, this message translates to:
+  /// **'Nama Kontak'**
+  String get invoiceContactName;
+
+  /// No description provided for @invoiceStatusLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Status'**
+  String get invoiceStatusLabel;
+
+  /// No description provided for @invoiceRemainingTotal.
+  ///
+  /// In id, this message translates to:
+  /// **'SISA TAGIHAN BERSIH'**
+  String get invoiceRemainingTotal;
+
+  /// No description provided for @invoiceUnpaidListTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'RINCIAN TAGIHAN BELUM LUNAS:'**
+  String get invoiceUnpaidListTitle;
+
+  /// No description provided for @invoiceRecentPaymentsTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'RIWAYAT PEMBAYARAN TERAKHIR:'**
+  String get invoiceRecentPaymentsTitle;
+
+  /// No description provided for @invoiceFooterText.
+  ///
+  /// In id, this message translates to:
+  /// **'Dibuat otomatis melalui aplikasi KasKita'**
+  String get invoiceFooterText;
+
+  /// No description provided for @shareInvoiceActionBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Bagikan Gambar Struk (PNG)'**
+  String get shareInvoiceActionBtn;
 }
 
 class _AppLocalizationsDelegate

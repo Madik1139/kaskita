@@ -39,7 +39,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get switchLanguageTooltip => 'Ganti Bahasa (ID / EN)';
 
   @override
-  String get phaseBadge => 'v0.4.0 • FASE 3';
+  String get phaseBadge => 'v0.5.0 • FASE 4';
 
   @override
   String get navHome => 'Beranda';
@@ -485,4 +485,182 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get nonConsumptionBookBadge => 'Buku Hutang (Bukan Konsumsi)';
+
+  @override
+  String get debtHeaderReceivablesLabel => 'Total Piutang di Teman';
+
+  @override
+  String get debtHeaderPayablesLabel => 'Total Hutang Saya';
+
+  @override
+  String get lendingCapBarTitle => 'Batas Rem Piutang (Lending Cap)';
+
+  @override
+  String get editLendingCapTitle => 'Atur Batas Rem Piutang';
+
+  @override
+  String get editLendingCapSubtitle =>
+      'Munculkan peringatan otomatis saat total uang yang tertahan di teman melewati batas ini.';
+
+  @override
+  String get filterAllContacts => 'Semua';
+
+  @override
+  String get filterTheyOweMe => 'Mereka Hutang';
+
+  @override
+  String get filterIOweThem => 'Saya Hutang';
+
+  @override
+  String get filterOverdue => 'Jatuh Tempo';
+
+  @override
+  String get addContactBtn => '+ Kontak';
+
+  @override
+  String get addContactTitle => 'Tambah Kontak Teman';
+
+  @override
+  String get contactPhoneNoteLabel =>
+      'No. WhatsApp / Catatan Singkat (Opsional)';
+
+  @override
+  String get contactPhoneNoteHint => 'Contoh: 0812-xxxx / Teman Kantor';
+
+  @override
+  String get contactSavedMsg => 'Kontak berhasil disimpan.';
+
+  @override
+  String get emptyContactsTitle => 'Buku Hutang Masih Kosong';
+
+  @override
+  String get emptyContactsSubtitle =>
+      'Catat pinjaman/talangan baru melalui tombol + Catat Cepat, atau tambahkan kontak teman.';
+
+  @override
+  String get contactStatusTheyOwe => 'PIUTANG • Berhutang ke Anda';
+
+  @override
+  String get contactStatusIOwe => 'HUTANG • Anda Berhutang';
+
+  @override
+  String get contactStatusSettled => 'LUNAS • Saldo Bersih Rp 0';
+
+  @override
+  String openDebtsCountLabel(int count) {
+    return '$count tagihan aktif';
+  }
+
+  @override
+  String get contactDetailTitle => 'Rincian Buku Hutang Kontak';
+
+  @override
+  String get settleOrPayBtn => 'Bayar / Cicil';
+
+  @override
+  String get shareInvoiceBtn => 'Struk Gambar';
+
+  @override
+  String get activeDebtsSectionTitle => 'TAGIHAN BELUM LUNAS';
+
+  @override
+  String get paymentHistorySectionTitle => 'RIWAYAT CICILAN & PELUNASAN';
+
+  @override
+  String get noActiveDebtsText => 'Tidak ada tagihan aktif untuk kontak ini.';
+
+  @override
+  String get noPaymentHistoryText =>
+      'Belum ada riwayat cicilan atau pelunasan.';
+
+  @override
+  String initialAndRemainingLabel(String initial, String remaining) {
+    return 'Awal: $initial • Sisa: $remaining';
+  }
+
+  @override
+  String get settlementSheetTitleReceivable =>
+      'Terima Pembayaran / Cicilan Piutang';
+
+  @override
+  String get settlementSheetTitlePayable => 'Bayar / Cicil Hutang Anda';
+
+  @override
+  String get settlementMethodCash => 'Tunai / Dompet';
+
+  @override
+  String get settlementMethodItemTreat => 'Barang / Traktiran';
+
+  @override
+  String get allocationModeFifo => 'Otomatis FIFO (Terlama Dulu)';
+
+  @override
+  String get allocationModeSpecific => 'Pilih Tagihan Spesifik';
+
+  @override
+  String get recordTreatAsExpenseToggle =>
+      'Catat sebagai konsumsi pengeluaran harian?';
+
+  @override
+  String get recordTreatAsExpenseSubtitle =>
+      'Jika dicentang, nilai traktiran masuk ke laporan konsumsi tanpa memotong saldo dompet.';
+
+  @override
+  String payFullRemainingChip(String amount) {
+    return 'Lunasi Sisa ($amount)';
+  }
+
+  @override
+  String get settlementSuccessMsg => 'Pelunasan / cicilan berhasil dicatat.';
+
+  @override
+  String get cancelPaymentConfirmTitle => 'Batalkan Cicilan Ini?';
+
+  @override
+  String get cancelPaymentConfirmSubtitle =>
+      'Sisa tagihan dan saldo dompet (jika tunai) akan dikembalikan seperti semula.';
+
+  @override
+  String get paymentCancelledMsg =>
+      'Cicilan berhasil dibatalkan dan saldo dikembalikan.';
+
+  @override
+  String get autoNettingBannerTitle => 'Deteksi Saldo Silang (Auto-Netting)!';
+
+  @override
+  String autoNettingBannerSubtitle(String contact, String oppositeAmount) {
+    return '$contact memiliki saldo berlawanan sebesar $oppositeAmount. Potong langsung tanpa memindahkan uang?';
+  }
+
+  @override
+  String get applyAutoNettingBtn => 'Gunakan Auto-Netting';
+
+  @override
+  String get invoiceHeaderTitle => 'KASKITA • CATATAN BUKU HUTANG';
+
+  @override
+  String invoicePrintedDate(String date) {
+    return 'Tanggal Cetak: $date';
+  }
+
+  @override
+  String get invoiceContactName => 'Nama Kontak';
+
+  @override
+  String get invoiceStatusLabel => 'Status';
+
+  @override
+  String get invoiceRemainingTotal => 'SISA TAGIHAN BERSIH';
+
+  @override
+  String get invoiceUnpaidListTitle => 'RINCIAN TAGIHAN BELUM LUNAS:';
+
+  @override
+  String get invoiceRecentPaymentsTitle => 'RIWAYAT PEMBAYARAN TERAKHIR:';
+
+  @override
+  String get invoiceFooterText => 'Dibuat otomatis melalui aplikasi KasKita';
+
+  @override
+  String get shareInvoiceActionBtn => 'Bagikan Gambar Struk (PNG)';
 }

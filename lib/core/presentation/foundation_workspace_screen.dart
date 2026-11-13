@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../../features/debts/presentation/debt_directory_tab_view.dart';
+import '../../features/debts/providers/debt_provider.dart';
 import '../../features/transactions/presentation/widgets/calendar_ledger_view.dart';
 import '../../features/transactions/presentation/widgets/daily_transaction_group_card.dart';
 import '../../features/transactions/presentation/widgets/monthly_ledger_view.dart';
@@ -41,6 +43,7 @@ class _FoundationWorkspaceScreenState
     await ref.read(walletsProvider.notifier).refresh();
     await ref.read(categoriesProvider.notifier).refresh();
     await ref.read(transactionsProvider.notifier).refresh();
+    await ref.read(debtsDirectoryProvider.notifier).refresh();
     await ref.read(ledgerOverviewProvider.notifier).refreshOverview();
   }
 
@@ -153,16 +156,7 @@ class _FoundationWorkspaceScreenState
         index: _selectedTabIndex,
         children: <Widget>[
           _buildHomeTab(context, overviewAsync, transactionsAsync, l10n),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: EmptyStateView(
-                icon: LucideIcons.users,
-                title: l10n.tabDebtPlaceholderTitle,
-                subtitle: l10n.tabDebtPlaceholderSubtitle,
-              ),
-            ),
-          ),
+          const DebtDirectoryTabView(),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Center(

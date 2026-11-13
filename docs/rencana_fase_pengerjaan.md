@@ -80,7 +80,7 @@ flowchart LR
 
 ---
 
-### Fase 4: Buku Hutang Pintar: Cicilan FIFO, Auto-Netting, Lunas Traktiran, & Struk Gambar (`v0.5.0`)
+### Fase 4: Buku Hutang Pintar: Cicilan FIFO, Auto-Netting, Lunas Traktiran, & Struk Gambar (`v0.5.0`) — [SELESAI]
 **Fokus:** Membangun modul `lib/features/debts/` (Tab 2) beserta seluruh skenario pelunasan fleksibel.
 1. **Halaman Buku Hutang & Direktori Kontak (Tab 2):**
    * Header ringkasan Total Piutang di Teman ($P_{\text{aktif}}$) vs Total Hutang Saya ($H_{\text{aktif}}$) + indikator bar **Rem Piutang (*Lending Cap*)**.
