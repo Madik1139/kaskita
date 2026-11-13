@@ -12,13 +12,15 @@ Aplikasi dibangun menggunakan pendekatan ringan, cepat, dan 100% *offline-first*
 | Kebutuhan | Package Pilihan | Alasan Pemilihan |
 | :--- | :--- | :--- |
 | **State Management** | `flutter_riverpod` | Reaktif, *compile-safe*, mudah mengelola *async state* database lokal tanpa *boilerplate* berlebih. |
-| **Database Lokal** | `sqflite` + `path` | Eksekusi langsung DDL SQLite sesuai ERD, performa tinggi (<100ms), kontrol penuh atas *database transaction* (`txn`). |
+| **Database Lokal & Test** | `sqflite`, `path`, `sqflite_common_ffi` (dev) | Eksekusi langsung DDL SQLite sesuai ERD (<100ms), kontrol penuh atas `db.transaction`, serta *unit test* SQLite instan di Windows via FFI. |
+| **Model & Pengelompokan** | `equatable`, `collection` | Perbandingan *value equality* bersih pada Model/State dan pengelompokan transaksi harian/bulanan (`groupBy`) bebas *bug*. |
+| **Ikon & Tipografi** | `lucide_icons_flutter`, `google_fonts` | Ikon *outline* tajam ala Linear/Wise (**Anti-AI-Slop**) dan font **Plus Jakarta Sans** dengan angka *tabular*. |
+| **Kalender Bulanan** | `table_calendar` | Standar industri untuk membuat sub-tab **Kalender** ala *Money Manager* dengan ringkasan angka harian di tiap sel tanggal. |
 | **Format Mata Uang & Tanggal** | `intl` | Pemformatan Rupiah (`Rp150.000`) dan lokalisasi tanggal Indonesia (`13 Nov 2026`). |
-| **Font & Tipografi** | `google_fonts` | Menggunakan font **Plus Jakarta Sans** dan **JetBrains Mono** (untuk elemen struk/angka tabular). |
 | **Visualisasi Grafik** | `fl_chart` | Grafik batang perbandingan bulanan & *donut/bar chart* kategori pengeluaran yang ringan. |
 | **Notifikasi Lokal** | `flutter_local_notifications` + `timezone` | Penjadwalan pengingat jatuh tempo hutang/piutang pada H-1 dan Hari-H pukul 09.00. |
-| **Keamanan Aplikasi** | `local_auth` | Mengunci aplikasi menggunakan Biometrik (*Fingerprint/Face Unlock*) atau PIN lokal. |
-| **Share & Ekspor File** | `share_plus`, `path_provider`, `file_picker`, `csv` | Membagikan *Image Receipt* (`RepaintBoundary` -> PNG) ke WhatsApp, serta *Backup/Restore* `.db`/`.json` dan ekspor `.csv`. |
+| **Keamanan PIN & Biometrik** | `local_auth`, `flutter_secure_storage` | Mengunci aplikasi dengan Biometrik (*Fingerprint/Face Unlock*) dan menyimpan PIN 6 digit secara terenkripsi di Keystore/Keychain. |
+| **Struk Gambar & Ekspor** | `screenshot`, `share_plus`, `path_provider`, `file_picker`, `csv` | Mengubah widget *Clean Invoice Receipt* menjadi PNG untuk dikirim ke WhatsApp, serta *Backup/Restore* `.db`/`.json` dan ekspor `.csv`. |
 | **In-App Update / OTA** | `package_info_plus` + `url_launcher` / `ota_update` | Mengecek rilis versi terbaru dari GitHub Releases JSON API dan mengunduh pembaruan aplikasi tanpa kehilangan data SQLite lokal. |
 
 ---

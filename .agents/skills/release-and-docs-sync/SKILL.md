@@ -18,9 +18,9 @@ Setiap kali menyelesaikan fitur penting, perubahan arsitektur, atau pembaruan ve
 2. Perbarui versi di `pubspec.yaml` (jika merupakan tonggak rilis) dan catat riwayat perubahannya pada tabel **Riwayat Versi (Changelog)** di [README.md](../../../README.md).
 3. Pastikan daftar status fitur di `README.md` mencerminkan kondisi kode terkini.
 
-## Langkah 2: Pembaruan User Manual Typst (`docs/user_manual.typ`)
+## Langkah 2: Pembaruan User Manual Typst (`docs/user_manual.typ`) Beserta Gambar Layout
 1. Buka file [docs/user_manual.typ](../../../docs/user_manual.typ).
-2. Perbarui bagian panduan pengguna yang terdampak oleh fitur baru atau perubahan alur UI (misal: cara memakai Input Satu Pintu, Talangan, Auto-Netting, atau Backup Data).
+2. Perbarui bagian panduan pengguna yang terdampak oleh fitur baru, termasuk **langkah-langkah penggunaan** serta **visualisasi/ilustrasi gambar layout layar aplikasi** di dalam dokumen Typst agar pembaca dapat melihat langsung bentuk antarmuka setiap fitur.
 3. Perbarui nomor versi dan tanggal pembaruan pada bagian header `docs/user_manual.typ`.
 4. Jika CLI `typst` tersedia di sistem, jalankan kompilasi:
    ```powershell
@@ -31,9 +31,9 @@ Setiap kali menyelesaikan fitur penting, perubahan arsitektur, atau pembaruan ve
 1. Jika ada widget reusable baru yang ditambahkan ke `lib/core/widgets/`, pastikan namanya sudah terdaftar di `AGENTS.md`.
 2. Jika ada prosedur teknis baru yang penting dan berulang, tambahkan atau perbarui *skill* di `.agents/skills/`.
 
-## Langkah 4: Standar Pesan Commit (*Conventional Commits*)
-Saat menyimpan perubahan ke Git, gunakan awalan standar agar selaras dengan *Changelog*:
-* `feat: ...` – Penambahan fitur baru
+## Langkah 4: Git Commit & Push per Fase (*Conventional Commits*)
+Setiap menyelesaikan satu fase pengerjaan (setelah `analyze_files` = 0 error dan `run_tests` lulus), **wajib melakukan commit ke Git** sebelum memulai fase berikutnya:
+* `feat: ...` – Penambahan fitur baru / penyelesaian fase
 * `fix: ...` – Perbaikan *bug* atau koreksi perhitungan saldo
 * `refactor: ...` – Perapian struktur kode tanpa mengubah perilaku fitur
 * `docs: ...` – Pembaruan `README.md`, `docs/`, `user_manual.typ`, atau `.agents/`

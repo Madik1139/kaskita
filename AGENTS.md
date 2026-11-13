@@ -10,8 +10,16 @@ Dokumen ini berisi aturan inti (*always-on rules*) yang **wajib** dipatuhi oleh 
   * `data/` (Repository & query SQLite `sqflite`).
   * `providers/` (State management menggunakan `flutter_riverpod`).
   * `presentation/` (Screens & Widgets).
-* **Single Responsibility:** Satu file/kelas hanya memiliki satu tanggung jawab utama. Hindari *God Widget* (> 300 baris); pecah menjadi sub-widget yang terfokus.
+* **Batas Panjang Baris File (Maksimal 250 Baris) & Single Responsibility:**
+  * Satu file `.dart` **tidak boleh melebihi 250–300 baris**.
+  * Jika sebuah Screen atau Widget mulai panjang, **wajib dipecah** menjadi sub-widget terpisah di dalam folder `widgets/` (misal: header kartu, baris transaksi, bottom sheet input masing-masing di file sendiri).
+* **Pemisahan Mutlak Logic vs UI (*Zero Business Logic in UI*):**
+  * File di lapisan UI (`presentation/`, `screens/`, `widgets/`, `app.dart`) **dilarang keras** mengimpor `sqflite`, memanggil `DatabaseHelper`, atau menghitung rumus saldo secara langsung.
+  * Seluruh komunikasi data wajib mengikuti alur satu arah: **`UI (Widget)` -> `Provider / Notifier (Riverpod)` -> `Repository (SQLite)`**.
 * **Keamanan Transaksi Database (*Atomic Ledger*):** Setiap operasi tulis yang mengubah lebih dari satu tabel (misal: `transactions` + `wallets` + `debts` + `contacts`) **wajib** dieksekusi di dalam satu blok `await db.transaction((txn) async { ... })` untuk mencegah ketidakcocokan saldo.
+* **Lokalisasi Dua Bahasa (`id` & `en`) Termasuk Pesan Error:**
+  * Seluruh teks UI wajib didaftarkan di `lib/l10n/app_id.arb` (Bahasa Indonesia) dan `lib/l10n/app_en.arb` (English) serta diakses melalui `context.l10n.<key>`.
+  * **Dilarang keras** melempar pesan error *hardcoded* (`throw Exception('teks bahasa indonesia')`). Gunakan `throw const AppException(AppErrorCode.<kode>)` dari `lib/core/errors/app_exception.dart` dan tampilkan melalui `AppException.resolveError(error, context.l10n)` agar pesan error selalu mengikuti bahasa yang dipilih pengguna.
 
 ---
 
@@ -48,4 +56,5 @@ Dokumen ini berisi aturan inti (*always-on rules*) yang **wajib** dipatuhi oleh 
 * **Update `README.md` & Versioning:** Setiap menyelesaikan fitur utama atau rilis versi, perbarui bagian *Changelog / Status Fitur* dan nomor versi di `@[README.md](README.md)`.
 * **Update User Manual Typst (`docs/user_manual.typ`):** Setiap ada penambahan atau perubahan fitur yang terlihat oleh pengguna (*user-facing*), perbarui `@[docs/user_manual.typ](docs/user_manual.typ)`.
 * **Evolusi `.agents`:** Jika ditemukan pola teknis berulang, solusi *troubleshooting* krusial, atau perubahan arsitektur penting, perbarui aturan di `.agents/` atau tambahkan/perbarui *skill* di `.agents/skills/` (hindari membuat skill baru untuk perubahan sepele agar konteks tetap ramping).
+* **Wajib Git Commit di Setiap Akhir Fase:** Setiap kali satu fase pengerjaan selesai diuji (`flutter analyze` & `flutter test` lulus) dan dokumentasi diperbarui, **wajib melakukan `git commit` (dan `git push`)** sebelum melangkah ke fase berikutnya agar riwayat versi bersih dan mudah di-*rollback*.
 

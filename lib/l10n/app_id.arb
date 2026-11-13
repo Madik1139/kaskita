@@ -1,0 +1,99 @@
+{
+  "@@locale": "id",
+  "appTitle": "KasKita",
+  "save": "Simpan",
+  "cancel": "Batal",
+  "reset": "Reset",
+  "delete": "Hapus",
+  "edit": "Ubah",
+  "skip": "Lewati",
+  "close": "Tutup",
+  "switchThemeTooltip": "Ganti Tema Terang / Gelap",
+  "switchLanguageTooltip": "Ganti Bahasa (ID / EN)",
+  "phase1Badge": "v0.2.0 • FASE 1",
+  "activeWalletsCount": "{count} Dompet Aktif",
+  "@activeWalletsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "categoriesAndContactsCount": "{categories} Kategori • {contacts} Kontak",
+  "@categoriesAndContactsCount": {
+    "placeholders": {
+      "categories": {
+        "type": "int"
+      },
+      "contacts": {
+        "type": "int"
+      }
+    }
+  },
+  "activeWalletBalanceLabel": "SALDO DOMPET AKTIF",
+  "safeToSpendLabel": "Dana Aman Siap Pakai",
+  "netWorthLabel": "Kekayaan Bersih",
+  "loadDemoData": "Muat Data Contoh",
+  "resetDataToZero": "Reset Data (Rp0)",
+  "emptyTransactionsTitle": "Belum Ada Catatan Transaksi",
+  "emptyTransactionsSubtitle": "Ketuk \"Muat Data Contoh\" di atas untuk melihat pengelompokan tanggal ala Money Manager & Talangan Teman, atau tekan tombol (+) di bawah.",
+  "loadDemoDataNow": "Muat Data Contoh Sekarang",
+  "quickRecord": "Catat Cepat",
+  "quickInputTitle": "Input Transaksi Satu Pintu (< 5 Detik)",
+  "transactionAmountLabel": "NOMINAL TRANSAKSI",
+  "walletOutflowLabel": "{walletName} • Kas Keluar: {amount}",
+  "@walletOutflowLabel": {
+    "placeholders": {
+      "walletName": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "debtBookCategoryLabel": "Buku Hutang",
+  "nonCashLabel": "Non-Tunai",
+  "badgeUnpaid": "BELUM LUNAS",
+  "badgePartial": "DICICIL",
+  "badgePaid": "LUNAS",
+  "badgeGood": "AMAN",
+  "badgeLate": "TELAT",
+  "badgeWarning": "PERHATIAN",
+  "defaultWalletCash": "Dompet Tunai",
+  "catFoodDrink": "Makan & Minum",
+  "catTransportFuel": "Transport & BBM",
+  "catDailyShopping": "Belanja Harian",
+  "catBillsQuota": "Tagihan & Kuota",
+  "catEntertainment": "Hiburan & Nongkrong",
+  "catOtherExpense": "Lainnya",
+  "catSalary": "Gaji / Upah",
+  "catBusiness": "Hasil Usaha",
+  "catBonusGift": "Bonus / Pemberian",
+  "catOtherIncome": "Lainnya",
+  "errUnexpectedUiTitle": "Terjadi kendala tampilan",
+  "errUnexpectedGeneral": "Terjadi kesalahan yang tidak terduga. Silakan coba lagi.",
+  "errDatabaseOperation": "Gagal memproses penyimpanan database lokal.",
+  "errAmountMustBePositive": "Nominal transaksi harus lebih besar dari Rp 0.",
+  "errWalletRequired": "Silakan pilih dompet terlebih dahulu.",
+  "errCategoryRequired": "Silakan pilih kategori transaksi terlebih dahulu.",
+  "errContactRequired": "Silakan pilih atau masukkan nama kontak teman.",
+  "errTransferSameWallet": "Dompet asal dan dompet tujuan tidak boleh sama.",
+  "errInsufficientWalletBalance": "Saldo dompet tidak mencukupi untuk transaksi ini.",
+  "errSplitAmountExceedsTotal": "Total porsi talangan teman tidak boleh melebihi total bayar di kasir.",
+  "errTransactionLockedHasInstallments": "Transaksi ini sudah memiliki riwayat cicilan. Batalkan cicilan terkait di Buku Hutang terlebih dahulu sebelum mengubah/menghapus transaksi awal.",
+  "errOverpaymentExceedsRemaining": "Nominal pembayaran melebihi sisa tagihan yang belum lunas.",
+  "errDuplicateContactName": "Nama kontak sudah terdaftar. Gunakan nama lain.",
+  "errLendingCapExceededWarning": "Perhatian: Total piutang aktif akan melewati batas Rem Piutang ({limit}).",
+  "@errLendingCapExceededWarning": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "errPinInvalid": "PIN yang dimasukkan salah. Silakan coba lagi.",
+  "errBackupRestoreFailed": "File cadangan tidak valid atau gagal dipulihkan.",
+  "errOtaCheckFailed": "Gagal memeriksa pembaruan. Pastikan perangkat terhubung ke internet."
+}
+

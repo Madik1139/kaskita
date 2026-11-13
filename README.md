@@ -1,6 +1,6 @@
 # KasKita – Aplikasi Pencatat Keuangan & Buku Hutang Mandiri (Offline-First)
 
-**Versi Saat Ini:** `0.1.0+1` (Tahap Inisialisasi & Spesifikasi)  
+**Versi Saat Ini:** `0.2.0+2` (Fase 1 Selesai: Fondasi Inti, Database SQLite, Tema, & Komponen Reusable)  
 **Platform:** Android & iOS (Flutter)  
 **Penyimpanan:** 100% Lokal / *Standalone* (`SQLite`)
 
@@ -30,6 +30,7 @@
 * [ERD & Skema Database SQLite](docs/erd_dan_skema_database_sqlite.md)
 * [Spesifikasi Teknis & Arsitektur](docs/spesifikasi_teknis_dan_arsitektur.md)
 * [Panduan Desain UI/UX (Tactile Financial Ledger)](docs/panduan_desain_ui_ux.md)
+* [Rencana Fase Pengerjaan (Roadmap MVP)](docs/rencana_fase_pengerjaan.md)
 * [Buku Panduan Pengguna (Typst User Manual)](docs/user_manual.typ)
 
 ### Aturan & Skills Agent (`AGENTS.md` & `.agents/`)
@@ -63,8 +64,8 @@ typst compile docs/user_manual.typ docs/user_manual.pdf
 ## Status Fitur MVP
 
 - [x] Perancangan PRD, ERD SQLite, Spesifikasi Arsitektur, & Design System
-- [x] Konfigurasi Workspace `.agents` (Rules & Skills) dan User Manual Typst
-- [ ] Lapisan Inti (`core/`): Tema Light/Dark, DatabaseHelper SQLite, & Komponen Reusable (`TactileCard`, `CustomNumpad`, `TabularCurrencyText`, `StatusBadge`)
+- [x] Konfigurasi Workspace `.agents` (Rules & Skills) dan User Manual Typst (beserta gambar layout aplikasi)
+- [x] Lapisan Inti (`core/`): Tema Light/Dark, DatabaseHelper SQLite (`DemoDataSeeder`), CI/CD GitHub Actions, & Komponen Reusable (`TactileCard`, `CustomNumpad`, `TabularCurrencyText`, `StatusBadge`, `EmptyStateView`)
 - [ ] Fitur Dompet (`wallets/`): Onboarding Saldo Awal, Multi-Dompet, & Transfer Antar Dompet
 - [ ] Fitur Transaksi (`transactions/`): Input Satu Pintu (`+`), Talangan Teman (*Split Expense*), & Riwayat Kas Harian
 - [ ] Fitur Buku Hutang (`debts/`): Kontak, Cicilan FIFO, *Auto-Netting*, Lunas via Traktiran, Rem Piutang, & *Clean Invoice Receipt*
@@ -76,4 +77,5 @@ typst compile docs/user_manual.typ docs/user_manual.pdf
 
 | Versi | Tanggal | Ringkasan Perubahan |
 | :--- | :--- | :--- |
+| **`0.2.0+2`** | 13 Nov 2026 | **Fase 1 Selesai:** Instalasi seluruh library standar industri, konfigurasi `AndroidManifest.xml` & `FlutterFragmentActivity`, workflow CI/CD GitHub Actions (`.github/workflows/ci_and_release.yml`), penambahan visualisasi layout layar di `docs/user_manual.typ`, implementasi **Lokalisasi 2 Bahasa (`id` & `en`) beserta Pesan Error Terlokalisasi (`AppException`)**, `DatabaseHelper` SQLite (7 tabel + `DemoDataSeeder`), tema *Light/Dark* (`AppColors` & `AppTheme`), 5 komponen reusable di `lib/core/widgets/`, serta *unit/widget test* (`flutter test` lulus 100% - 7/7 test). |
 | **`0.1.0+1`** | 13 Nov 2026 | Inisialisasi proyek Flutter `kaskita`, penyempurnaan skema ERD (`RECEIVABLE_SETTLE`, `PAYABLE_SETTLE`, `TRANSFER`), pembuatan dokumen arsitektur teknis & UI/UX *Tactile Financial Ledger*, setup `.agents` (Rules & Skills), serta pembuatan `docs/user_manual.typ`. |

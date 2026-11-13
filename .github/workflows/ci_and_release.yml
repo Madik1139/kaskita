@@ -1,0 +1,74 @@
+name: KasKita CI & Auto-Release (APK + PDF Manual)
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify_and_build:
+    name: Analyze, Test, Build APK & Typst PDF
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Install Linux SQLite3 Libs (for sqflite_common_ffi tests)
+        run: sudo apt-get update && sudo apt-get install -y libsqlite3-dev
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Run Static Analysis (Strict Mode)
+        run: flutter analyze
+
+      - name: Run Automated Unit Tests
+        run: flutter test
+
+      - name: Setup Typst & Compile User Manual PDF
+        uses: typst-community/setup-typst@v3
+      - name: Compile docs/user_manual.typ to PDF
+        run: typst compile docs/user_manual.typ Panduan_Pengguna_KasKita.pdf
+
+      - name: Build Android Release APK
+        run: flutter build apk --release
+
+      - name: Rename APK Artifact
+        run: cp build/app/outputs/flutter-apk/app-release.apk kaskita-release.apk
+
+      - name: Upload Artifacts (APK & User Manual PDF)
+        uses: actions/upload-artifact@v4
+        with:
+          name: kaskita-bundle
+          path: |
+            kaskita-release.apk
+            Panduan_Pengguna_KasKita.pdf
+
+      - name: Publish to GitHub Releases (Triggered on v* Tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            kaskita-release.apk
+            Panduan_Pengguna_KasKita.pdf
+

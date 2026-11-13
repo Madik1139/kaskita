@@ -12,8 +12,10 @@
    * Menggunakan `flutter_riverpod` (`Notifier` / `AsyncNotifier` / `Provider`).
    * Menjadi jembatan tunggal antara UI (`presentation/`) dan Repository (`data/`). UI dilarang memanggil SQLite secara langsung.
 4. **Presentation (`presentation/` & `lib/core/widgets/`):**
-   * Fokus pada *rendering* state dan menangkap input pengguna.
-   * Hindari logika kalkulasi bisnis di dalam metode `build()`.
+   * Fokus 100% pada *rendering* state dan menangkap input pengguna.
+   * **Dilarang keras** mengimpor `package:sqflite/sqflite.dart` atau `DatabaseHelper` di dalam file UI/Widget.
+   * **Batas Ukuran File:** Maksimal **250 baris per file**. Pecah layar menjadi komponen-komponen kecil (misal: `*_header_card.dart`, `*_list_item.dart`, `*_bottom_sheet.dart`).
+   * Wajib menggunakan `context.l10n` (`lib/l10n/app_id.arb` & `app_en.arb`) untuk seluruh label dan `AppException.resolveError(err, context.l10n)` untuk seluruh pesan *error/validasi*.
 
 ## 2. Daftar Periksa Komponen Reusable (`lib/core/widgets/`)
 Sebelum menulis widget baru di dalam `lib/features/*/presentation/widgets/`, periksa apakah fungsi tersebut bisa menggunakan atau memperluas widget di `lib/core/widgets/`:
