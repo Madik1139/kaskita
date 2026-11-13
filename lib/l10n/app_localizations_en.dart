@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchLanguageTooltip => 'Switch Language (ID / EN)';
 
   @override
-  String get phaseBadge => 'v0.3.0 • PHASE 2';
+  String get phaseBadge => 'v0.4.0 • PHASE 3';
 
   @override
   String get navHome => 'Home';
@@ -351,4 +351,136 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get errOtaCheckFailed =>
       'Failed to check for updates. Please check your internet connection.';
+
+  @override
+  String get modeExpense => 'Expense';
+
+  @override
+  String get modeIncome => 'Income';
+
+  @override
+  String get modeReceivable => 'Lend';
+
+  @override
+  String get modePayable => 'Borrow';
+
+  @override
+  String get modeTransfer => 'Transfer';
+
+  @override
+  String get selectWalletLabel => 'Wallet';
+
+  @override
+  String get selectCategoryLabel => 'Category';
+
+  @override
+  String get selectContactLabel => 'Contact';
+
+  @override
+  String get contactNameHint => 'Friend\'s name (select or type new)...';
+
+  @override
+  String get dueDateLabel => 'Due Date';
+
+  @override
+  String get noDueDate => 'No Due Date';
+
+  @override
+  String get transactionDateLabel => 'Date';
+
+  @override
+  String get transactionNoteHint => 'Transaction note (optional)...';
+
+  @override
+  String get splitExpenseToggleTitle => 'Split / Advance for Friend?';
+
+  @override
+  String get splitExpenseToggleSubtitle =>
+      'Separate your pure consumption from your friend\'s receivable share.';
+
+  @override
+  String get splitEqual5050 => 'Split 50:50';
+
+  @override
+  String get splitFriendShareLabel => 'Friend\'s Share (Rp)';
+
+  @override
+  String splitSummaryText(
+    String walletOut,
+    String pureExpense,
+    String contact,
+    String friendShare,
+  ) {
+    return 'Cash Out: $walletOut -> Your Expense: $pureExpense | $contact\'s Debt: $friendShare';
+  }
+
+  @override
+  String get editTransactionTitle => 'Transaction Details & Edit';
+
+  @override
+  String get deleteTransactionConfirmTitle => 'Delete This Transaction?';
+
+  @override
+  String get deleteTransactionConfirmSubtitle =>
+      'Related wallet balance and debt ledger records will be automatically rolled back.';
+
+  @override
+  String get transactionSavedMsg => 'Transaction saved successfully.';
+
+  @override
+  String get transactionDeletedMsg =>
+      'Transaction deleted and balances rolled back.';
+
+  @override
+  String get subTabDaily => 'Daily';
+
+  @override
+  String get subTabCalendar => 'Calendar';
+
+  @override
+  String get subTabMonthly => 'Monthly';
+
+  @override
+  String get summaryIncomeLabel => 'Income';
+
+  @override
+  String get summaryPureExpenseLabel => 'Pure Expense';
+
+  @override
+  String get summaryNetDifferenceLabel => 'Net Flow';
+
+  @override
+  String get weeklyBreakdownLabel => 'Weekly Breakdown';
+
+  @override
+  String weekRangeLabel(int week, String startDay, String endDay) {
+    return 'Week $week (Day $startDay–$endDay)';
+  }
+
+  @override
+  String selectedDateTransactionsLabel(String date) {
+    return 'Transactions on $date';
+  }
+
+  @override
+  String get noTransactionsInPeriodTitle => 'No Transactions in This Period';
+
+  @override
+  String get noTransactionsInPeriodSubtitle =>
+      'Tap + Quick Record at the bottom right to add a transaction, or tap Load Demo Data.';
+
+  @override
+  String get trxTypeReceivableOut => 'Lent Out';
+
+  @override
+  String get trxTypeDebtIn => 'Borrowed';
+
+  @override
+  String get trxTypeReceivableSettle => 'Debt Collected';
+
+  @override
+  String get trxTypePayableSettle => 'Debt Paid';
+
+  @override
+  String get nonConsumptionBookBadge => 'Debt Ledger (Not Expense)';
 }

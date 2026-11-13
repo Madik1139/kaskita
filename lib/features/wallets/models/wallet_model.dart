@@ -131,3 +131,4 @@ class FinancialIndicatorsModel extends Equatable {
         activePayables,
       ];
 }
+

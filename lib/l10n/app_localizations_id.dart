@@ -39,7 +39,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get switchLanguageTooltip => 'Ganti Bahasa (ID / EN)';
 
   @override
-  String get phaseBadge => 'v0.3.0 • FASE 2';
+  String get phaseBadge => 'v0.4.0 • FASE 3';
 
   @override
   String get navHome => 'Beranda';
@@ -352,4 +352,137 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get errOtaCheckFailed =>
       'Gagal memeriksa pembaruan. Pastikan perangkat terhubung ke internet.';
+
+  @override
+  String get modeExpense => 'Pengeluaran';
+
+  @override
+  String get modeIncome => 'Pemasukan';
+
+  @override
+  String get modeReceivable => 'Piutang';
+
+  @override
+  String get modePayable => 'Hutang';
+
+  @override
+  String get modeTransfer => 'Transfer';
+
+  @override
+  String get selectWalletLabel => 'Dompet';
+
+  @override
+  String get selectCategoryLabel => 'Kategori';
+
+  @override
+  String get selectContactLabel => 'Kontak Teman';
+
+  @override
+  String get contactNameHint => 'Nama teman (pilih atau ketik baru)...';
+
+  @override
+  String get dueDateLabel => 'Jatuh Tempo';
+
+  @override
+  String get noDueDate => 'Tanpa Jatuh Tempo';
+
+  @override
+  String get transactionDateLabel => 'Tanggal';
+
+  @override
+  String get transactionNoteHint => 'Catatan transaksi (opsional)...';
+
+  @override
+  String get splitExpenseToggleTitle => 'Sekalian Talangi Teman?';
+
+  @override
+  String get splitExpenseToggleSubtitle =>
+      'Pisahkan konsumsi murni Anda dari porsi piutang teman.';
+
+  @override
+  String get splitEqual5050 => 'Bagi Rata (50:50)';
+
+  @override
+  String get splitFriendShareLabel => 'Porsi Talangan Teman (Rp)';
+
+  @override
+  String splitSummaryText(
+    String walletOut,
+    String pureExpense,
+    String contact,
+    String friendShare,
+  ) {
+    return 'Kas Keluar: $walletOut -> Konsumsi Anda: $pureExpense | Piutang $contact: $friendShare';
+  }
+
+  @override
+  String get editTransactionTitle => 'Detail & Ubah Transaksi';
+
+  @override
+  String get deleteTransactionConfirmTitle => 'Hapus Transaksi Ini?';
+
+  @override
+  String get deleteTransactionConfirmSubtitle =>
+      'Saldo dompet dan buku hutang terkait akan dikembalikan (rollback) secara otomatis.';
+
+  @override
+  String get transactionSavedMsg => 'Catatan transaksi berhasil disimpan.';
+
+  @override
+  String get transactionDeletedMsg =>
+      'Transaksi berhasil dihapus dan saldo telah dikembalikan.';
+
+  @override
+  String get subTabDaily => 'Harian';
+
+  @override
+  String get subTabCalendar => 'Kalender';
+
+  @override
+  String get subTabMonthly => 'Bulanan';
+
+  @override
+  String get summaryIncomeLabel => 'Pemasukan';
+
+  @override
+  String get summaryPureExpenseLabel => 'Konsumsi Murni';
+
+  @override
+  String get summaryNetDifferenceLabel => 'Selisih Bersih';
+
+  @override
+  String get weeklyBreakdownLabel => 'Rincian Mingguan';
+
+  @override
+  String weekRangeLabel(int week, String startDay, String endDay) {
+    return 'Minggu $week (Tgl $startDay–$endDay)';
+  }
+
+  @override
+  String selectedDateTransactionsLabel(String date) {
+    return 'Transaksi $date';
+  }
+
+  @override
+  String get noTransactionsInPeriodTitle =>
+      'Belum Ada Transaksi di Periode Ini';
+
+  @override
+  String get noTransactionsInPeriodSubtitle =>
+      'Ketuk tombol + Catat Cepat di kanan bawah untuk mencatat transaksi, atau ketuk Muat Data Contoh.';
+
+  @override
+  String get trxTypeReceivableOut => 'Piutang Keluar';
+
+  @override
+  String get trxTypeDebtIn => 'Hutang Masuk';
+
+  @override
+  String get trxTypeReceivableSettle => 'Terima Cicilan';
+
+  @override
+  String get trxTypePayableSettle => 'Bayar Hutang';
+
+  @override
+  String get nonConsumptionBookBadge => 'Buku Hutang (Bukan Konsumsi)';
 }

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../../features/transactions/presentation/widgets/calendar_ledger_view.dart';
+import '../../features/transactions/presentation/widgets/daily_transaction_group_card.dart';
+import '../../features/transactions/presentation/widgets/monthly_ledger_view.dart';
+import '../../features/transactions/presentation/widgets/period_summary_header.dart';
+import '../../features/transactions/presentation/widgets/transaction_form_sheet.dart';
+import '../../features/transactions/providers/transaction_provider.dart';
 import '../../features/wallets/presentation/widgets/onboarding_balance_sheet.dart';
 import '../../features/wallets/providers/category_provider.dart';
 import '../../features/wallets/providers/wallet_provider.dart';
@@ -14,11 +20,9 @@ import '../utils/localization_helper.dart';
 import '../widgets/empty_state_view.dart';
 import '../widgets/status_badge.dart';
 import '../widgets/tactile_card.dart';
-import 'widgets/daily_ledger_preview_card.dart';
-import 'widgets/quick_input_preview_sheet.dart';
 import 'widgets/unified_ledger_summary_card.dart';
 
-/// Kerangka Navigasi 3 Tab & Beranda KasKita (Fase 2 - v0.3.0):
+/// Kerangka Navigasi 3 Tab & Beranda KasKita (Fase 3 - v0.4.0):
 /// 100% murni UI (mengambil state melalui Riverpod tanpa impor SQLite).
 class FoundationWorkspaceScreen extends ConsumerStatefulWidget {
   const FoundationWorkspaceScreen({super.key});
@@ -36,21 +40,24 @@ class _FoundationWorkspaceScreenState
   Future<void> _refreshAllProviders() async {
     await ref.read(walletsProvider.notifier).refresh();
     await ref.read(categoriesProvider.notifier).refresh();
+    await ref.read(transactionsProvider.notifier).refresh();
     await ref.read(ledgerOverviewProvider.notifier).refreshOverview();
   }
 
   Future<void> _handleLoadDemoData() async {
     ref.read(selectedWalletIdProvider.notifier).state = null;
+    final DateTime now = DateTime.now();
+    ref.read(selectedPeriodProvider.notifier).state =
+        DateTime(now.year, now.month, 1);
+    ref.read(selectedCalendarDayProvider.notifier).state = now;
     await ref.read(ledgerOverviewProvider.notifier).loadDemoData();
-    await ref.read(walletsProvider.notifier).refresh();
-    await ref.read(categoriesProvider.notifier).refresh();
+    await _refreshAllProviders();
   }
 
   Future<void> _handleResetAllData() async {
     ref.read(selectedWalletIdProvider.notifier).state = null;
     await ref.read(ledgerOverviewProvider.notifier).resetAllData();
-    await ref.read(walletsProvider.notifier).refresh();
-    await ref.read(categoriesProvider.notifier).refresh();
+    await _refreshAllProviders();
   }
 
   @override
@@ -59,6 +66,8 @@ class _FoundationWorkspaceScreenState
     final Locale currentLocale = ref.watch(appLocaleProvider);
     final AsyncValue<LedgerOverviewState> overviewAsync =
         ref.watch(ledgerOverviewProvider);
+    final AsyncValue<TransactionsPeriodState> transactionsAsync =
+        ref.watch(transactionsProvider);
     final AppLocalizations l10n = context.l10n;
     final String langCode = currentLocale.languageCode;
 
@@ -143,7 +152,7 @@ class _FoundationWorkspaceScreenState
       body: IndexedStack(
         index: _selectedTabIndex,
         children: <Widget>[
-          _buildHomeTab(context, overviewAsync, l10n),
+          _buildHomeTab(context, overviewAsync, transactionsAsync, l10n),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Center(
@@ -167,7 +176,7 @@ class _FoundationWorkspaceScreenState
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => QuickInputPreviewSheet.show(context),
+        onPressed: () => TransactionFormSheet.show(context),
         backgroundColor: AppColors.accent(context),
         foregroundColor:
             AppColors.isDark(context) ? AppColors.darkBackground : Colors.white,
@@ -202,8 +211,12 @@ class _FoundationWorkspaceScreenState
   Widget _buildHomeTab(
     BuildContext context,
     AsyncValue<LedgerOverviewState> overviewAsync,
+    AsyncValue<TransactionsPeriodState> transactionsAsync,
     AppLocalizations l10n,
   ) {
+    final LedgerViewSubTab activeSubTab =
+        ref.watch(selectedLedgerSubTabProvider);
+
     return overviewAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (Object err, StackTrace _) => Center(
@@ -218,53 +231,71 @@ class _FoundationWorkspaceScreenState
           ),
         ),
       ),
-      data: (LedgerOverviewState overview) => RefreshIndicator(
-        onRefresh: _refreshAllProviders,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 16, 16, 88),
-          children: <Widget>[
-            UnifiedLedgerSummaryCard(overview: overview),
-            const SizedBox(height: 12),
-            TactileCard(
-              backgroundColor: AppColors.surfaceSecondary(context),
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: _handleLoadDemoData,
-                      icon: const Icon(LucideIcons.database, size: 16),
-                      label: Text(l10n.loadDemoData),
+      data: (LedgerOverviewState overview) {
+        final TransactionsPeriodState? periodState =
+            transactionsAsync.valueOrNull;
+
+        return RefreshIndicator(
+          onRefresh: _refreshAllProviders,
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 88),
+            children: <Widget>[
+              UnifiedLedgerSummaryCard(overview: overview),
+              const SizedBox(height: 10),
+              TactileCard(
+                backgroundColor: AppColors.surfaceSecondary(context),
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: _handleLoadDemoData,
+                        icon: const Icon(LucideIcons.database, size: 15),
+                        label: Text(l10n.loadDemoData),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: _handleResetAllData,
-                      icon: const Icon(LucideIcons.rotateCcw, size: 16),
-                      label: Text(l10n.resetDataToZero),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: _handleResetAllData,
+                        icon: const Icon(LucideIcons.rotateCcw, size: 15),
+                        label: Text(l10n.resetDataToZero),
+                      ),
                     ),
-                  ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              PeriodSummaryHeader(
+                totalIncome: periodState?.monthTotalIncome ?? 0,
+                totalPureExpense: periodState?.monthTotalPureExpense ?? 0,
+              ),
+              const SizedBox(height: 12),
+              if (periodState == null)
+                const Center(child: CircularProgressIndicator())
+              else if (activeSubTab == LedgerViewSubTab.calendar)
+                CalendarLedgerView(periodState: periodState)
+              else if (activeSubTab == LedgerViewSubTab.monthly)
+                MonthlyLedgerView(summaries: periodState.yearlySummaries)
+              else if (periodState.dailyGroups.isEmpty)
+                EmptyStateView(
+                  icon: LucideIcons.receiptText,
+                  title: l10n.noTransactionsInPeriodTitle,
+                  subtitle: l10n.noTransactionsInPeriodSubtitle,
+                  actionLabel: l10n.loadDemoDataNow,
+                  onActionTap: _handleLoadDemoData,
+                )
+              else
+                for (int i = 0;
+                    i < periodState.dailyGroups.length;
+                    i++) ...<Widget>[
+                  if (i > 0) const SizedBox(height: 10),
+                  DailyTransactionGroupCard(group: periodState.dailyGroups[i]),
                 ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            if (overview.recentTransactions.isEmpty)
-              EmptyStateView(
-                icon: LucideIcons.receiptText,
-                title: l10n.emptyTransactionsTitle,
-                subtitle: l10n.emptyTransactionsSubtitle,
-                actionLabel: l10n.loadDemoDataNow,
-                onActionTap: _handleLoadDemoData,
-              )
-            else
-              DailyLedgerPreviewCard(
-                date: DateTime.now(),
-                transactions: overview.recentTransactions,
-              ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

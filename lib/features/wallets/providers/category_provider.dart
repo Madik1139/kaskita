@@ -46,3 +46,4 @@ class CategoriesNotifier extends AsyncNotifier<List<CategoryModel>> {
     await refresh();
   }
 }
+

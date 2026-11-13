@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @phaseBadge.
   ///
   /// In id, this message translates to:
-  /// **'v0.3.0 • FASE 2'**
+  /// **'v0.4.0 • FASE 3'**
   String get phaseBadge;
 
   /// No description provided for @navHome.
@@ -721,6 +721,245 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Gagal memeriksa pembaruan. Pastikan perangkat terhubung ke internet.'**
   String get errOtaCheckFailed;
+
+  /// No description provided for @modeExpense.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengeluaran'**
+  String get modeExpense;
+
+  /// No description provided for @modeIncome.
+  ///
+  /// In id, this message translates to:
+  /// **'Pemasukan'**
+  String get modeIncome;
+
+  /// No description provided for @modeReceivable.
+  ///
+  /// In id, this message translates to:
+  /// **'Piutang'**
+  String get modeReceivable;
+
+  /// No description provided for @modePayable.
+  ///
+  /// In id, this message translates to:
+  /// **'Hutang'**
+  String get modePayable;
+
+  /// No description provided for @modeTransfer.
+  ///
+  /// In id, this message translates to:
+  /// **'Transfer'**
+  String get modeTransfer;
+
+  /// No description provided for @selectWalletLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Dompet'**
+  String get selectWalletLabel;
+
+  /// No description provided for @selectCategoryLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Kategori'**
+  String get selectCategoryLabel;
+
+  /// No description provided for @selectContactLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Kontak Teman'**
+  String get selectContactLabel;
+
+  /// No description provided for @contactNameHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Nama teman (pilih atau ketik baru)...'**
+  String get contactNameHint;
+
+  /// No description provided for @dueDateLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Jatuh Tempo'**
+  String get dueDateLabel;
+
+  /// No description provided for @noDueDate.
+  ///
+  /// In id, this message translates to:
+  /// **'Tanpa Jatuh Tempo'**
+  String get noDueDate;
+
+  /// No description provided for @transactionDateLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Tanggal'**
+  String get transactionDateLabel;
+
+  /// No description provided for @transactionNoteHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan transaksi (opsional)...'**
+  String get transactionNoteHint;
+
+  /// No description provided for @splitExpenseToggleTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Sekalian Talangi Teman?'**
+  String get splitExpenseToggleTitle;
+
+  /// No description provided for @splitExpenseToggleSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Pisahkan konsumsi murni Anda dari porsi piutang teman.'**
+  String get splitExpenseToggleSubtitle;
+
+  /// No description provided for @splitEqual5050.
+  ///
+  /// In id, this message translates to:
+  /// **'Bagi Rata (50:50)'**
+  String get splitEqual5050;
+
+  /// No description provided for @splitFriendShareLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Porsi Talangan Teman (Rp)'**
+  String get splitFriendShareLabel;
+
+  /// No description provided for @splitSummaryText.
+  ///
+  /// In id, this message translates to:
+  /// **'Kas Keluar: {walletOut} -> Konsumsi Anda: {pureExpense} | Piutang {contact}: {friendShare}'**
+  String splitSummaryText(
+    String walletOut,
+    String pureExpense,
+    String contact,
+    String friendShare,
+  );
+
+  /// No description provided for @editTransactionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Detail & Ubah Transaksi'**
+  String get editTransactionTitle;
+
+  /// No description provided for @deleteTransactionConfirmTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Hapus Transaksi Ini?'**
+  String get deleteTransactionConfirmTitle;
+
+  /// No description provided for @deleteTransactionConfirmSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Saldo dompet dan buku hutang terkait akan dikembalikan (rollback) secara otomatis.'**
+  String get deleteTransactionConfirmSubtitle;
+
+  /// No description provided for @transactionSavedMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan transaksi berhasil disimpan.'**
+  String get transactionSavedMsg;
+
+  /// No description provided for @transactionDeletedMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Transaksi berhasil dihapus dan saldo telah dikembalikan.'**
+  String get transactionDeletedMsg;
+
+  /// No description provided for @subTabDaily.
+  ///
+  /// In id, this message translates to:
+  /// **'Harian'**
+  String get subTabDaily;
+
+  /// No description provided for @subTabCalendar.
+  ///
+  /// In id, this message translates to:
+  /// **'Kalender'**
+  String get subTabCalendar;
+
+  /// No description provided for @subTabMonthly.
+  ///
+  /// In id, this message translates to:
+  /// **'Bulanan'**
+  String get subTabMonthly;
+
+  /// No description provided for @summaryIncomeLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Pemasukan'**
+  String get summaryIncomeLabel;
+
+  /// No description provided for @summaryPureExpenseLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Konsumsi Murni'**
+  String get summaryPureExpenseLabel;
+
+  /// No description provided for @summaryNetDifferenceLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Selisih Bersih'**
+  String get summaryNetDifferenceLabel;
+
+  /// No description provided for @weeklyBreakdownLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Rincian Mingguan'**
+  String get weeklyBreakdownLabel;
+
+  /// No description provided for @weekRangeLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Minggu {week} (Tgl {startDay}–{endDay})'**
+  String weekRangeLabel(int week, String startDay, String endDay);
+
+  /// No description provided for @selectedDateTransactionsLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Transaksi {date}'**
+  String selectedDateTransactionsLabel(String date);
+
+  /// No description provided for @noTransactionsInPeriodTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum Ada Transaksi di Periode Ini'**
+  String get noTransactionsInPeriodTitle;
+
+  /// No description provided for @noTransactionsInPeriodSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Ketuk tombol + Catat Cepat di kanan bawah untuk mencatat transaksi, atau ketuk Muat Data Contoh.'**
+  String get noTransactionsInPeriodSubtitle;
+
+  /// No description provided for @trxTypeReceivableOut.
+  ///
+  /// In id, this message translates to:
+  /// **'Piutang Keluar'**
+  String get trxTypeReceivableOut;
+
+  /// No description provided for @trxTypeDebtIn.
+  ///
+  /// In id, this message translates to:
+  /// **'Hutang Masuk'**
+  String get trxTypeDebtIn;
+
+  /// No description provided for @trxTypeReceivableSettle.
+  ///
+  /// In id, this message translates to:
+  /// **'Terima Cicilan'**
+  String get trxTypeReceivableSettle;
+
+  /// No description provided for @trxTypePayableSettle.
+  ///
+  /// In id, this message translates to:
+  /// **'Bayar Hutang'**
+  String get trxTypePayableSettle;
+
+  /// No description provided for @nonConsumptionBookBadge.
+  ///
+  /// In id, this message translates to:
+  /// **'Buku Hutang (Bukan Konsumsi)'**
+  String get nonConsumptionBookBadge;
 }
 
 class _AppLocalizationsDelegate

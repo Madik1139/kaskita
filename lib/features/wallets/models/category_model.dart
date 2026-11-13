@@ -49,3 +49,4 @@ class CategoryModel extends Equatable {
         isDefault,
       ];
 }
+

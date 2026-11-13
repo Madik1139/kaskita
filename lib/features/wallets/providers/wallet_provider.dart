@@ -136,3 +136,4 @@ class WalletsNotifier extends AsyncNotifier<WalletsState> {
     await refresh();
   }
 }
+

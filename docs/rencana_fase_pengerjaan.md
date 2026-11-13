@@ -61,7 +61,7 @@ flowchart LR
 
 ---
 
-### Fase 3: Input Satu Pintu (`< 5 Detik`), Talangan Teman, & Beranda Gaya *Money Manager* (`v0.4.0`)
+### Fase 3: Input Satu Pintu (`< 5 Detik`), Talangan Teman, & Beranda Gaya *Money Manager* (`v0.4.0`) — [SELESAI]
 **Fokus:** Membangun modul `lib/features/transactions/` dengan alur input cepat dan pengelompokan tanggal/bulan ala *Money Manager (Realbyte)*.
 1. **Bottom Sheet Input Satu Pintu (`+`):**
    * *Segmented Mode Switcher*: `Pengeluaran` | `Pemasukan` | `Piutang` | `Hutang` | `⇄ Transfer`.

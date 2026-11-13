@@ -10,7 +10,7 @@
   "close": "Tutup",
   "switchThemeTooltip": "Ganti Tema Terang / Gelap",
   "switchLanguageTooltip": "Ganti Bahasa (ID / EN)",
-  "phaseBadge": "v0.3.0 • FASE 2",
+  "phaseBadge": "v0.4.0 • FASE 3",
   "navHome": "Beranda",
   "navDebtBook": "Buku Hutang",
   "navSummary": "Ringkasan",
@@ -154,5 +154,80 @@
   },
   "errPinInvalid": "PIN yang dimasukkan salah. Silakan coba lagi.",
   "errBackupRestoreFailed": "File cadangan tidak valid atau gagal dipulihkan.",
-  "errOtaCheckFailed": "Gagal memeriksa pembaruan. Pastikan perangkat terhubung ke internet."
+  "errOtaCheckFailed": "Gagal memeriksa pembaruan. Pastikan perangkat terhubung ke internet.",
+  "modeExpense": "Pengeluaran",
+  "modeIncome": "Pemasukan",
+  "modeReceivable": "Piutang",
+  "modePayable": "Hutang",
+  "modeTransfer": "Transfer",
+  "selectWalletLabel": "Dompet",
+  "selectCategoryLabel": "Kategori",
+  "selectContactLabel": "Kontak Teman",
+  "contactNameHint": "Nama teman (pilih atau ketik baru)...",
+  "dueDateLabel": "Jatuh Tempo",
+  "noDueDate": "Tanpa Jatuh Tempo",
+  "transactionDateLabel": "Tanggal",
+  "transactionNoteHint": "Catatan transaksi (opsional)...",
+  "splitExpenseToggleTitle": "Sekalian Talangi Teman?",
+  "splitExpenseToggleSubtitle": "Pisahkan konsumsi murni Anda dari porsi piutang teman.",
+  "splitEqual5050": "Bagi Rata (50:50)",
+  "splitFriendShareLabel": "Porsi Talangan Teman (Rp)",
+  "splitSummaryText": "Kas Keluar: {walletOut} -> Konsumsi Anda: {pureExpense} | Piutang {contact}: {friendShare}",
+  "@splitSummaryText": {
+    "placeholders": {
+      "walletOut": {
+        "type": "String"
+      },
+      "pureExpense": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      },
+      "friendShare": {
+        "type": "String"
+      }
+    }
+  },
+  "editTransactionTitle": "Detail & Ubah Transaksi",
+  "deleteTransactionConfirmTitle": "Hapus Transaksi Ini?",
+  "deleteTransactionConfirmSubtitle": "Saldo dompet dan buku hutang terkait akan dikembalikan (rollback) secara otomatis.",
+  "transactionSavedMsg": "Catatan transaksi berhasil disimpan.",
+  "transactionDeletedMsg": "Transaksi berhasil dihapus dan saldo telah dikembalikan.",
+  "subTabDaily": "Harian",
+  "subTabCalendar": "Kalender",
+  "subTabMonthly": "Bulanan",
+  "summaryIncomeLabel": "Pemasukan",
+  "summaryPureExpenseLabel": "Konsumsi Murni",
+  "summaryNetDifferenceLabel": "Selisih Bersih",
+  "weeklyBreakdownLabel": "Rincian Mingguan",
+  "weekRangeLabel": "Minggu {week} (Tgl {startDay}–{endDay})",
+  "@weekRangeLabel": {
+    "placeholders": {
+      "week": {
+        "type": "int"
+      },
+      "startDay": {
+        "type": "String"
+      },
+      "endDay": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedDateTransactionsLabel": "Transaksi {date}",
+  "@selectedDateTransactionsLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "noTransactionsInPeriodTitle": "Belum Ada Transaksi di Periode Ini",
+  "noTransactionsInPeriodSubtitle": "Ketuk tombol + Catat Cepat di kanan bawah untuk mencatat transaksi, atau ketuk Muat Data Contoh.",
+  "trxTypeReceivableOut": "Piutang Keluar",
+  "trxTypeDebtIn": "Hutang Masuk",
+  "trxTypeReceivableSettle": "Terima Cicilan",
+  "trxTypePayableSettle": "Bayar Hutang",
+  "nonConsumptionBookBadge": "Buku Hutang (Bukan Konsumsi)"
 }

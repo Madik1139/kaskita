@@ -1,6 +1,6 @@
 # KasKita – Aplikasi Pencatat Keuangan & Buku Hutang Mandiri (Offline-First)
 
-**Versi Saat Ini:** `0.3.0+3` (Fase 2 Selesai: Multi-Dompet, Onboarding Saldo Awal, Transfer Antar Dompet, & Navigasi 3 Tab)  
+**Versi Saat Ini:** `0.4.0+4` (Fase 3 Selesai: Input Satu Pintu `< 5 Detik`, Talangan Teman, Rollback Edit/Hapus, & Beranda Gaya *Money Manager*)  
 **Platform:** Android & iOS (Flutter)  
 **Penyimpanan:** 100% Lokal / *Standalone* (`SQLite`)
 
@@ -67,7 +67,7 @@ typst compile docs/user_manual.typ docs/user_manual.pdf
 - [x] Konfigurasi Workspace `.agents` (Rules & Skills) dan User Manual Typst (beserta gambar layout aplikasi)
 - [x] Lapisan Inti (`core/`): Tema Light/Dark, DatabaseHelper SQLite (`DemoDataSeeder`), CI/CD GitHub Actions, & Komponen Reusable (`TactileCard`, `CustomNumpad`, `TabularCurrencyText`, `StatusBadge`, `EmptyStateView`)
 - [x] Fitur Dompet (`wallets/`): Onboarding Saldo Awal, Multi-Dompet, Kategori Kustom, & Transfer Antar Dompet
-- [ ] Fitur Transaksi (`transactions/`): Input Satu Pintu (`+`), Talangan Teman (*Split Expense*), & Riwayat Kas Harian
+- [x] Fitur Transaksi (`transactions/`): Input Satu Pintu (`+`), Talangan Teman (*Split Expense*), Rollback Edit/Hapus, & Riwayat Kas Harian/Kalender/Bulanan
 - [ ] Fitur Buku Hutang (`debts/`): Kontak, Cicilan FIFO, *Auto-Netting*, Lunas via Traktiran, Rem Piutang, & *Clean Invoice Receipt*
 - [ ] Fitur Laporan & Pengaturan (`reports/` & `settings/`): Grafik Bulanan, Notifikasi Jatuh Tempo, PIN/Biometrik, & Backup/Restore (`.db`/`.json`/`.csv`)
 
@@ -77,6 +77,7 @@ typst compile docs/user_manual.typ docs/user_manual.pdf
 
 | Versi | Tanggal | Ringkasan Perubahan |
 | :--- | :--- | :--- |
+| **`0.4.0+4`** | 13 Nov 2026 | **Fase 3 Selesai:** Implementasi modul `lib/features/transactions/`, **Input Satu Pintu (`< 5 Detik`)** dengan 5 mode (`Pengeluaran`, `Pemasukan`, `Piutang`, `Hutang`, `Transfer`), fitur **"Sekalian Talangi Teman" (*Inline Split Expense*)** beserta tombol **Bagi Rata (50:50)**, **Tampilan Beranda Gaya *Money Manager (Realbyte)*** (Navigasi Periode, Ringkasan 3 Kolom, Sub-Tab `Harian`, `Kalender` interaktif dengan `TableCalendar`, dan `Bulanan` dengan rincian mingguan *expandable*), **Edit & Hapus Transaksi dengan Rollback Otomatis** serta proteksi kunci jika sudah ada cicilan, dan penambahan *unit test* Fase 3 (`flutter test` lulus 100% - 13/13 test). |
 | **`0.3.0+3`** | 13 Nov 2026 | **Fase 2 Selesai:** Implementasi modul `lib/features/wallets/` (Model, Repository, Riverpod Provider, dan UI Bottom Sheets), **Onboarding Saldo Awal Dompet Tunai**, **Manajemen Multi-Dompet (`CASH`, `BANK`, `EWALLET`)**, **Transfer Antar Dompet (`trx_type = 'TRANSFER'`)** atomik tanpa mengotori konsumsi murni, **Kelola Kategori Kustom**, **Filter Pill Dompet Interaktif pada Kartu Buku Kas Terpadu**, kerangka navigasi 3 Tab (`Beranda`, `Buku Hutang`, `Ringkasan`), serta penambahan *unit test* Fase 2 (`flutter test` lulus 100% - 10/10 test). |
 | **`0.2.0+2`** | 13 Nov 2026 | **Fase 1 Selesai:** Instalasi seluruh library standar industri, konfigurasi `AndroidManifest.xml` & `FlutterFragmentActivity`, workflow CI/CD GitHub Actions (`.github/workflows/ci_and_release.yml`), penambahan visualisasi layout layar di `docs/user_manual.typ`, implementasi **Lokalisasi 2 Bahasa (`id` & `en`) beserta Pesan Error Terlokalisasi (`AppException`)**, `DatabaseHelper` SQLite (7 tabel + `DemoDataSeeder`), tema *Light/Dark* (`AppColors` & `AppTheme`), 5 komponen reusable di `lib/core/widgets/`, serta *unit/widget test* (`flutter test` lulus 100% - 7/7 test). |
 | **`0.1.0+1`** | 13 Nov 2026 | Inisialisasi proyek Flutter `kaskita`, penyempurnaan skema ERD (`RECEIVABLE_SETTLE`, `PAYABLE_SETTLE`, `TRANSFER`), pembuatan dokumen arsitektur teknis & UI/UX *Tactile Financial Ledger*, setup `.agents` (Rules & Skills), serta pembuatan `docs/user_manual.typ`. |
