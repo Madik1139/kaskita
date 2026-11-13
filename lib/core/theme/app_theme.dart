@@ -160,6 +160,40 @@ class AppTheme {
           borderSide: BorderSide(color: accent, width: 1.5),
         ),
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: surface,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        height: 68,
+        indicatorColor: accent.withValues(alpha: isDark ? 0.22 : 0.14),
+        indicatorShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(
+            color: accent.withValues(alpha: isDark ? 0.55 : 0.35),
+            width: 1,
+          ),
+        ),
+        iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
+          (Set<WidgetState> states) {
+            final bool selected = states.contains(WidgetState.selected);
+            return IconThemeData(
+              size: selected ? 21 : 20,
+              color: selected ? accent : textSec,
+            );
+          },
+        ),
+        labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
+          (Set<WidgetState> states) {
+            final bool selected = states.contains(WidgetState.selected);
+            return TextStyle(
+              fontFamily: fontFamilyName,
+              fontSize: 11.5,
+              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              color: selected ? accent : textSec,
+            );
+          },
+        ),
+      ),
     );
   }
 }

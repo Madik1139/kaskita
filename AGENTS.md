@@ -4,6 +4,15 @@ Dokumen ini berisi aturan inti (*always-on rules*) yang **wajib** dipatuhi oleh 
 
 ---
 
+## 0. Konfirmasi & Klarifikasi Sebelum Eksekusi (*Confirm Before Build*)
+* **Jangan Berasumsi Sepihak:** Sebelum mulai mengubah kode fitur, UI/UX, arsitektur, atau alur kerja yang permintaannya masih terbuka atau memiliki beberapa opsi implementasi, Agent **wajib** mengklarifikasi kebutuhan dan memastikan persetujuan pengguna terlebih dahulu.
+* **Sajikan Opsi & Rekomendasi Singkat:** Jika ada ambiguitas (misal: penempatan menu baru, apakah tombol lama dihapus atau dipindah, dampak terhadap data/alur pengguna), tanyakan langsung poin-poin keputusannya (gunakan `ask_question` atau pertanyaan terstruktur yang ringkas) beserta rekomendasi terbaiknya sebelum menulis kode.
+* **Kapan Langsung Jalan vs Wajib Tanya:**
+  * *Wajib konfirmasi dulu:* Penambahan/perubahan fitur, tata letak UI/navigasi, skema database, penghapusan fitur yang ada, atau instruksi umum yang punya lebih dari satu tafsir.
+  * *Boleh langsung dikerjakan:* Perbaikan kecil yang sudah spesifik dan eksplisit disetujui pengguna (misal: menambah satu baris ke `.gitignore`, typo yang jelas, atau mengeksekusi rencana yang baru saja disetujui).
+
+---
+
 ## 1. Prinsip Clean Code & Clean Architecture
 * **Struktur *Feature-First Layered*:** Seluruh kode fitur ditempatkan di `lib/features/<nama_fitur>/` dengan pemisahan tegas antara:
   * `domain/` atau `models/` (Entitas & logika murni tanpa dependensi UI/SQLite).

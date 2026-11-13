@@ -12,7 +12,7 @@ import '../../providers/debt_provider.dart';
 /// Banner pintar di Form Input Transaksi untuk:
 /// 1. Peringatan Rem Piutang (Lending Cap) saat total piutang melewati batas.
 /// 2. Deteksi Saldo Silang (Auto-Netting) saat mencatat hutang/piutang pada kontak bersaldo lawan.
-class DebtSmartAlertBanners extends ConsumerWidget {
+class DebtSmartAlertBanners extends ConsumerStatefulWidget {
   const DebtSmartAlertBanners({
     required this.trxType,
     required this.isSplitTalangan,
@@ -28,17 +28,27 @@ class DebtSmartAlertBanners extends ConsumerWidget {
   final int totalWalletAmount;
   final int friendShareAmount;
   final ContactOptionModel? selectedContact;
-  final VoidCallback onApplyAutoNetting;
+  final void Function({required bool nonCashOnly}) onApplyAutoNetting;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DebtSmartAlertBanners> createState() =>
+      _DebtSmartAlertBannersState();
+}
+
+class _DebtSmartAlertBannersState extends ConsumerState<DebtSmartAlertBanners> {
+  bool _nonCashOnly = false;
+
+  @override
+  Widget build(BuildContext context) {
     final AppLocalizations l10n = context.l10n;
     final DebtsDirectoryState? dirState =
         ref.watch(debtsDirectoryProvider).valueOrNull;
 
-    final int addedReceivable = trxType == 'RECEIVABLE_OUT'
-        ? totalWalletAmount
-        : (trxType == 'EXPENSE' && isSplitTalangan ? friendShareAmount : 0);
+    final int addedReceivable = widget.trxType == 'RECEIVABLE_OUT'
+        ? widget.totalWalletAmount
+        : (widget.trxType == 'EXPENSE' && widget.isSplitTalangan
+            ? widget.friendShareAmount
+            : 0);
 
     final bool showLendingCapWarning = dirState != null &&
         addedReceivable > 0 &&
@@ -46,10 +56,10 @@ class DebtSmartAlertBanners extends ConsumerWidget {
         (dirState.totalReceivables + addedReceivable) >
             dirState.lendingCapLimit;
 
-    final ContactOptionModel? contact = selectedContact;
+    final ContactOptionModel? contact = widget.selectedContact;
     final bool hasOppositeBalance = contact != null &&
-        ((trxType == 'DEBT_IN' && contact.netBalance > 0) ||
-            (trxType == 'RECEIVABLE_OUT' && contact.netBalance < 0));
+        ((widget.trxType == 'DEBT_IN' && contact.netBalance > 0) ||
+            (widget.trxType == 'RECEIVABLE_OUT' && contact.netBalance < 0));
 
     if (!showLendingCapWarning && !hasOppositeBalance) {
       return const SizedBox.shrink();
@@ -93,45 +103,85 @@ class DebtSmartAlertBanners extends ConsumerWidget {
             backgroundColor: mutationColor.withValues(alpha: 0.08),
             borderColor: mutationColor,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Icon(LucideIcons.arrowLeftRight, size: 16, color: mutationColor),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        l10n.autoNettingBannerTitle,
-                        style: TextStyle(
-                          fontSize: 12,
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      LucideIcons.arrowLeftRight,
+                      size: 16,
+                      color: mutationColor,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            l10n.autoNettingBannerTitle,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: mutationColor,
+                            ),
+                          ),
+                          Text(
+                            l10n.autoNettingBannerSubtitle(
+                              contact.name,
+                              CurrencyFormatter.format(
+                                contact.netBalance.abs(),
+                              ),
+                            ),
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    FilledButton.tonal(
+                      onPressed: () =>
+                          widget.onApplyAutoNetting(nonCashOnly: _nonCashOnly),
+                      style: FilledButton.styleFrom(
+                        visualDensity: VisualDensity.compact,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                      ),
+                      child: Text(
+                        l10n.applyAutoNettingBtn,
+                        style: const TextStyle(
+                          fontSize: 11,
                           fontWeight: FontWeight.w700,
-                          color: mutationColor,
                         ),
                       ),
-                      Text(
-                        l10n.autoNettingBannerSubtitle(
-                          contact.name,
-                          CurrencyFormatter.format(contact.netBalance.abs()),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                InkWell(
+                  onTap: () => setState(() => _nonCashOnly = !_nonCashOnly),
+                  borderRadius: BorderRadius.circular(6),
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: Checkbox(
+                          value: _nonCashOnly,
+                          onChanged: (bool? val) =>
+                              setState(() => _nonCashOnly = val ?? false),
+                          visualDensity: VisualDensity.compact,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
                         ),
-                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          l10n.autoNettingNonCashToggle,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                       ),
                     ],
-                  ),
-                ),
-                const SizedBox(width: 6),
-                FilledButton.tonal(
-                  onPressed: onApplyAutoNetting,
-                  style: FilledButton.styleFrom(
-                    visualDensity: VisualDensity.compact,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                  ),
-                  child: Text(
-                    l10n.applyAutoNettingBtn,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                    ),
                   ),
                 ),
               ],

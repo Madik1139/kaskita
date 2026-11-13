@@ -131,7 +131,7 @@ class _OnboardingBalanceSheetState
             amount: _amount,
             onAmountChanged: (int nextValue) =>
                 setState(() => _amount = nextValue),
-            submitLabel: l10n.saveInitialBalance,
+            submitLabel: l10n.save,
             onSubmit: () => _submitBalance(_amount),
           ),
         ],

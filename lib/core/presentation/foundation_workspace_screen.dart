@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../features/debts/presentation/debt_directory_tab_view.dart';
 import '../../features/debts/providers/debt_provider.dart';
+import '../../features/reports/presentation/reports_tab_view.dart';
 import '../../features/reports/providers/report_provider.dart';
-import '../../features/settings/presentation/summary_settings_tab_view.dart';
+import '../../features/settings/presentation/settings_tab_view.dart';
 import '../../features/settings/providers/settings_provider.dart';
 import '../../features/transactions/presentation/widgets/calendar_ledger_view.dart';
 import '../../features/transactions/presentation/widgets/daily_transaction_group_card.dart';
@@ -18,16 +19,14 @@ import '../../features/wallets/providers/wallet_provider.dart';
 import '../../l10n/app_localizations.dart';
 import '../errors/app_exception.dart';
 import '../models/ledger_summary_model.dart';
-import '../providers/app_preferences_provider.dart';
 import '../providers/ledger_overview_provider.dart';
 import '../theme/app_colors.dart';
 import '../utils/localization_helper.dart';
 import '../widgets/empty_state_view.dart';
 import '../widgets/status_badge.dart';
-import '../widgets/tactile_card.dart';
 import 'widgets/unified_ledger_summary_card.dart';
 
-/// Kerangka Navigasi 3 Tab & Beranda KasKita (Fase 3 - v0.4.0):
+/// Kerangka Navigasi 4 Tab & Beranda KasKita:
 /// 100% murni UI (mengambil state melalui Riverpod tanpa impor SQLite).
 class FoundationWorkspaceScreen extends ConsumerStatefulWidget {
   const FoundationWorkspaceScreen({super.key});
@@ -52,32 +51,13 @@ class _FoundationWorkspaceScreenState
     await ref.read(settingsProvider.notifier).refresh();
   }
 
-  Future<void> _handleLoadDemoData() async {
-    ref.read(selectedWalletIdProvider.notifier).state = null;
-    final DateTime now = DateTime.now();
-    ref.read(selectedPeriodProvider.notifier).state =
-        DateTime(now.year, now.month, 1);
-    ref.read(selectedCalendarDayProvider.notifier).state = now;
-    await ref.read(ledgerOverviewProvider.notifier).loadDemoData();
-    await _refreshAllProviders();
-  }
-
-  Future<void> _handleResetAllData() async {
-    ref.read(selectedWalletIdProvider.notifier).state = null;
-    await ref.read(ledgerOverviewProvider.notifier).resetAllData();
-    await _refreshAllProviders();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final ThemeMode currentTheme = ref.watch(themeModeProvider);
-    final Locale currentLocale = ref.watch(appLocaleProvider);
     final AsyncValue<LedgerOverviewState> overviewAsync =
         ref.watch(ledgerOverviewProvider);
     final AsyncValue<TransactionsPeriodState> transactionsAsync =
         ref.watch(transactionsProvider);
     final AppLocalizations l10n = context.l10n;
-    final String langCode = currentLocale.languageCode;
 
     ref.listen<AsyncValue<WalletsState>>(
       walletsProvider,
@@ -125,47 +105,17 @@ class _FoundationWorkspaceScreenState
             ),
           ],
         ),
-        actions: <Widget>[
-          Tooltip(
-            message: l10n.switchLanguageTooltip,
-            child: TextButton.icon(
-              onPressed: () {
-                final Locale nextLocale = langCode == 'id'
-                    ? const Locale('en')
-                    : const Locale('id');
-                ref.read(settingsProvider.notifier).saveLocale(nextLocale);
-              },
-              icon: const Icon(LucideIcons.languages, size: 16),
-              label: Text(
-                langCode.toUpperCase(),
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-            ),
-          ),
-          IconButton(
-            tooltip: l10n.switchThemeTooltip,
-            onPressed: () {
-              final ThemeMode next = currentTheme == ThemeMode.dark
-                  ? ThemeMode.light
-                  : ThemeMode.dark;
-              ref.read(settingsProvider.notifier).saveThemeMode(next);
-            },
-            icon: Icon(
-              AppColors.isDark(context) ? LucideIcons.sun : LucideIcons.moon,
-              size: 19,
-            ),
-          ),
-        ],
       ),
       body: IndexedStack(
         index: _selectedTabIndex,
         children: <Widget>[
           _buildHomeTab(context, overviewAsync, transactionsAsync, l10n),
           const DebtDirectoryTabView(),
-          const SummarySettingsTabView(),
+          const ReportsTabView(),
+          const SettingsTabView(),
         ],
       ),
-      floatingActionButton: _selectedTabIndex == 2
+      floatingActionButton: _selectedTabIndex >= 2
           ? null
           : FloatingActionButton.extended(
         onPressed: () => TransactionFormSheet.show(context),
@@ -178,24 +128,35 @@ class _FoundationWorkspaceScreenState
           style: const TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedTabIndex,
-        onDestinationSelected: (int index) =>
-            setState(() => _selectedTabIndex = index),
-        destinations: <NavigationDestination>[
-          NavigationDestination(
-            icon: const Icon(LucideIcons.wallet, size: 20),
-            label: l10n.navHome,
+      bottomNavigationBar: DecoratedBox(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: AppColors.border(context), width: 1),
           ),
-          NavigationDestination(
-            icon: const Icon(LucideIcons.bookUser, size: 20),
-            label: l10n.navDebtBook,
-          ),
-          NavigationDestination(
-            icon: const Icon(LucideIcons.chartColumn, size: 20),
-            label: l10n.navSummary,
-          ),
-        ],
+        ),
+        child: NavigationBar(
+          selectedIndex: _selectedTabIndex,
+          onDestinationSelected: (int index) =>
+              setState(() => _selectedTabIndex = index),
+          destinations: <NavigationDestination>[
+            NavigationDestination(
+              icon: const Icon(LucideIcons.wallet),
+              label: l10n.navHome,
+            ),
+            NavigationDestination(
+              icon: const Icon(LucideIcons.bookUser),
+              label: l10n.navDebtBook,
+            ),
+            NavigationDestination(
+              icon: const Icon(LucideIcons.chartColumn),
+              label: l10n.navReports,
+            ),
+            NavigationDestination(
+              icon: const Icon(LucideIcons.settings),
+              label: l10n.navSettings,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -233,31 +194,7 @@ class _FoundationWorkspaceScreenState
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 88),
             children: <Widget>[
               UnifiedLedgerSummaryCard(overview: overview),
-              const SizedBox(height: 10),
-              TactileCard(
-                backgroundColor: AppColors.surfaceSecondary(context),
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: _handleLoadDemoData,
-                        icon: const Icon(LucideIcons.database, size: 15),
-                        label: Text(l10n.loadDemoData),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: _handleResetAllData,
-                        icon: const Icon(LucideIcons.rotateCcw, size: 15),
-                        label: Text(l10n.resetDataToZero),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               PeriodSummaryHeader(
                 totalIncome: periodState?.monthTotalIncome ?? 0,
                 totalPureExpense: periodState?.monthTotalPureExpense ?? 0,
@@ -274,8 +211,8 @@ class _FoundationWorkspaceScreenState
                   icon: LucideIcons.receiptText,
                   title: l10n.noTransactionsInPeriodTitle,
                   subtitle: l10n.noTransactionsInPeriodSubtitle,
-                  actionLabel: l10n.loadDemoDataNow,
-                  onActionTap: _handleLoadDemoData,
+                  actionLabel: l10n.recordTransactionBtn,
+                  onActionTap: () => TransactionFormSheet.show(context),
                 )
               else
                 for (int i = 0;

@@ -4,6 +4,7 @@ import '../../../core/database/database_helper.dart';
 import '../../../core/providers/app_preferences_provider.dart';
 import '../../../core/providers/ledger_overview_provider.dart';
 import '../../debts/providers/debt_provider.dart';
+import '../../reports/providers/report_provider.dart';
 import '../../transactions/providers/transaction_provider.dart';
 import '../../wallets/providers/category_provider.dart';
 import '../../wallets/providers/wallet_provider.dart';
@@ -138,9 +139,27 @@ class SettingsNotifier extends AsyncNotifier<AppSecurityConfigModel> {
       await ref.read(transactionsProvider.notifier).refresh();
       await ref.read(debtsDirectoryProvider.notifier).refresh();
       await ref.read(ledgerOverviewProvider.notifier).refreshOverview();
+      ref.invalidate(reportsProvider);
       await refresh();
     }
     return restored;
+  }
+
+  /// Menghapus seluruh data keuangan (transaksi, dompet tambahan, kontak, hutang)
+  /// ke kondisi Rp 0 sambil tetap mempertahankan preferensi Tema & Bahasa aktif.
+  Future<void> resetAllFinancialData() async {
+    final ThemeMode currentTheme = ref.read(themeModeProvider);
+    final Locale currentLocale = ref.read(appLocaleProvider);
+    await ref.read(ledgerOverviewProvider.notifier).resetAllData();
+    await ref.read(appSecurityServiceProvider).saveThemeMode(currentTheme);
+    await ref.read(appSecurityServiceProvider).saveLocale(currentLocale);
+    ref.read(isAppLockedProvider.notifier).state = false;
+    await ref.read(walletsProvider.notifier).refresh();
+    await ref.read(categoriesProvider.notifier).refresh();
+    await ref.read(transactionsProvider.notifier).refresh();
+    await ref.read(debtsDirectoryProvider.notifier).refresh();
+    ref.invalidate(reportsProvider);
+    await refresh();
   }
 }
 

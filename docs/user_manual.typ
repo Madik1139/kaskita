@@ -13,7 +13,7 @@
   paper: "a4",
   margin: (x: 2.0cm, y: 2.2cm),
   header: align(right)[
-    #text(size: 8.5pt, fill: rgb("#686B73"))[KasKita – Buku Panduan Pengguna & Layout Antarmuka (v1.0.0)]
+    #text(size: 8.5pt, fill: rgb("#686B73"))[KasKita – Buku Panduan Pengguna & Layout Antarmuka (v1.1.0)]
   ],
   footer: context [
     #line(length: 100%, stroke: 0.5pt + rgb("#E4E2DD"))
@@ -95,7 +95,7 @@
     fill: rgb("#0F5247"),
     inset: (x: 14pt, y: 6pt),
     radius: 4pt,
-    text(fill: white, weight: "bold", size: 9.5pt)[PANDUAN RESMI PENGGUNA & VISUAL LAYOUT • VERSI 0.2.0]
+    text(fill: white, weight: "bold", size: 9.5pt)[PANDUAN RESMI PENGGUNA & VISUAL LAYOUT • VERSI 1.1.0]
   )
   #v(0.4cm)
   #text(size: 26pt, weight: "bold", fill: rgb("#141518"))[KasKita]
@@ -226,7 +226,7 @@ Di halaman *Beranda (Tab 1)*, KasKita menggabungkan **Kartu Buku Kas Terpadu** d
 ]
 
 == Cara Membaca & Menggunakan Navigasi Beranda
-1. *Memilih Filter Dompet:* Ketuk pill *Semua Dompet* di bagian paling atas untuk memfilter mutasi dompet tertentu (misal hanya `Dompet Tunai` atau `BCA`), atau tekan *+ Dompet* untuk menambah dompet baru.
+1. *Memilih Filter Dompet:* Ketuk pill *Semua Dompet* di bagian paling atas untuk memfilter mutasi dompet tertentu (misal hanya `Dompet Tunai` atau `BCA`). Untuk menambah, mengubah, atau menghapus dompet, buka *Tab 4 (Pengaturan)* -> *Kelola Dompet*.
 2. *Berpindah Periode & Tampilan:*
    - Gunakan panah `◀` dan `▶` untuk berpindah bulan.
    - Pilih tab *Harian* untuk melihat rincian per blok tanggal, *Kalender* untuk tampilan kotak tanggal sebulan penuh, atau *Bulanan* untuk rekapitulasi Januari–Desember beserta rincian mingguan.
@@ -238,11 +238,11 @@ Di halaman *Beranda (Tab 1)*, KasKita menggabungkan **Kartu Buku Kas Terpadu** d
 // ============================================================================
 = Mencatat Transaksi & Talangan Teman (< 5 Detik)
 
-Menekan tombol utama *`+`* di bagian bawah layar akan membuka *Bottom Sheet* berkecepatan tinggi dengan **Custom Numpad Terintegrasi** (tanpa perlu menunggu keyboard bawaan HP muncul).
+Menekan tombol utama *`+`* di bagian bawah layar akan membuka halaman input **Layar Penuh (*Full-Screen*)** yang rapi dengan **Kolom Tanggal Terpisah**, **Pemilih Grid Dompet & Kategori** tanpa perlu menggeser layar ke samping, serta **Custom Numpad Terintegrasi** di bagian bawah.
 
-== Gambar Layout 2: Form Input Satu Pintu (`+`) & Sekalian Talangi Teman
+== Gambar Layout 2: Form Input Satu Pintu (`+`) Layar Penuh & Grid Selector
 #v(4pt)
-#phone-frame("Bottom Sheet: Input Transaksi Cepat (+)")[
+#phone-frame("Halaman Penuh: Input Transaksi Cepat (+)")[
   // Mode Switcher
   #block(
     width: 100%,
@@ -257,6 +257,25 @@ Menekan tombol utama *`+`* di bagian bawah layar akan membuka *Bottom Sheet* ber
       align(center)[#text(size: 7.5pt)[Hutang]],
       align(center)[#text(size: 7.5pt)[⇄ Transfer]],
     )
+  )
+  #v(5pt)
+  // Pemilih Tanggal Terpisah (Kemarin / Hari Ini / Kalender)
+  #block(
+    width: 100%,
+    fill: white,
+    stroke: 1pt + rgb("#E4E2DD"),
+    radius: 5pt,
+    inset: 6pt,
+    [
+      #grid(
+        columns: (1fr, auto, auto, auto),
+        gutter: 4pt,
+        [#text(size: 7.5pt, weight: "bold")[Tanggal: 13 Nov 2026]],
+        [#block(fill: rgb("#EFECE6"), inset: (x: 5pt, y: 2pt), radius: 3pt)[#text(size: 7pt)[Kemarin]]],
+        [#block(fill: rgb("#0F5247"), inset: (x: 5pt, y: 2pt), radius: 3pt)[#text(fill: white, size: 7pt, weight: "bold")[Hari Ini]]],
+        [#block(fill: rgb("#EFECE6"), inset: (x: 5pt, y: 2pt), radius: 3pt)[#text(size: 7pt)[Pilih Tgl]]],
+      )
+    ]
   )
   #v(5pt)
   // Layar Nominal & Quick Chips
@@ -285,13 +304,12 @@ Menekan tombol utama *`+`* di bagian bawah layar akan membuka *Bottom Sheet* ber
     ]
   )
   #v(5pt)
-  // Pemilih Dompet & Kategori
+  // Pemilih Dompet & Kategori (Ketuk untuk mengganti panel bawah menjadi Grid)
   #grid(
-    columns: (1fr, 1fr, 1fr),
-    gutter: 4pt,
-    block(fill: white, stroke: 0.8pt + rgb("#E4E2DD"), inset: 5pt, radius: 4pt, width: 100%)[#text(size: 7.5pt)[Dompet: *Tunai ▾*]],
-    block(fill: white, stroke: 0.8pt + rgb("#E4E2DD"), inset: 5pt, radius: 4pt, width: 100%)[#text(size: 7.5pt)[Kat: *Makan ▾*]],
-    block(fill: white, stroke: 0.8pt + rgb("#E4E2DD"), inset: 5pt, radius: 4pt, width: 100%)[#text(size: 7.5pt)[Tgl: *Hari Ini ▾*]],
+    columns: (1fr, 1fr),
+    gutter: 6pt,
+    block(fill: white, stroke: 0.8pt + rgb("#0F5247"), inset: 6pt, radius: 4pt, width: 100%)[#text(size: 7.5pt)[Dompet: *Tunai ▾*]],
+    block(fill: white, stroke: 0.8pt + rgb("#E4E2DD"), inset: 6pt, radius: 4pt, width: 100%)[#text(size: 7.5pt)[Kategori: *Makan ▾*]],
   )
   #v(5pt)
   // Toggle Sekalian Talangi Teman
@@ -312,6 +330,16 @@ Menekan tombol utama *`+`* di bagian bawah layar akan membuka *Bottom Sheet* ber
     ]
   )
   #v(5pt)
+  // Panel Bawah Kontekstual: Custom Numpad <-> Grid Dompet / Grid Kategori
+  #block(
+    width: 100%,
+    fill: rgb("#F7F6F2"),
+    stroke: 0.6pt + rgb("#E4E2DD"),
+    radius: 4pt,
+    inset: 4pt,
+    [#align(center)[#text(size: 7pt, fill: rgb("#686B73"))[Panel Bawah Otomatis Berubah: *Numpad* <-> *Grid Dompet (2 Kolom)* <-> *Grid Kategori (3 Kolom)*]]],
+  )
+  #v(4pt)
   // Custom Numpad Grid 4x4
   #grid(
     columns: (1fr, 1fr, 1fr, 1.1fr),
@@ -333,7 +361,8 @@ Menekan tombol utama *`+`* di bagian bawah layar akan membuka *Bottom Sheet* ber
 
 == Langkah-Langkah Mencatat Transaksi & Talangan
 1. *Mencatat Pengeluaran/Pemasukan Biasa (3 Ketukan):*
-   - Ketuk tombol *`+`* -> tekan tombol angka atau chip cepat (`+10rb`, `+50rb`) -> pilih Kategori -> ketuk *SIMPAN*.
+   - Ketuk tombol *`+`* -> atur tanggal jika bukan *Hari Ini* -> tekan tombol angka atau chip cepat (`+10rb`, `+50rb`).
+   - Ketuk kotak *Dompet* atau *Kategori* untuk menampilkan pilihan grid kotak di bagian bawah (panel otomatis kembali ke *Numpad* setelah Anda mengetuk *Numpad* atau memilih nominal), lalu ketuk *SIMPAN*.
 2. *Mencatat Makan Bersama / Talangan Teman:*
    - Pada tab *Pengeluaran*, masukkan total uang yang Anda bayarkan di kasir (misal `Rp 60.000`).
    - Aktifkan kotak *"Sekalian Talangi Teman"*, pilih nama kontak (`Riko`), lalu ketuk *Bagi Rata 50:50* (atau ketik nominal porsi teman).
@@ -435,16 +464,23 @@ Pada *Tab 2 (Buku Hutang)*, setiap teman hanya memiliki **satu angka Saldo Bersi
    - Saat Anda mencatat hutang baru kepada teman yang masih memiliki piutang belum lunas di tempat Anda, aktifkan opsi *"Potong langsung dari piutang sebelumnya"*. Saldo langsung terpotong otomatis tanpa perlu memindahkan uang dompet.
 3. *Lunas via Barang / Traktiran (Settle with Item):*
    - Di menu *Bayar / Cicil*, pilih tab *Traktiran / Barang*. Piutang teman otomatis berkurang tanpa mengubah saldo uang tunai di dompet Anda, dan dapat langsung dicatat sebagai konsumsi makan/belanja Anda.
+4. *Mengubah & Menghapus Kontak:*
+   - Ketuk menu *`⋮`* pada baris kontak (atau ikon Edit/Hapus di halaman *Detail Kontak*) untuk mengubah nama, nomor WhatsApp, dan *Batas Aman Piutang*, atau menghapus kontak beserta catatan hutangnya tanpa menghapus riwayat mutasi dompet di Beranda.
 
 // ============================================================================
-// BAB 4: LAPORAN GRAFIK, KEAMANAN, BACKUP, & UPDATE OTA
+// BAB 4: TAB LAPORAN & TAB PENGATURAN (PREFERENSI, KELOLA DATA, BACKUP, OTA)
 // ============================================================================
-= Laporan Bulanan, Keamanan, Backup, & Update OTA
+= Laporan Bulanan & Menu Pengaturan
 
-Di *Tab 3 (Ringkasan & Pengaturan)*, Anda dapat memantau kesehatan finansial, mengatur keamanan & notifikasi pengingat, serta mencadangkan data lokal Anda:
+Aplikasi KasKita memiliki **4 Tab Navigasi Utama**: *Beranda*, *Buku Hutang*, *Laporan*, dan *Pengaturan*:
 
+== Tab 3 (Laporan)
 1. *Grafik 6 Bulan: Konsumsi Murni vs Uang Tertahan:* Diagram batang interaktif yang membandingkan pengeluaran pribadi murni Anda dengan nominal uang yang masih dipinjam teman setiap bulan.
 2. *Rincian Pengeluaran per Kategori:* Daftar persentase dan total nominal pengeluaran murni pada bulan terpilih agar Anda tahu pos pengeluaran terbesar.
+
+== Tab 4 (Pengaturan)
+1. *Preferensi Aplikasi (Bahasa & Tema):* Pilih bahasa antarmuka (*Bahasa Indonesia* / *English*) serta mode tampilan (*Ikuti Sistem*, *Terang*, atau *Gelap*).
+2. *Manajemen Dompet, Kategori, & Reset Data:* Buka *Kelola Dompet* atau *Kelola Kategori* untuk menambah, mengedit, maupun menghapus akun dompet dan kategori kustom. Tersedia pula menu *Reset Data (Rp 0)* dengan konfirmasi aman jika ingin memulai pembukuan baru dari awal.
 3. *Kunci Aplikasi (PIN 6 Digit & Biometrik) + Pengingat Jatuh Tempo:* Lindungi privasi catatan kas Anda dengan PIN 6 digit (tersimpan aman di Secure Storage) serta sidik jari/wajah, dan aktifkan pengingat otomatis *H-1* & *Hari-H pukul 09:00* untuk hutang/piutang bertenggat waktu.
 4. *Backup & Restore Lokal (`.json` / `.db`) & Ekspor `.csv`:* Cadangkan seluruh database ke penyimpanan perangkat, ekspor laporan transaksi `.csv` untuk Excel/Google Sheets, atau pulihkan data kapan saja tanpa kehilangan riwayat.
 5. *Cek Pembaruan Otomatis (OTA via GitHub Releases):* Ketuk menu *Cek Pembaruan Aplikasi* untuk memeriksa rilis terbaru KasKita dan mengunduhnya secara langsung tanpa menghapus data keuangan Anda.
@@ -458,14 +494,14 @@ Di *Tab 3 (Ringkasan & Pengaturan)*, Anda dapat memantau kesehatan finansial, me
   inset: 10pt,
   [
     #block(fill: rgb("#141518"), width: 100%, inset: 5pt, radius: 3pt)[
-      #text(fill: white, weight: "bold", size: 8pt)[Preview Tab 3: Ringkasan & Pengaturan (v1.0.0)]
+      #text(fill: white, weight: "bold", size: 8pt)[Preview Tab 3 (Laporan) & Tab 4 (Pengaturan) • v1.1.0]
     ]
     #v(6pt)
     #grid(
       columns: (1fr, 1fr),
       gutter: 8pt,
       block(fill: white, stroke: 0.8pt + rgb("#E4E2DD"), inset: 6pt, radius: 4pt, width: 100%)[
-        #text(size: 8pt, weight: "bold")[Grafik 6 Bulan & Kategori]\
+        #text(size: 8pt, weight: "bold")[Tab 3: Grafik 6 Bulan & Kategori]\
         #text(size: 7pt, fill: rgb("#C83349"))[■ Konsumsi Murni: Rp 1.450.000]\
         #text(size: 7pt, fill: rgb("#0D7A5F"))[■ Uang di Teman: Rp 350.000]\
         #v(3pt)
@@ -475,9 +511,10 @@ Di *Tab 3 (Ringkasan & Pengaturan)*, Anda dapat memantau kesehatan finansial, me
         #text(size: 7pt)[• Transportasi (38% • Rp 550.000)]
       ],
       block(fill: white, stroke: 0.8pt + rgb("#E4E2DD"), inset: 6pt, radius: 4pt, width: 100%)[
-        #text(size: 8pt, weight: "bold")[Keamanan, Backup & OTA]\
-        #text(size: 7pt)[• Kunci Aplikasi (PIN & Biometrik): *Aktif*]\
-        #text(size: 7pt)[• Pengingat Jatuh Tempo (09:00): *Aktif*]\
+        #text(size: 8pt, weight: "bold")[Tab 4: Pengaturan Aplikasi]\
+        #text(size: 7pt)[• Bahasa & Tema: *ID • Sistem/Terang/Gelap*]\
+        #text(size: 7pt)[• Kelola: *Dompet • Kategori • Reset Data*]\
+        #text(size: 7pt)[• Kunci Aplikasi (PIN/Biometrik) & Pengingat]\
         #text(size: 7pt, fill: rgb("#0F5247"))[[Backup JSON] [Backup DB] [Ekspor CSV]]\
         #text(size: 7pt, fill: rgb("#1D4ED8"))[[Pulihkan Cadangan] [Cek Update OTA]]
       ],

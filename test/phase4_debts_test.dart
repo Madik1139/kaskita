@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kaskita/core/database/database_helper.dart';
+import 'package:kaskita/core/errors/app_exception.dart';
 import 'package:kaskita/features/debts/data/debt_repository.dart';
 import 'package:kaskita/features/debts/models/debt_models.dart';
 import 'package:kaskita/features/debts/presentation/widgets/clean_invoice_receipt_sheet.dart';
+import 'package:kaskita/features/transactions/data/transaction_query_repository.dart';
 import 'package:kaskita/features/transactions/data/transaction_repository.dart';
+import 'package:kaskita/features/transactions/models/transaction_model.dart';
 import 'package:kaskita/features/wallets/data/wallet_repository.dart';
 import 'package:kaskita/features/wallets/models/wallet_model.dart';
 import 'package:kaskita/l10n/app_localizations_id.dart';
@@ -276,6 +279,162 @@ void main() {
         expect(find.text('Rp 130.000'), findsOneWidget);
         expect(find.textContaining('Talangan Makan Siang'), findsOneWidget);
         expect(find.textContaining('Cicilan Tunai'), findsOneWidget);
+      },
+    );
+
+    test(
+      '5. Auto-Netting dengan Dompet (Kasus Titipan Uang -> Beli Barang -> Tercatat di Beranda & Rollback)',
+      () async {
+        final TransactionQueryRepository queryRepo =
+            TransactionQueryRepository(DatabaseHelper.instance);
+
+        // Awalnya saldo Dompet Tunai (wallet 1) Rp 500.000
+        // Teman menitip uang Rp 50.000 (DEBT_IN)
+        await trxRepo.recordTransaction(
+          trxType: 'DEBT_IN',
+          walletId: 1,
+          totalWalletAmount: 50000,
+          trxDate: DateTime(2026, 11, 13),
+          note: 'Titip uang dari Riko',
+          newContactName: 'Riko',
+        );
+
+        final int rikoId = (await debtRepo.getContactsSummary())
+            .firstWhere((ContactSummaryModel c) => c.name == 'Riko')
+            .id;
+        expect(
+          (await walletRepo.calculateIndicators()).totalWalletBalance,
+          550000,
+        );
+
+        // Beli nasi padang Rp 10.000 memakai Auto-Netting dengan Dompet Tunai (wallet 1)
+        await debtRepo.recordDebtWithAutoNetting(
+          contactId: rikoId,
+          newDebtType: 'RECEIVABLE',
+          amount: 10000,
+          date: DateTime(2026, 11, 13),
+          walletId: 1,
+          note: 'Beli nasi padang titipan Riko',
+        );
+
+        // Saldo dompet berkurang Rp 10.000 -> Rp 540.000, dan sisa titipan (hutang) jadi -Rp 40.000
+        expect(
+          (await walletRepo.calculateIndicators()).totalWalletBalance,
+          540000,
+        );
+        final ContactDetailStateModel afterBuy =
+            await debtRepo.getContactDetail(rikoId);
+        expect(afterBuy.contact.netBalance, -40000);
+
+        // Mutasi PAYABLE_SETTLE Rp 10.000 harus muncul di Beranda (pureConsumption = 0)
+        final List<TransactionItemModel> monthTrxs =
+            await queryRepo.getTransactionsByMonth(year: 2026, month: 11);
+        final TransactionItemModel settleTrx = monthTrxs.firstWhere(
+          (TransactionItemModel t) => t.trxType == 'PAYABLE_SETTLE',
+        );
+        expect(settleTrx.totalWalletAmount, 10000);
+        expect(settleTrx.pureConsumptionAmount, 0);
+        expect(settleTrx.note, 'Beli nasi padang titipan Riko');
+
+        // Skenario melebihi sisa titipan: bayar Rp 65.000 -> 40rb lunasi titipan + 25rb jadi piutang baru
+        await debtRepo.recordDebtWithAutoNetting(
+          contactId: rikoId,
+          newDebtType: 'RECEIVABLE',
+          amount: 65000,
+          date: DateTime(2026, 11, 14),
+          walletId: 1,
+          note: 'Belanja tambahan Riko',
+        );
+
+        expect(
+          (await walletRepo.calculateIndicators()).totalWalletBalance,
+          475000,
+        );
+        final ContactDetailStateModel afterExcess =
+            await debtRepo.getContactDetail(rikoId);
+        expect(afterExcess.contact.netBalance, 25000);
+        expect(afterExcess.activeDebts.length, 1);
+        expect(afterExcess.activeDebts.first.debtType, 'RECEIVABLE');
+        expect(afterExcess.activeDebts.first.remainingAmount, 25000);
+
+        // Pembatalan cicilan PAYABLE_SETTLE pertama (Rp 10.000) harus mengembalikan dompet +10.000
+        final int firstPaymentId = afterBuy.paymentHistory.first.id;
+        await debtRepo.cancelDebtPayment(firstPaymentId);
+        expect(
+          (await walletRepo.calculateIndicators()).totalWalletBalance,
+          485000,
+        );
+        final ContactDetailStateModel afterCancel =
+            await debtRepo.getContactDetail(rikoId);
+        expect(afterCancel.contact.netBalance, 15000);
+      },
+    );
+
+    test(
+      '6. Edit & Hapus Kontak: Update Nama/Catatan (cek duplikat) & Hapus Kontak beserta tagihan aktif tanpa mengubah saldo dompet',
+      () async {
+        final ContactSummaryModel andi = await debtRepo.createContact(
+          name: 'Andi',
+          phoneNote: '081111',
+        );
+        await debtRepo.createContact(name: 'Sinta');
+
+        // Edit valid
+        final ContactSummaryModel updatedAndi = await debtRepo.updateContact(
+          id: andi.id,
+          name: 'Andi Wijaya',
+          phoneNote: '0812-9999',
+        );
+        expect(updatedAndi.name, 'Andi Wijaya');
+        expect(updatedAndi.phoneNote, '0812-9999');
+
+        // Edit ke nama yang sudah dipakai kontak lain -> AppErrorCode.duplicateContactName
+        await expectLater(
+          () => debtRepo.updateContact(id: andi.id, name: 'sinta'),
+          throwsA(
+            isA<AppException>().having(
+              (AppException e) => e.code,
+              'code',
+              AppErrorCode.duplicateContactName,
+            ),
+          ),
+        );
+
+        // Catat piutang aktif ke Andi Wijaya Rp 75.000 (saldo dompet turun dari 500rb -> 425rb)
+        await trxRepo.recordTransaction(
+          trxType: 'RECEIVABLE_OUT',
+          walletId: 1,
+          totalWalletAmount: 75000,
+          trxDate: DateTime(2026, 11, 13),
+          note: 'Pinjam sementara',
+          contactId: andi.id,
+        );
+        expect(
+          (await walletRepo.calculateIndicators()).totalWalletBalance,
+          425000,
+        );
+
+        // Hapus kontak Andi Wijaya meski masih ada piutang aktif
+        await debtRepo.deleteContact(andi.id);
+
+        final List<ContactSummaryModel> remaining =
+            await debtRepo.getContactsSummary();
+        expect(remaining.any((ContactSummaryModel c) => c.id == andi.id), isFalse);
+        expect(
+          (await db.query('debts', where: 'contact_id = ?', whereArgs: <Object>[andi.id])).isEmpty,
+          isTrue,
+        );
+
+        // Saldo dompet & transaksi kas di Beranda tetap terjaga
+        expect(
+          (await walletRepo.calculateIndicators()).totalWalletBalance,
+          425000,
+        );
+        final TransactionQueryRepository queryRepo =
+            TransactionQueryRepository(DatabaseHelper.instance);
+        final List<TransactionItemModel> monthTrxs =
+            await queryRepo.getTransactionsByMonth(year: 2026, month: 11);
+        expect(monthTrxs.length, 1);
       },
     );
   });

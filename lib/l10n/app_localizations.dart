@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @phaseBadge.
   ///
   /// In id, this message translates to:
-  /// **'v1.0.0'**
+  /// **'v1.1.0'**
   String get phaseBadge;
 
   /// No description provided for @navHome.
@@ -176,11 +176,17 @@ abstract class AppLocalizations {
   /// **'Buku Hutang'**
   String get navDebtBook;
 
-  /// No description provided for @navSummary.
+  /// No description provided for @navReports.
   ///
   /// In id, this message translates to:
-  /// **'Ringkasan'**
-  String get navSummary;
+  /// **'Laporan'**
+  String get navReports;
+
+  /// No description provided for @navSettings.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengaturan'**
+  String get navSettings;
 
   /// No description provided for @allWallets.
   ///
@@ -392,12 +398,6 @@ abstract class AppLocalizations {
   /// **'Kekayaan Bersih'**
   String get netWorthLabel;
 
-  /// No description provided for @loadDemoData.
-  ///
-  /// In id, this message translates to:
-  /// **'Muat Data Contoh'**
-  String get loadDemoData;
-
   /// No description provided for @resetDataToZero.
   ///
   /// In id, this message translates to:
@@ -413,14 +413,14 @@ abstract class AppLocalizations {
   /// No description provided for @emptyTransactionsSubtitle.
   ///
   /// In id, this message translates to:
-  /// **'Gunakan tombol Transfer di atas, tambah Dompet baru, atau ketuk \"Muat Data Contoh\" untuk melihat simulasi transaksi.'**
+  /// **'Ketuk tombol Catat Cepat di kanan bawah atau Transfer untuk mulai mencatat arus kas Anda.'**
   String get emptyTransactionsSubtitle;
 
-  /// No description provided for @loadDemoDataNow.
+  /// No description provided for @recordTransactionBtn.
   ///
   /// In id, this message translates to:
-  /// **'Muat Data Contoh Sekarang'**
-  String get loadDemoDataNow;
+  /// **'Catat Transaksi'**
+  String get recordTransactionBtn;
 
   /// No description provided for @quickRecord.
   ///
@@ -928,7 +928,7 @@ abstract class AppLocalizations {
   /// No description provided for @noTransactionsInPeriodSubtitle.
   ///
   /// In id, this message translates to:
-  /// **'Ketuk tombol + Catat Cepat di kanan bawah untuk mencatat transaksi, atau ketuk Muat Data Contoh.'**
+  /// **'Ketuk tombol Catat Transaksi di bawah atau + Catat Cepat di kanan bawah untuk mencatat transaksi.'**
   String get noTransactionsInPeriodSubtitle;
 
   /// No description provided for @trxTypeReceivableOut.
@@ -1216,8 +1216,14 @@ abstract class AppLocalizations {
   /// No description provided for @autoNettingBannerSubtitle.
   ///
   /// In id, this message translates to:
-  /// **'{contact} memiliki saldo berlawanan sebesar {oppositeAmount}. Potong langsung tanpa memindahkan uang?'**
+  /// **'{contact} memiliki saldo berlawanan sebesar {oppositeAmount}. Potong saldo silang otomatis & catat mutasi dompet di Beranda?'**
   String autoNettingBannerSubtitle(String contact, String oppositeAmount);
+
+  /// No description provided for @autoNettingNonCashToggle.
+  ///
+  /// In id, this message translates to:
+  /// **'Non-tunai (tanpa mengubah saldo dompet)'**
+  String get autoNettingNonCashToggle;
 
   /// No description provided for @applyAutoNettingBtn.
   ///
@@ -1488,6 +1494,186 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Unduh / Buka Rilis'**
   String get downloadUpdateBtn;
+
+  /// No description provided for @preferencesSectionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'TAMPILAN & BAHASA'**
+  String get preferencesSectionTitle;
+
+  /// No description provided for @languageSettingTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Bahasa Aplikasi'**
+  String get languageSettingTitle;
+
+  /// No description provided for @languageIndonesian.
+  ///
+  /// In id, this message translates to:
+  /// **'Indonesia'**
+  String get languageIndonesian;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In id, this message translates to:
+  /// **'Inggris'**
+  String get languageEnglish;
+
+  /// No description provided for @themeSettingTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Tema Tampilan'**
+  String get themeSettingTitle;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In id, this message translates to:
+  /// **'Sistem'**
+  String get themeSystem;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In id, this message translates to:
+  /// **'Terang'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In id, this message translates to:
+  /// **'Gelap'**
+  String get themeDark;
+
+  /// No description provided for @ledgerManagementSectionTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'MANAJEMEN DOMPET & KATEGORI'**
+  String get ledgerManagementSectionTitle;
+
+  /// No description provided for @walletManagementTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Kelola Dompet'**
+  String get walletManagementTitle;
+
+  /// No description provided for @walletManagementSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'{count} dompet aktif • Tambah, ubah, atau arsipkan'**
+  String walletManagementSubtitle(int count);
+
+  /// No description provided for @categoryManagementSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'{count} kategori kas • Tambah atau hapus kategori kustom'**
+  String categoryManagementSubtitle(int count);
+
+  /// No description provided for @walletManagementSheetTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Kelola Dompet Kas'**
+  String get walletManagementSheetTitle;
+
+  /// No description provided for @addNewWalletBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Tambah Dompet Baru'**
+  String get addNewWalletBtn;
+
+  /// No description provided for @resetDataTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Reset Semua Data (Rp0)'**
+  String get resetDataTitle;
+
+  /// No description provided for @resetDataSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Hapus seluruh transaksi, hutang, dan kontak, lalu kembalikan dompet awal ke Rp 0.'**
+  String get resetDataSubtitle;
+
+  /// No description provided for @resetDataConfirmTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Reset Seluruh Data ke Rp 0?'**
+  String get resetDataConfirmTitle;
+
+  /// No description provided for @resetDataConfirmSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Seluruh catatan transaksi, dompet tambahan, kontak, dan riwayat hutang-piutang akan dihapus permanen. Pastikan Anda sudah mencadangkan data jika diperlukan.'**
+  String get resetDataConfirmSubtitle;
+
+  /// No description provided for @resetDataConfirmBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Ya, Reset Data'**
+  String get resetDataConfirmBtn;
+
+  /// No description provided for @resetDataSuccessMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Seluruh data berhasil di-reset ke Rp 0.'**
+  String get resetDataSuccessMsg;
+
+  /// No description provided for @dateToday.
+  ///
+  /// In id, this message translates to:
+  /// **'Hari Ini'**
+  String get dateToday;
+
+  /// No description provided for @dateYesterday.
+  ///
+  /// In id, this message translates to:
+  /// **'Kemarin'**
+  String get dateYesterday;
+
+  /// No description provided for @selectWalletTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih Dompet'**
+  String get selectWalletTitle;
+
+  /// No description provided for @selectCategoryTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Pilih Kategori'**
+  String get selectCategoryTitle;
+
+  /// No description provided for @editContactTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah Kontak'**
+  String get editContactTitle;
+
+  /// No description provided for @contactUpdatedMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Data kontak berhasil diperbarui.'**
+  String get contactUpdatedMsg;
+
+  /// No description provided for @deleteContactConfirmTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Hapus Kontak Ini?'**
+  String get deleteContactConfirmTitle;
+
+  /// No description provided for @deleteContactConfirmSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Kontak {name} akan dihapus. Catatan transaksi dompet di Beranda tetap aman.'**
+  String deleteContactConfirmSubtitle(String name);
+
+  /// No description provided for @deleteContactActiveDebtsWarning.
+  ///
+  /// In id, this message translates to:
+  /// **'Perhatian: {count} tagihan hutang/piutang aktif terkait kontak ini juga akan ikut terhapus.'**
+  String deleteContactActiveDebtsWarning(int count);
+
+  /// No description provided for @contactDeletedMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Kontak berhasil dihapus.'**
+  String get contactDeletedMsg;
 }
 
 class _AppLocalizationsDelegate

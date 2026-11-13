@@ -100,29 +100,25 @@ class SplitExpenseSection extends StatelessWidget {
           if (enabled) ...<Widget>[
             const Divider(height: 14),
             if (contacts.isNotEmpty) ...<Widget>[
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: contacts.map((ContactOptionModel c) {
-                    final bool isSelected = selectedContactId == c.id;
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 6),
-                      child: ChoiceChip(
-                        label: Text(c.name),
-                        selected: isSelected,
-                        visualDensity: VisualDensity.compact,
-                        onSelected: (bool val) {
-                          if (val) {
-                            onSelectContactId(c.id);
-                            contactNameController.text = c.name;
-                          } else {
-                            onSelectContactId(null);
-                          }
-                        },
-                      ),
-                    );
-                  }).toList(),
-                ),
+              Wrap(
+                spacing: 6,
+                runSpacing: 6,
+                children: contacts.map((ContactOptionModel c) {
+                  final bool isSelected = selectedContactId == c.id;
+                  return ChoiceChip(
+                    label: Text(c.name),
+                    selected: isSelected,
+                    visualDensity: VisualDensity.compact,
+                    onSelected: (bool val) {
+                      if (val) {
+                        onSelectContactId(c.id);
+                        contactNameController.text = c.name;
+                      } else {
+                        onSelectContactId(null);
+                      }
+                    },
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 8),
             ],

@@ -138,6 +138,24 @@ class DebtsDirectoryNotifier extends AsyncNotifier<DebtsDirectoryState> {
     await _syncAllLedgers();
   }
 
+  Future<void> updateContact({
+    required int id,
+    required String name,
+    String? phoneNote,
+  }) async {
+    await ref.read(debtRepositoryProvider).updateContact(
+          id: id,
+          name: name,
+          phoneNote: phoneNote,
+        );
+    await _syncAllLedgers();
+  }
+
+  Future<void> deleteContact(int contactId) async {
+    await ref.read(debtRepositoryProvider).deleteContact(contactId);
+    await _syncAllLedgers();
+  }
+
   Future<void> updateLendingCapLimit(int newLimit) async {
     await ref.read(debtRepositoryProvider).updateLendingCapLimit(newLimit);
     await refresh();
@@ -175,6 +193,7 @@ class DebtsDirectoryNotifier extends AsyncNotifier<DebtsDirectoryState> {
     required String newDebtType,
     required int amount,
     required DateTime date,
+    int? walletId,
     String? note,
     DateTime? dueDate,
   }) async {
@@ -183,6 +202,7 @@ class DebtsDirectoryNotifier extends AsyncNotifier<DebtsDirectoryState> {
           newDebtType: newDebtType,
           amount: amount,
           date: date,
+          walletId: walletId,
           note: note,
           dueDate: dueDate,
         );

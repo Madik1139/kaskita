@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchLanguageTooltip => 'Switch Language (ID / EN)';
 
   @override
-  String get phaseBadge => 'v1.0.0';
+  String get phaseBadge => 'v1.1.0';
 
   @override
   String get navHome => 'Home';
@@ -48,7 +48,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navDebtBook => 'Debt Book';
 
   @override
-  String get navSummary => 'Summary';
+  String get navReports => 'Reports';
+
+  @override
+  String get navSettings => 'Settings';
 
   @override
   String get allWallets => 'All Wallets';
@@ -165,9 +168,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get netWorthLabel => 'Net Worth';
 
   @override
-  String get loadDemoData => 'Load Sample Data';
-
-  @override
   String get resetDataToZero => 'Reset Data (Rp0)';
 
   @override
@@ -175,10 +175,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emptyTransactionsSubtitle =>
-      'Use the Transfer button above, add a new Wallet, or tap \"Load Sample Data\" to preview transactions.';
+      'Tap Quick Add at the bottom right or Transfer to start recording your cash flow.';
 
   @override
-  String get loadDemoDataNow => 'Load Sample Data Now';
+  String get recordTransactionBtn => 'Record Transaction';
 
   @override
   String get quickRecord => 'Quick Add';
@@ -467,7 +467,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noTransactionsInPeriodSubtitle =>
-      'Tap + Quick Record at the bottom right to add a transaction, or tap Load Demo Data.';
+      'Tap Record Transaction below or + Quick Add at the bottom right to record a transaction.';
 
   @override
   String get trxTypeReceivableOut => 'Lent Out';
@@ -626,8 +626,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String autoNettingBannerSubtitle(String contact, String oppositeAmount) {
-    return '$contact has an opposite balance of $oppositeAmount. Offset directly without moving cash?';
+    return '$contact has an opposite balance of $oppositeAmount. Offset opposite balance & record wallet mutation on Home?';
   }
+
+  @override
+  String get autoNettingNonCashToggle =>
+      'Non-cash (without changing wallet balance)';
 
   @override
   String get applyAutoNettingBtn => 'Apply Auto-Netting';
@@ -779,4 +783,104 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get downloadUpdateBtn => 'Download / Open Release';
+
+  @override
+  String get preferencesSectionTitle => 'APPEARANCE & LANGUAGE';
+
+  @override
+  String get languageSettingTitle => 'App Language';
+
+  @override
+  String get languageIndonesian => 'Indonesian';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get themeSettingTitle => 'Display Theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get ledgerManagementSectionTitle => 'WALLET & CATEGORY MANAGEMENT';
+
+  @override
+  String get walletManagementTitle => 'Manage Wallets';
+
+  @override
+  String walletManagementSubtitle(int count) {
+    return '$count active wallets • Add, edit, or archive';
+  }
+
+  @override
+  String categoryManagementSubtitle(int count) {
+    return '$count cash categories • Add or remove custom categories';
+  }
+
+  @override
+  String get walletManagementSheetTitle => 'Manage Cash Wallets';
+
+  @override
+  String get addNewWalletBtn => 'Add New Wallet';
+
+  @override
+  String get resetDataTitle => 'Reset All Data (Rp0)';
+
+  @override
+  String get resetDataSubtitle =>
+      'Delete all transactions, debts, and contacts, and reset the initial wallet to Rp 0.';
+
+  @override
+  String get resetDataConfirmTitle => 'Reset All Data to Rp 0?';
+
+  @override
+  String get resetDataConfirmSubtitle =>
+      'All transactions, extra wallets, contacts, and debt records will be permanently deleted. Make sure you have backed up your data if needed.';
+
+  @override
+  String get resetDataConfirmBtn => 'Yes, Reset Data';
+
+  @override
+  String get resetDataSuccessMsg => 'All data has been reset to Rp 0.';
+
+  @override
+  String get dateToday => 'Today';
+
+  @override
+  String get dateYesterday => 'Yesterday';
+
+  @override
+  String get selectWalletTitle => 'Select Wallet';
+
+  @override
+  String get selectCategoryTitle => 'Select Category';
+
+  @override
+  String get editContactTitle => 'Edit Contact';
+
+  @override
+  String get contactUpdatedMsg => 'Contact updated successfully.';
+
+  @override
+  String get deleteContactConfirmTitle => 'Delete This Contact?';
+
+  @override
+  String deleteContactConfirmSubtitle(String name) {
+    return 'Contact $name will be deleted. Wallet transactions on Home remain intact.';
+  }
+
+  @override
+  String deleteContactActiveDebtsWarning(int count) {
+    return 'Warning: $count active debt/receivable items for this contact will also be deleted.';
+  }
+
+  @override
+  String get contactDeletedMsg => 'Contact deleted successfully.';
 }

@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import '../../../core/errors/app_exception.dart';
 import '../../../core/utils/date_formatter.dart';
 import '../../transactions/data/transaction_repository.dart';
+import '../../transactions/data/transaction_rollback_helper.dart';
 
 /// Helper SQLite untuk operasi Auto-Netting dan Rollback Pembatalan Cicilan.
 class DebtSettlementHelper {
@@ -14,6 +15,7 @@ class DebtSettlementHelper {
     required String newDebtType,
     required int amount,
     required DateTime date,
+    int? walletId,
     String? note,
     DateTime? dueDate,
   }) async {
@@ -27,12 +29,51 @@ class DebtSettlementHelper {
         ? note.trim()
         : 'Potong Saldo Silang (Auto-Netting)';
 
+    if (walletId != null) {
+      final int currentWalletBalance =
+          await TransactionRollbackHelper.getWalletBalance(txn, walletId);
+      final bool isOutflow = newDebtType == 'RECEIVABLE';
+      if (isOutflow && currentWalletBalance < amount) {
+        throw const AppException(AppErrorCode.insufficientWalletBalance);
+      }
+      final int nextWalletBalance = isOutflow
+          ? currentWalletBalance - amount
+          : currentWalletBalance + amount;
+      await TransactionRollbackHelper.updateWalletBalance(
+        txn,
+        walletId,
+        nextWalletBalance,
+      );
+    }
+
     final List<Map<String, Object?>> oppositeDebts = await txn.query(
       'debts',
       where: "contact_id = ? AND debt_type = ? AND status != 'PAID'",
       whereArgs: <Object>[contactId, oppositeDebtType],
       orderBy: 'created_at ASC, id ASC',
     );
+
+    int totalOppositeAvailable = 0;
+    for (final Map<String, Object?> row in oppositeDebts) {
+      totalOppositeAvailable += (row['remaining_amount'] as int?) ?? 0;
+    }
+    final int offsetTotal = math.min(amount, totalOppositeAvailable);
+
+    int? settleTrxId;
+    if (walletId != null && offsetTotal > 0) {
+      settleTrxId = await txn.insert('transactions', <String, Object?>{
+        'wallet_id': walletId,
+        'target_wallet_id': null,
+        'category_id': null,
+        'trx_type': newDebtType == 'RECEIVABLE'
+            ? 'PAYABLE_SETTLE'
+            : 'RECEIVABLE_SETTLE',
+        'total_wallet_amount': offsetTotal,
+        'pure_consumption_amount': 0,
+        'note': cleanNote,
+        'trx_date': isoDate,
+      });
+    }
 
     int remainingToOffset = amount;
     for (final Map<String, Object?> row in oppositeDebts) {
@@ -42,6 +83,9 @@ class DebtSettlementHelper {
       final int debtId = (row['id'] as int?) ?? 0;
       final int currentRem = (row['remaining_amount'] as int?) ?? 0;
       final int offsetAmount = math.min(remainingToOffset, currentRem);
+      if (offsetAmount <= 0) {
+        continue;
+      }
       final int nextRem = currentRem - offsetAmount;
 
       await txn.update(
@@ -56,7 +100,7 @@ class DebtSettlementHelper {
 
       await txn.insert('debt_payments', <String, Object?>{
         'debt_id': debtId,
-        'payment_transaction_id': null,
+        'payment_transaction_id': settleTrxId,
         'settlement_method': 'AUTO_NETTING',
         'amount_paid': offsetAmount,
         'payment_date': isoDate,
@@ -67,9 +111,25 @@ class DebtSettlementHelper {
     }
 
     if (remainingToOffset > 0) {
+      int? excessTrxId;
+      if (walletId != null) {
+        excessTrxId = await txn.insert('transactions', <String, Object?>{
+          'wallet_id': walletId,
+          'target_wallet_id': null,
+          'category_id': null,
+          'trx_type': newDebtType == 'RECEIVABLE'
+              ? 'RECEIVABLE_OUT'
+              : 'DEBT_IN',
+          'total_wallet_amount': remainingToOffset,
+          'pure_consumption_amount': 0,
+          'note': cleanNote,
+          'trx_date': isoDate,
+        });
+      }
+
       await txn.insert('debts', <String, Object?>{
         'contact_id': contactId,
-        'source_transaction_id': null,
+        'source_transaction_id': excessTrxId,
         'debt_type': newDebtType,
         'principal_amount': remainingToOffset,
         'remaining_amount': remainingToOffset,

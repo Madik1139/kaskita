@@ -2,7 +2,7 @@ class AppConstants {
   AppConstants._();
 
   static const String appName = 'KasKita';
-  static const String appVersion = '1.0.0';
+  static const String appVersion = '1.1.0';
   static const String dbName = 'kaskita_ledger.db';
   static const int dbVersion = 1;
 

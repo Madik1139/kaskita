@@ -124,7 +124,7 @@ void main() {
     );
 
     testWidgets(
-      '2. E2E UI QA: Navigasi 3 Tab, Bahasa ID/EN, Light/Dark Mode & Input Cepat (+)',
+      '2. E2E UI QA: Navigasi 4 Tab, Bahasa ID/EN, Light/Dark Mode & Input Cepat (+)',
       (WidgetTester tester) async {
         // Gunakan ukuran layar ponsel standar agar responsif tanpa overflow
         tester.view.physicalSize = const Size(1080, 2400);
@@ -152,15 +152,34 @@ void main() {
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 200));
 
-        // Verifikasi Beranda (Light Mode awal) & NavigationBar tampil tanpa exception
+        // Verifikasi Beranda (Light Mode awal) & NavigationBar 4 Tab tampil tanpa exception
         expect(find.text('KasKita'), findsOneWidget);
         expect(find.byType(NavigationBar), findsOneWidget);
+        expect(find.text('Muat Data Contoh'), findsNothing);
         expect(tester.takeException(), isNull);
 
-        // Uji Toggle Tema (Light -> Dark Mode)
-        final Finder themeBtn = find.byIcon(LucideIcons.moon);
-        expect(themeBtn, findsOneWidget);
-        await tester.tap(themeBtn);
+        // Berpindah ke Tab 2 (Buku Hutang / Debt Book)
+        await tester.tap(find.byIcon(LucideIcons.bookUser));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 200));
+        expect(tester.takeException(), isNull);
+
+        // Berpindah ke Tab 3 (Laporan / Reports)
+        await tester.tap(find.byIcon(LucideIcons.chartColumn));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+        expect(tester.takeException(), isNull);
+
+        // Berpindah ke Tab 4 (Pengaturan / Settings)
+        await tester.tap(find.byIcon(LucideIcons.settings));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+        expect(tester.takeException(), isNull);
+
+        // Uji Toggle Tema di Pengaturan (Light/System -> Dark Mode)
+        final Finder darkBtn = find.text('Gelap');
+        expect(darkBtn, findsOneWidget);
+        await tester.tap(darkBtn);
         await tester.pump();
         await tester.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 100)),
@@ -169,39 +188,52 @@ void main() {
           await tester.pump(const Duration(milliseconds: 100));
         }
 
-        expect(find.byIcon(LucideIcons.sun), findsOneWidget);
         final BuildContext titleCtx =
             tester.element(find.text('KasKita'));
         expect(AppColors.isDark(titleCtx), isTrue);
 
-        // Uji Toggle Bahasa (ID -> EN)
-        await tester.tap(find.text('ID'));
+        // Uji Ganti Bahasa di Pengaturan (ID -> EN)
+        await tester.tap(find.text('Inggris (EN)'));
         await tester.runAsync(
           () => Future<void>.delayed(const Duration(milliseconds: 100)),
         );
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 200));
-        expect(find.text('EN'), findsOneWidget);
+        expect(find.text('Settings'), findsOneWidget);
 
-        // Berpindah ke Tab 2 (Buku Hutang / Debt Book)
-        await tester.tap(find.byIcon(LucideIcons.bookUser));
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 200));
-        expect(tester.takeException(), isNull);
-
-        // Berpindah ke Tab 3 (Ringkasan & Pengaturan / Summary)
-        await tester.tap(find.byIcon(LucideIcons.chartColumn));
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 300));
-        expect(tester.takeException(), isNull);
-
-        // Kembali ke Tab 1 (Beranda) & buka Sheet Input Cepat (+)
-        await tester.tap(find.byIcon(LucideIcons.wallet).last);
+        // Kembali ke Tab 1 (Beranda) & buka Halaman Penuh Input Cepat (+)
+        await tester.tap(
+          find.descendant(
+            of: find.byType(NavigationBar),
+            matching: find.byIcon(LucideIcons.wallet),
+          ),
+        );
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 200));
         await tester.tap(find.byType(FloatingActionButton));
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 300));
+        expect(find.text('Record Transaction'), findsOneWidget);
+        expect(find.text('Yesterday'), findsOneWidget);
+        expect(find.text('Today'), findsOneWidget);
+
+        // Uji switch panel bawah: ketuk WALLET -> Grid Dompet -> pilih BCA -> kembali ke Numpad
+        await tester.tap(find.text('WALLET'));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 200));
+        expect(find.text('SELECT WALLET'), findsOneWidget);
+        await tester.tap(find.text('BCA').last);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 200));
+
+        // Uji switch panel bawah: ketuk CATEGORY -> Grid Kategori -> pilih Transport & Fuel -> kembali ke Numpad
+        await tester.tap(find.text('CATEGORY'));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 200));
+        expect(find.text('SELECT CATEGORY'), findsOneWidget);
+        await tester.tap(find.text('Transport & Fuel').last);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 200));
         expect(tester.takeException(), isNull);
 
         // Tutup pohon widget dan tuntaskan timer watchdog sqflite di FakeAsync

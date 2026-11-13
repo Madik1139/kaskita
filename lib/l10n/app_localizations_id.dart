@@ -39,7 +39,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get switchLanguageTooltip => 'Ganti Bahasa (ID / EN)';
 
   @override
-  String get phaseBadge => 'v1.0.0';
+  String get phaseBadge => 'v1.1.0';
 
   @override
   String get navHome => 'Beranda';
@@ -48,7 +48,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get navDebtBook => 'Buku Hutang';
 
   @override
-  String get navSummary => 'Ringkasan';
+  String get navReports => 'Laporan';
+
+  @override
+  String get navSettings => 'Pengaturan';
 
   @override
   String get allWallets => 'Semua Dompet';
@@ -165,9 +168,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get netWorthLabel => 'Kekayaan Bersih';
 
   @override
-  String get loadDemoData => 'Muat Data Contoh';
-
-  @override
   String get resetDataToZero => 'Reset Data (Rp0)';
 
   @override
@@ -175,10 +175,10 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get emptyTransactionsSubtitle =>
-      'Gunakan tombol Transfer di atas, tambah Dompet baru, atau ketuk \"Muat Data Contoh\" untuk melihat simulasi transaksi.';
+      'Ketuk tombol Catat Cepat di kanan bawah atau Transfer untuk mulai mencatat arus kas Anda.';
 
   @override
-  String get loadDemoDataNow => 'Muat Data Contoh Sekarang';
+  String get recordTransactionBtn => 'Catat Transaksi';
 
   @override
   String get quickRecord => 'Catat Cepat';
@@ -469,7 +469,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get noTransactionsInPeriodSubtitle =>
-      'Ketuk tombol + Catat Cepat di kanan bawah untuk mencatat transaksi, atau ketuk Muat Data Contoh.';
+      'Ketuk tombol Catat Transaksi di bawah atau + Catat Cepat di kanan bawah untuk mencatat transaksi.';
 
   @override
   String get trxTypeReceivableOut => 'Piutang Keluar';
@@ -629,8 +629,12 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String autoNettingBannerSubtitle(String contact, String oppositeAmount) {
-    return '$contact memiliki saldo berlawanan sebesar $oppositeAmount. Potong langsung tanpa memindahkan uang?';
+    return '$contact memiliki saldo berlawanan sebesar $oppositeAmount. Potong saldo silang otomatis & catat mutasi dompet di Beranda?';
   }
+
+  @override
+  String get autoNettingNonCashToggle =>
+      'Non-tunai (tanpa mengubah saldo dompet)';
 
   @override
   String get applyAutoNettingBtn => 'Gunakan Auto-Netting';
@@ -782,4 +786,104 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get downloadUpdateBtn => 'Unduh / Buka Rilis';
+
+  @override
+  String get preferencesSectionTitle => 'TAMPILAN & BAHASA';
+
+  @override
+  String get languageSettingTitle => 'Bahasa Aplikasi';
+
+  @override
+  String get languageIndonesian => 'Indonesia';
+
+  @override
+  String get languageEnglish => 'Inggris';
+
+  @override
+  String get themeSettingTitle => 'Tema Tampilan';
+
+  @override
+  String get themeSystem => 'Sistem';
+
+  @override
+  String get themeLight => 'Terang';
+
+  @override
+  String get themeDark => 'Gelap';
+
+  @override
+  String get ledgerManagementSectionTitle => 'MANAJEMEN DOMPET & KATEGORI';
+
+  @override
+  String get walletManagementTitle => 'Kelola Dompet';
+
+  @override
+  String walletManagementSubtitle(int count) {
+    return '$count dompet aktif • Tambah, ubah, atau arsipkan';
+  }
+
+  @override
+  String categoryManagementSubtitle(int count) {
+    return '$count kategori kas • Tambah atau hapus kategori kustom';
+  }
+
+  @override
+  String get walletManagementSheetTitle => 'Kelola Dompet Kas';
+
+  @override
+  String get addNewWalletBtn => 'Tambah Dompet Baru';
+
+  @override
+  String get resetDataTitle => 'Reset Semua Data (Rp0)';
+
+  @override
+  String get resetDataSubtitle =>
+      'Hapus seluruh transaksi, hutang, dan kontak, lalu kembalikan dompet awal ke Rp 0.';
+
+  @override
+  String get resetDataConfirmTitle => 'Reset Seluruh Data ke Rp 0?';
+
+  @override
+  String get resetDataConfirmSubtitle =>
+      'Seluruh catatan transaksi, dompet tambahan, kontak, dan riwayat hutang-piutang akan dihapus permanen. Pastikan Anda sudah mencadangkan data jika diperlukan.';
+
+  @override
+  String get resetDataConfirmBtn => 'Ya, Reset Data';
+
+  @override
+  String get resetDataSuccessMsg => 'Seluruh data berhasil di-reset ke Rp 0.';
+
+  @override
+  String get dateToday => 'Hari Ini';
+
+  @override
+  String get dateYesterday => 'Kemarin';
+
+  @override
+  String get selectWalletTitle => 'Pilih Dompet';
+
+  @override
+  String get selectCategoryTitle => 'Pilih Kategori';
+
+  @override
+  String get editContactTitle => 'Ubah Kontak';
+
+  @override
+  String get contactUpdatedMsg => 'Data kontak berhasil diperbarui.';
+
+  @override
+  String get deleteContactConfirmTitle => 'Hapus Kontak Ini?';
+
+  @override
+  String deleteContactConfirmSubtitle(String name) {
+    return 'Kontak $name akan dihapus. Catatan transaksi dompet di Beranda tetap aman.';
+  }
+
+  @override
+  String deleteContactActiveDebtsWarning(int count) {
+    return 'Perhatian: $count tagihan hutang/piutang aktif terkait kontak ini juga akan ikut terhapus.';
+  }
+
+  @override
+  String get contactDeletedMsg => 'Kontak berhasil dihapus.';
 }

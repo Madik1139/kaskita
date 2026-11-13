@@ -10,10 +10,11 @@
   "close": "Tutup",
   "switchThemeTooltip": "Ganti Tema Terang / Gelap",
   "switchLanguageTooltip": "Ganti Bahasa (ID / EN)",
-  "phaseBadge": "v1.0.0",
+  "phaseBadge": "v1.1.0",
   "navHome": "Beranda",
   "navDebtBook": "Buku Hutang",
-  "navSummary": "Ringkasan",
+  "navReports": "Laporan",
+  "navSettings": "Pengaturan",
   "allWallets": "Semua Dompet",
   "addWallet": "+ Dompet",
   "manageCategories": "Kategori",
@@ -73,11 +74,10 @@
   },
   "safeToSpendLabel": "Dana Aman Siap Pakai",
   "netWorthLabel": "Kekayaan Bersih",
-  "loadDemoData": "Muat Data Contoh",
   "resetDataToZero": "Reset Data (Rp0)",
   "emptyTransactionsTitle": "Belum Ada Catatan Transaksi",
-  "emptyTransactionsSubtitle": "Gunakan tombol Transfer di atas, tambah Dompet baru, atau ketuk \"Muat Data Contoh\" untuk melihat simulasi transaksi.",
-  "loadDemoDataNow": "Muat Data Contoh Sekarang",
+  "emptyTransactionsSubtitle": "Ketuk tombol Catat Cepat di kanan bawah atau Transfer untuk mulai mencatat arus kas Anda.",
+  "recordTransactionBtn": "Catat Transaksi",
   "quickRecord": "Catat Cepat",
   "quickInputTitle": "Input Transaksi Satu Pintu (< 5 Detik)",
   "transactionAmountLabel": "NOMINAL TRANSAKSI",
@@ -224,7 +224,7 @@
     }
   },
   "noTransactionsInPeriodTitle": "Belum Ada Transaksi di Periode Ini",
-  "noTransactionsInPeriodSubtitle": "Ketuk tombol + Catat Cepat di kanan bawah untuk mencatat transaksi, atau ketuk Muat Data Contoh.",
+  "noTransactionsInPeriodSubtitle": "Ketuk tombol Catat Transaksi di bawah atau + Catat Cepat di kanan bawah untuk mencatat transaksi.",
   "trxTypeReceivableOut": "Piutang Keluar",
   "trxTypeDebtIn": "Hutang Masuk",
   "trxTypeReceivableSettle": "Terima Cicilan",
@@ -296,7 +296,7 @@
   "cancelPaymentConfirmSubtitle": "Sisa tagihan dan saldo dompet (jika tunai) akan dikembalikan seperti semula.",
   "paymentCancelledMsg": "Cicilan berhasil dibatalkan dan saldo dikembalikan.",
   "autoNettingBannerTitle": "Deteksi Saldo Silang (Auto-Netting)!",
-  "autoNettingBannerSubtitle": "{contact} memiliki saldo berlawanan sebesar {oppositeAmount}. Potong langsung tanpa memindahkan uang?",
+  "autoNettingBannerSubtitle": "{contact} memiliki saldo berlawanan sebesar {oppositeAmount}. Potong saldo silang otomatis & catat mutasi dompet di Beranda?",
   "@autoNettingBannerSubtitle": {
     "placeholders": {
       "contact": {
@@ -307,6 +307,7 @@
       }
     }
   },
+  "autoNettingNonCashToggle": "Non-tunai (tanpa mengubah saldo dompet)",
   "applyAutoNettingBtn": "Gunakan Auto-Netting",
   "invoiceHeaderTitle": "KASKITA • CATATAN BUKU HUTANG",
   "invoicePrintedDate": "Tanggal Cetak: {date}",
@@ -379,5 +380,63 @@
       }
     }
   },
-  "downloadUpdateBtn": "Unduh / Buka Rilis"
+  "downloadUpdateBtn": "Unduh / Buka Rilis",
+  "preferencesSectionTitle": "TAMPILAN & BAHASA",
+  "languageSettingTitle": "Bahasa Aplikasi",
+  "languageIndonesian": "Indonesia",
+  "languageEnglish": "Inggris",
+  "themeSettingTitle": "Tema Tampilan",
+  "themeSystem": "Sistem",
+  "themeLight": "Terang",
+  "themeDark": "Gelap",
+  "ledgerManagementSectionTitle": "MANAJEMEN DOMPET & KATEGORI",
+  "walletManagementTitle": "Kelola Dompet",
+  "walletManagementSubtitle": "{count} dompet aktif • Tambah, ubah, atau arsipkan",
+  "@walletManagementSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryManagementSubtitle": "{count} kategori kas • Tambah atau hapus kategori kustom",
+  "@categoryManagementSubtitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "walletManagementSheetTitle": "Kelola Dompet Kas",
+  "addNewWalletBtn": "Tambah Dompet Baru",
+  "resetDataTitle": "Reset Semua Data (Rp0)",
+  "resetDataSubtitle": "Hapus seluruh transaksi, hutang, dan kontak, lalu kembalikan dompet awal ke Rp 0.",
+  "resetDataConfirmTitle": "Reset Seluruh Data ke Rp 0?",
+  "resetDataConfirmSubtitle": "Seluruh catatan transaksi, dompet tambahan, kontak, dan riwayat hutang-piutang akan dihapus permanen. Pastikan Anda sudah mencadangkan data jika diperlukan.",
+  "resetDataConfirmBtn": "Ya, Reset Data",
+  "resetDataSuccessMsg": "Seluruh data berhasil di-reset ke Rp 0.",
+  "dateToday": "Hari Ini",
+  "dateYesterday": "Kemarin",
+  "selectWalletTitle": "Pilih Dompet",
+  "selectCategoryTitle": "Pilih Kategori",
+  "editContactTitle": "Ubah Kontak",
+  "contactUpdatedMsg": "Data kontak berhasil diperbarui.",
+  "deleteContactConfirmTitle": "Hapus Kontak Ini?",
+  "deleteContactConfirmSubtitle": "Kontak {name} akan dihapus. Catatan transaksi dompet di Beranda tetap aman.",
+  "@deleteContactConfirmSubtitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteContactActiveDebtsWarning": "Perhatian: {count} tagihan hutang/piutang aktif terkait kontak ini juga akan ikut terhapus.",
+  "@deleteContactActiveDebtsWarning": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "contactDeletedMsg": "Kontak berhasil dihapus."
 }

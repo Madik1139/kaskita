@@ -8,18 +8,27 @@ import '../../../../core/widgets/custom_numpad.dart';
 import '../../../../core/widgets/tabular_currency_text.dart';
 import '../../../../core/widgets/tactile_card.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../models/debt_models.dart';
 import '../../providers/debt_provider.dart';
 
-/// Modal Bottom Sheet untuk menambah Kontak Teman baru.
+/// Modal Bottom Sheet untuk menambah atau mengubah Kontak Teman.
 class ContactFormSheet extends ConsumerStatefulWidget {
-  const ContactFormSheet({super.key});
+  const ContactFormSheet({
+    this.editingContact,
+    super.key,
+  });
 
-  static Future<void> show(BuildContext context) {
+  final ContactSummaryModel? editingContact;
+
+  static Future<void> show(
+    BuildContext context, {
+    ContactSummaryModel? editingContact,
+  }) {
     return showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      builder: (_) => const ContactFormSheet(),
+      builder: (_) => ContactFormSheet(editingContact: editingContact),
     );
   }
 
@@ -28,9 +37,20 @@ class ContactFormSheet extends ConsumerStatefulWidget {
 }
 
 class _ContactFormSheetState extends ConsumerState<ContactFormSheet> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneNoteController = TextEditingController();
+  late final TextEditingController _nameController;
+  late final TextEditingController _phoneNoteController;
   bool _isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(
+      text: widget.editingContact?.name ?? '',
+    );
+    _phoneNoteController = TextEditingController(
+      text: widget.editingContact?.phoneNote ?? '',
+    );
+  }
 
   @override
   void dispose() {
@@ -44,16 +64,29 @@ class _ContactFormSheetState extends ConsumerState<ContactFormSheet> {
       return;
     }
     final AppLocalizations l10n = context.l10n;
+    final ContactSummaryModel? editing = widget.editingContact;
     setState(() => _isSaving = true);
     try {
-      await ref.read(debtsDirectoryProvider.notifier).createContact(
-            name: _nameController.text,
-            phoneNote: _phoneNoteController.text,
-          );
+      if (editing == null) {
+        await ref.read(debtsDirectoryProvider.notifier).createContact(
+              name: _nameController.text,
+              phoneNote: _phoneNoteController.text,
+            );
+      } else {
+        await ref.read(debtsDirectoryProvider.notifier).updateContact(
+              id: editing.id,
+              name: _nameController.text,
+              phoneNote: _phoneNoteController.text,
+            );
+      }
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.contactSavedMsg)),
+          SnackBar(
+            content: Text(
+              editing == null ? l10n.contactSavedMsg : l10n.contactUpdatedMsg,
+            ),
+          ),
         );
       }
     } catch (error) {
@@ -72,6 +105,7 @@ class _ContactFormSheetState extends ConsumerState<ContactFormSheet> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = context.l10n;
+    final bool isEditing = widget.editingContact != null;
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -88,7 +122,7 @@ class _ContactFormSheetState extends ConsumerState<ContactFormSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                l10n.addContactTitle,
+                isEditing ? l10n.editContactTitle : l10n.addContactTitle,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               IconButton(
@@ -124,12 +158,94 @@ class _ContactFormSheetState extends ConsumerState<ContactFormSheet> {
           const SizedBox(height: 14),
           FilledButton.icon(
             onPressed: _isSaving ? null : _saveContact,
-            icon: const Icon(LucideIcons.userPlus, size: 16),
+            icon: Icon(
+              isEditing ? LucideIcons.check : LucideIcons.userPlus,
+              size: 16,
+            ),
             label: Text(l10n.save),
           ),
         ],
       ),
     );
+  }
+}
+
+/// Helper bersama untuk dialog konfirmasi & eksekusi hapus kontak.
+class ContactActionsHelper {
+  const ContactActionsHelper._();
+
+  static Future<void> confirmAndDelete({
+    required BuildContext context,
+    required WidgetRef ref,
+    required ContactSummaryModel contact,
+    VoidCallback? onBeforeDelete,
+    VoidCallback? onAfterDelete,
+    VoidCallback? onDeleteFailed,
+  }) async {
+    final AppLocalizations l10n = context.l10n;
+    final bool hasActiveDebts =
+        contact.openDebtsCount > 0 || contact.netBalance != 0;
+
+    final bool? confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext ctx) => AlertDialog(
+        title: Text(l10n.deleteContactConfirmTitle),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(l10n.deleteContactConfirmSubtitle(contact.name)),
+            if (hasActiveDebts) ...<Widget>[
+              const SizedBox(height: 10),
+              Text(
+                l10n.deleteContactActiveDebtsWarning(contact.openDebtsCount),
+                style: TextStyle(
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.warning(ctx),
+                ),
+              ),
+            ],
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.negative(ctx),
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(l10n.delete),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !context.mounted) {
+      return;
+    }
+
+    onBeforeDelete?.call();
+    try {
+      await ref.read(debtsDirectoryProvider.notifier).deleteContact(contact.id);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.contactDeletedMsg)),
+        );
+        onAfterDelete?.call();
+      }
+    } catch (error) {
+      onDeleteFailed?.call();
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppException.resolveError(error, l10n))),
+        );
+      }
+    }
   }
 }
 

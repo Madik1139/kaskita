@@ -15,7 +15,7 @@ Setiap kali menyelesaikan fitur penting, perubahan arsitektur, atau pembaruan ve
    * `PATCH` (`0.1.x`): Perbaikan *bug*, perapian UI kecil, atau optimasi performa.
    * `MINOR` (`0.x.0`): Penambahan fitur baru (misal: selesainya modul Buku Hutang, Grafik, atau Backup/Restore).
    * `MAJOR` (`x.0.0`): Rilis MVP penuh atau perubahan skema besar.
-2. Perbarui versi di `pubspec.yaml` (jika merupakan tonggak rilis) dan catat riwayat perubahannya pada tabel **Riwayat Versi (Changelog)** di [README.md](../../../README.md).
+2. Perbarui versi di `pubspec.yaml` (jika merupakan tonggak rilis) dan catat riwayat perubahannya pada tabel **Riwayat Versi (Changelog)** di [README.md](../../../README.md) secara ringkas: fokus hanya pada pembaruan/penambahan fitur tanpa mencantumkan nama file, simbol kode, atau detail teknis internal.
 3. Pastikan daftar status fitur di `README.md` mencerminkan kondisi kode terkini.
 
 ## Langkah 2: Pembaruan User Manual Typst (`docs/user_manual.typ`) Beserta Gambar Layout

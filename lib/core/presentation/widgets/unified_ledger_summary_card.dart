@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../features/wallets/models/wallet_model.dart';
-import '../../../features/wallets/presentation/widgets/category_management_sheet.dart';
-import '../../../features/wallets/presentation/widgets/wallet_form_sheet.dart';
 import '../../../features/wallets/presentation/widgets/wallet_transfer_sheet.dart';
 import '../../../features/wallets/providers/wallet_provider.dart';
 import '../../../l10n/app_localizations.dart';
@@ -69,24 +67,9 @@ class UnifiedLedgerSummaryCard extends ConsumerWidget {
                         ref.read(selectedWalletIdProvider.notifier).state =
                             wallet.id;
                       },
-                      onLongPress: () => WalletFormSheet.show(
-                        context,
-                        editingWallet: wallet,
-                      ),
                     ),
                     const SizedBox(width: 6),
                   ],
-                  _ActionPill(
-                    label: l10n.addWallet,
-                    icon: LucideIcons.plus,
-                    onTap: () => WalletFormSheet.show(context),
-                  ),
-                  const SizedBox(width: 6),
-                  _ActionPill(
-                    label: l10n.manageCategories,
-                    icon: LucideIcons.tags,
-                    onTap: () => CategoryManagementSheet.show(context),
-                  ),
                 ],
               ),
             ),
@@ -101,41 +84,17 @@ class UnifiedLedgerSummaryCard extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Flexible(
-                            child: Text(
-                              selectedWallet != null
-                                  ? l10n
-                                      .selectedWalletBalanceLabel(
-                                        selectedWalletLabel,
-                                      )
-                                      .toUpperCase()
-                                  : l10n.activeWalletBalanceLabel,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          ),
-                          if (selectedWallet != null) ...<Widget>[
-                            const SizedBox(width: 6),
-                            InkWell(
-                              onTap: () => WalletFormSheet.show(
-                                context,
-                                editingWallet: selectedWallet,
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                              child: Padding(
-                                padding: const EdgeInsets.all(2),
-                                child: Icon(
-                                  LucideIcons.pencil,
-                                  size: 13,
-                                  color: AppColors.accent(context),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
+                      Text(
+                        selectedWallet != null
+                            ? l10n
+                                .selectedWalletBalanceLabel(
+                                  selectedWalletLabel,
+                                )
+                                .toUpperCase()
+                            : l10n.activeWalletBalanceLabel,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelSmall,
                       ),
                       const SizedBox(height: 4),
                       TabularCurrencyText(
@@ -240,21 +199,18 @@ class _FilterPill extends StatelessWidget {
     required this.icon,
     required this.selected,
     required this.onTap,
-    this.onLongPress,
   });
 
   final String label;
   final IconData icon;
   final bool selected;
   final VoidCallback onTap;
-  final VoidCallback? onLongPress;
 
   @override
   Widget build(BuildContext context) {
     final Color accent = AppColors.accent(context);
     return InkWell(
       onTap: onTap,
-      onLongPress: onLongPress,
       borderRadius: BorderRadius.circular(6),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -282,49 +238,6 @@ class _FilterPill extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
                 color: selected ? accent : AppColors.textPrimary(context),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ActionPill extends StatelessWidget {
-  const _ActionPill({
-    required this.label,
-    required this.icon,
-    required this.onTap,
-  });
-
-  final String label;
-  final IconData icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(6),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
-        decoration: BoxDecoration(
-          color: AppColors.surface(context),
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: AppColors.border(context)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(icon, size: 13, color: AppColors.accent(context)),
-            const SizedBox(width: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: AppColors.accent(context),
               ),
             ),
           ],

@@ -6,33 +6,27 @@ import '../../../core/errors/app_exception.dart';
 import '../../../core/providers/app_preferences_provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/localization_helper.dart';
-import '../../../core/widgets/empty_state_view.dart';
 import '../../../core/widgets/tactile_card.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../reports/models/report_models.dart';
-import '../../reports/presentation/widgets/category_breakdown_card.dart';
-import '../../reports/presentation/widgets/monthly_comparison_chart_card.dart';
-import '../../reports/providers/report_provider.dart';
 import '../models/settings_models.dart';
 import '../providers/settings_provider.dart';
 import 'widgets/pin_lock_and_setup_views.dart';
+import 'widgets/settings_preferences_cards.dart';
 
-/// Tampilan Tab 3 (Ringkasan & Pengaturan):
-/// - Grafik Perbandingan 6 Bulan (`fl_chart`) & Rincian Kategori
-/// - Kunci Aplikasi (PIN 6 Digit & Biometrik)
-/// - Pengingat Jatuh Tempo Lokal (09.00 pagi)
-/// - Backup/Restore Lokal (`.json` / `.db`) & Ekspor Laporan `.csv`
+/// Tampilan Tab 4 (Pengaturan):
+/// - Preferensi Bahasa & Tema
+/// - Manajemen Dompet & Kategori
+/// - Keamanan Aplikasi (PIN 6 Digit / Biometrik) & Pengingat Jatuh Tempo
+/// - Cadangkan / Pulihkan Data, Ekspor CSV, & Reset Data (Rp0)
 /// - Cek Pembaruan Aplikasi OTA via GitHub Releases
-class SummarySettingsTabView extends ConsumerStatefulWidget {
-  const SummarySettingsTabView({super.key});
+class SettingsTabView extends ConsumerStatefulWidget {
+  const SettingsTabView({super.key});
 
   @override
-  ConsumerState<SummarySettingsTabView> createState() =>
-      _SummarySettingsTabViewState();
+  ConsumerState<SettingsTabView> createState() => _SettingsTabViewState();
 }
 
-class _SummarySettingsTabViewState
-    extends ConsumerState<SummarySettingsTabView> {
+class _SettingsTabViewState extends ConsumerState<SettingsTabView> {
   bool _isBusy = false;
 
   Future<void> _runWithFeedback(Future<void> Function() action) async {
@@ -55,6 +49,43 @@ class _SummarySettingsTabViewState
         setState(() => _isBusy = false);
       }
     }
+  }
+
+  Future<void> _confirmAndResetAllData() async {
+    final AppLocalizations l10n = context.l10n;
+    final bool? confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext ctx) => AlertDialog(
+        title: Text(l10n.resetDataConfirmTitle),
+        content: Text(l10n.resetDataConfirmSubtitle),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.negative(ctx),
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(l10n.resetDataConfirmBtn),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) {
+      return;
+    }
+    await _runWithFeedback(() async {
+      await ref.read(settingsProvider.notifier).resetAllFinancialData();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.resetDataSuccessMsg)),
+        );
+      }
+    });
   }
 
   Future<void> _checkOtaUpdates() async {
@@ -110,45 +141,27 @@ class _SummarySettingsTabViewState
   Widget build(BuildContext context) {
     final AppLocalizations l10n = context.l10n;
     final String langCode = ref.watch(appLocaleProvider).languageCode;
-    final AsyncValue<ReportSummaryState> reportsAsync =
-        ref.watch(reportsProvider);
     final AsyncValue<AppSecurityConfigModel> settingsAsync =
         ref.watch(settingsProvider);
 
     return RefreshIndicator(
-      onRefresh: () async {
-        ref.invalidate(reportsProvider);
-        await ref.read(settingsProvider.notifier).refresh();
-      },
+      onRefresh: () => ref.read(settingsProvider.notifier).refresh(),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 88),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
         children: <Widget>[
           Text(
-            l10n.reportSectionTitle,
+            l10n.preferencesSectionTitle,
             style: Theme.of(context).textTheme.labelSmall,
           ),
           const SizedBox(height: 8),
-          reportsAsync.when(
-            loading: () => const TactileCard(
-              child: Center(child: CircularProgressIndicator()),
-            ),
-            error: (Object err, StackTrace _) => EmptyStateView(
-              icon: LucideIcons.triangleAlert,
-              title: l10n.errUnexpectedUiTitle,
-              subtitle: AppException.resolveError(err, l10n),
-            ),
-            data: (ReportSummaryState report) => Column(
-              children: <Widget>[
-                MonthlyComparisonChartCard(points: report.sixMonthTrend),
-                const SizedBox(height: 12),
-                CategoryBreakdownCard(
-                  activePeriod: report.activePeriod,
-                  items: report.categoryBreakdown,
-                  totalPureExpense: report.totalPureExpenseInMonth,
-                ),
-              ],
-            ),
+          const PreferencesSettingsCard(),
+          const SizedBox(height: 18),
+          Text(
+            l10n.ledgerManagementSectionTitle,
+            style: Theme.of(context).textTheme.labelSmall,
           ),
+          const SizedBox(height: 8),
+          const LedgerManagementSettingsCard(),
           const SizedBox(height: 18),
           Text(
             l10n.securitySectionTitle,
@@ -306,6 +319,31 @@ class _SummarySettingsTabViewState
                     }
                   }),
                 ),
+                const Divider(),
+                ListTile(
+                  leading: Icon(
+                    LucideIcons.rotateCcw,
+                    size: 19,
+                    color: AppColors.negative(context),
+                  ),
+                  title: Text(
+                    l10n.resetDataTitle,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.negative(context),
+                    ),
+                  ),
+                  subtitle: Text(
+                    l10n.resetDataSubtitle,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  trailing: Icon(
+                    LucideIcons.chevronRight,
+                    size: 16,
+                    color: AppColors.negative(context),
+                  ),
+                  onTap: _confirmAndResetAllData,
+                ),
               ],
             ),
           ),
@@ -355,4 +393,3 @@ class _SummarySettingsTabViewState
     );
   }
 }
-

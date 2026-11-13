@@ -139,6 +139,60 @@ class DebtRepository {
     return detail.contact;
   }
 
+  /// Memperbarui nama dan catatan kontak (cek duplikasi nama case-insensitive).
+  Future<ContactSummaryModel> updateContact({
+    required int id,
+    required String name,
+    String? phoneNote,
+  }) async {
+    final String trimmed = name.trim();
+    if (trimmed.isEmpty) {
+      throw const AppException(AppErrorCode.contactRequired);
+    }
+    final Database db = await _dbHelper.database;
+    final List<Map<String, Object?>> dup = await db.query(
+      'contacts',
+      where: 'LOWER(name) = ? AND id != ?',
+      whereArgs: <Object>[trimmed.toLowerCase(), id],
+      limit: 1,
+    );
+    if (dup.isNotEmpty) {
+      throw const AppException(AppErrorCode.duplicateContactName);
+    }
+
+    final int updatedRows = await db.update(
+      'contacts',
+      <String, Object?>{
+        'name': trimmed,
+        'phone_note': (phoneNote ?? '').trim(),
+        'updated_at': DateTime.now().toIso8601String(),
+      },
+      where: 'id = ?',
+      whereArgs: <Object>[id],
+    );
+    if (updatedRows == 0) {
+      throw const AppException(AppErrorCode.contactRequired);
+    }
+    final ContactDetailStateModel detail = await getContactDetail(id);
+    return detail.contact;
+  }
+
+  /// Menghapus kontak beserta catatan tagihan terkait (CASCADE di `debts`/`debt_payments`),
+  /// sementara transaksi dompet di Beranda tetap aman tanpa mengubah saldo kas.
+  Future<void> deleteContact(int contactId) async {
+    final Database db = await _dbHelper.database;
+    await db.transaction((Transaction txn) async {
+      final int deletedRows = await txn.delete(
+        'contacts',
+        where: 'id = ?',
+        whereArgs: <Object>[contactId],
+      );
+      if (deletedRows == 0) {
+        throw const AppException(AppErrorCode.contactRequired);
+      }
+    });
+  }
+
   /// Pelunasan / Cicilan Tagihan dengan Alokasi Otomatis FIFO (atau Pilih Tagihan Spesifik)
   /// serta dukungan Tunai (`CASH`) maupun Lunas via Barang/Traktiran (`ITEM_TREAT`).
   Future<void> settleDebts({
@@ -302,6 +356,7 @@ class DebtRepository {
     required String newDebtType,
     required int amount,
     required DateTime date,
+    int? walletId,
     String? note,
     DateTime? dueDate,
   }) async {
@@ -313,6 +368,7 @@ class DebtRepository {
         newDebtType: newDebtType,
         amount: amount,
         date: date,
+        walletId: walletId,
         note: note,
         dueDate: dueDate,
       );

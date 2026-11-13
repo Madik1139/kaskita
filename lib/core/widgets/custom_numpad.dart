@@ -171,32 +171,46 @@ class CustomNumpad extends StatelessWidget {
                   child: InkWell(
                     onTap: onSubmit,
                     borderRadius: BorderRadius.circular(8),
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Icon(
-                            LucideIcons.check,
-                            size: 20,
-                            color: onSubmit != null
-                                ? (AppColors.isDark(context)
-                                    ? AppColors.darkBackground
-                                    : Colors.white)
-                                : AppColors.textSecondary(context),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            submitLabel ?? context.l10n.save,
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: onSubmit != null
-                                      ? (AppColors.isDark(context)
-                                          ? AppColors.darkBackground
-                                          : Colors.white)
-                                      : AppColors.textSecondary(context),
-                                ),
-                          ),
-                        ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 8,
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(
+                              LucideIcons.check,
+                              size: 20,
+                              color: onSubmit != null
+                                  ? (AppColors.isDark(context)
+                                      ? AppColors.darkBackground
+                                      : Colors.white)
+                                  : AppColors.textSecondary(context),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              submitLabel ?? context.l10n.save,
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    fontSize: 12.5,
+                                    height: 1.15,
+                                    fontWeight: FontWeight.w700,
+                                    color: onSubmit != null
+                                        ? (AppColors.isDark(context)
+                                            ? AppColors.darkBackground
+                                            : Colors.white)
+                                        : AppColors.textSecondary(context),
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

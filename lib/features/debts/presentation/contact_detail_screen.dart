@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../core/errors/app_exception.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/utils/currency_formatter.dart';
 import '../../../core/utils/localization_helper.dart';
 import '../../../core/widgets/empty_state_view.dart';
 import '../../../core/widgets/status_badge.dart';
@@ -12,13 +11,15 @@ import '../../../core/widgets/tactile_card.dart';
 import '../../../l10n/app_localizations.dart';
 import '../models/debt_models.dart';
 import '../providers/debt_provider.dart';
+import 'widgets/active_debt_row.dart';
 import 'widgets/clean_invoice_receipt_sheet.dart';
+import 'widgets/contact_and_cap_sheets.dart';
 import 'widgets/debt_settlement_sheet.dart';
 
 /// Halaman Detail Kontak Buku Hutang:
 /// Menampilkan Saldo Bersih, Trust Badge, Daftar Tagihan Aktif (FIFO),
-/// Riwayat Pembayaran/Cicilan, serta tombol Struk Gambar (PNG).
-class ContactDetailScreen extends ConsumerWidget {
+/// Riwayat Pembayaran/Cicilan, serta tombol Edit, Hapus, & Struk Gambar (PNG).
+class ContactDetailScreen extends ConsumerStatefulWidget {
   const ContactDetailScreen({
     required this.contactId,
     super.key,
@@ -26,9 +27,16 @@ class ContactDetailScreen extends ConsumerWidget {
 
   final int contactId;
 
+  @override
+  ConsumerState<ContactDetailScreen> createState() =>
+      _ContactDetailScreenState();
+}
+
+class _ContactDetailScreenState extends ConsumerState<ContactDetailScreen> {
+  bool _isDeleting = false;
+
   Future<void> _confirmCancelPayment(
     BuildContext context,
-    WidgetRef ref,
     DebtPaymentModel payment,
   ) async {
     final AppLocalizations l10n = context.l10n;
@@ -70,14 +78,54 @@ class ContactDetailScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final AppLocalizations l10n = context.l10n;
+    if (_isDeleting) {
+      return Scaffold(
+        appBar: AppBar(title: Text(l10n.contactDetailTitle)),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     final AsyncValue<ContactDetailStateModel> detailAsync =
-        ref.watch(contactDetailProvider(contactId));
+        ref.watch(contactDetailProvider(widget.contactId));
+    final ContactSummaryModel? loadedContact = detailAsync.valueOrNull?.contact;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.contactDetailTitle),
+        actions: loadedContact == null
+            ? null
+            : <Widget>[
+                IconButton(
+                  tooltip: l10n.edit,
+                  onPressed: () => ContactFormSheet.show(
+                    context,
+                    editingContact: loadedContact,
+                  ),
+                  icon: const Icon(LucideIcons.pencil, size: 18),
+                ),
+                IconButton(
+                  tooltip: l10n.delete,
+                  onPressed: () => ContactActionsHelper.confirmAndDelete(
+                    context: context,
+                    ref: ref,
+                    contact: loadedContact,
+                    onBeforeDelete: () => setState(() => _isDeleting = true),
+                    onAfterDelete: () => Navigator.of(context).pop(),
+                    onDeleteFailed: () {
+                      if (mounted) {
+                        setState(() => _isDeleting = false);
+                      }
+                    },
+                  ),
+                  icon: Icon(
+                    LucideIcons.trash2,
+                    size: 18,
+                    color: AppColors.negative(context),
+                  ),
+                ),
+              ],
       ),
       body: detailAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -205,7 +253,7 @@ class ContactDetailScreen extends ConsumerWidget {
                           i < detail.activeDebts.length;
                           i++) ...<Widget>[
                         if (i > 0) const Divider(),
-                        _ActiveDebtRow(
+                        ActiveDebtRow(
                           item: detail.activeDebts[i],
                           l10n: l10n,
                           onTap: () => DebtSettlementSheet.show(
@@ -263,7 +311,6 @@ class ContactDetailScreen extends ConsumerWidget {
                                 tooltip: l10n.delete,
                                 onPressed: () => _confirmCancelPayment(
                                   context,
-                                  ref,
                                   detail.paymentHistory[i],
                                 ),
                                 icon: Icon(
@@ -282,79 +329,6 @@ class ContactDetailScreen extends ConsumerWidget {
             ],
           );
         },
-      ),
-    );
-  }
-}
-
-class _ActiveDebtRow extends StatelessWidget {
-  const _ActiveDebtRow({
-    required this.item,
-    required this.l10n,
-    required this.onTap,
-  });
-
-  final DebtItemModel item;
-  final AppLocalizations l10n;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isReceivable = item.debtType == 'RECEIVABLE';
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Flexible(
-                        child: Text(
-                          item.note,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      StatusBadge.fromDebtStatus(item.status, l10n: l10n),
-                    ],
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    l10n.initialAndRemainingLabel(
-                      CurrencyFormatter.format(item.principalAmount),
-                      CurrencyFormatter.format(item.remainingAmount),
-                    ),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                  if (item.dueDate != null && item.dueDate!.isNotEmpty)
-                    Text(
-                      '${l10n.dueDateLabel}: ${item.dueDate}',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.warning(context),
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                ],
-              ),
-            ),
-            TabularCurrencyText(
-              amount: isReceivable
-                  ? item.remainingAmount
-                  : -item.remainingAmount,
-              showPlusSign: isReceivable,
-              semanticType: isReceivable
-                  ? CurrencySemanticType.positive
-                  : CurrencySemanticType.negative,
-            ),
-          ],
-        ),
       ),
     );
   }
