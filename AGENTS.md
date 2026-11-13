@@ -10,9 +10,10 @@ Dokumen ini berisi aturan inti (*always-on rules*) yang **wajib** dipatuhi oleh 
   * `data/` (Repository & query SQLite `sqflite`).
   * `providers/` (State management menggunakan `flutter_riverpod`).
   * `presentation/` (Screens & Widgets).
-* **Batas Panjang Baris File (Maksimal 250 Baris) & Single Responsibility:**
-  * Satu file `.dart` **tidak boleh melebihi 250–300 baris**.
-  * Jika sebuah Screen atau Widget mulai panjang, **wajib dipecah** menjadi sub-widget terpisah di dalam folder `widgets/` (misal: header kartu, baris transaksi, bottom sheet input masing-masing di file sendiri).
+* **Batas Panjang Baris File yang Proporsional (Ideal <= 300, Maksimal 400 Baris) & Kohesi:**
+  * Mengingat struktur pohon widget Flutter yang vertikal, target ideal per file adalah **`150–300 baris`**, dengan batas maksimal (**hard limit**) **`400 baris`**.
+  * Jangan memecah file secara berlebihan (*over-fragmentation*) jika kodenya masih satu kesatuan utuh di bawah 350–400 baris.
+  * Pecah file berdasarkan **batas tanggung jawab fungsional** (misal: pisahkan *Screen Utama*, *Modal Bottom Sheet*, dan *Kartu Kompleks* ke file masing-masing).
 * **Pemisahan Mutlak Logic vs UI (*Zero Business Logic in UI*):**
   * File di lapisan UI (`presentation/`, `screens/`, `widgets/`, `app.dart`) **dilarang keras** mengimpor `sqflite`, memanggil `DatabaseHelper`, atau menghitung rumus saldo secara langsung.
   * Seluruh komunikasi data wajib mengikuti alur satu arah: **`UI (Widget)` -> `Provider / Notifier (Riverpod)` -> `Repository (SQLite)`**.

@@ -10,7 +10,7 @@ class LedgerOverviewRepository {
 
   final DatabaseHelper _dbHelper;
 
-  Future<LedgerOverviewState> fetchOverview() async {
+  Future<LedgerOverviewState> fetchOverview({int? selectedWalletId}) async {
     try {
       final Database db = await _dbHelper.database;
 
@@ -25,18 +25,38 @@ class LedgerOverviewRepository {
         'debts',
         where: "status != 'PAID'",
       );
+
+      final String whereClause = selectedWalletId != null
+          ? 'WHERE t.wallet_id = ? OR t.target_wallet_id = ?'
+          : '';
+      final List<Object> whereArgs = selectedWalletId != null
+          ? <Object>[selectedWalletId, selectedWalletId]
+          : <Object>[];
+
       final List<Map<String, Object?>> trxs = await db.rawQuery('''
-        SELECT t.*, w.name AS wallet_name, c.name AS category_name
+        SELECT t.*,
+               w.name AS wallet_name,
+               tw.name AS target_wallet_name,
+               c.name AS category_name
         FROM transactions t
         LEFT JOIN wallets w ON t.wallet_id = w.id
+        LEFT JOIN wallets tw ON t.target_wallet_id = tw.id
         LEFT JOIN categories c ON t.category_id = c.id
+        $whereClause
         ORDER BY t.trx_date DESC, t.id DESC
-      ''');
+      ''', whereArgs);
 
-      int totalWallet = 0;
+      int totalAllWallets = 0;
+      int displayedWallet = 0;
       for (final Map<String, Object?> w in wallets) {
-        totalWallet += (w['current_balance'] as int?) ?? 0;
+        final int bal = (w['current_balance'] as int?) ?? 0;
+        totalAllWallets += bal;
+        if (selectedWalletId != null && w['id'] == selectedWalletId) {
+          displayedWallet = bal;
+        }
       }
+      final int activeBalance =
+          selectedWalletId != null ? displayedWallet : totalAllWallets;
 
       int activeReceivables = 0;
       int activePayables = 0;
@@ -50,9 +70,9 @@ class LedgerOverviewRepository {
       }
 
       return LedgerOverviewState(
-        walletBalance: totalWallet,
-        safeToSpend: totalWallet - activePayables,
-        netWorth: totalWallet + activeReceivables - activePayables,
+        walletBalance: activeBalance,
+        safeToSpend: activeBalance - activePayables,
+        netWorth: totalAllWallets + activeReceivables - activePayables,
         walletCount: wallets.length,
         categoryCount: categories.length,
         contactCount: contacts.length,

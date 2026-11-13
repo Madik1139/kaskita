@@ -14,7 +14,7 @@
 4. **Presentation (`presentation/` & `lib/core/widgets/`):**
    * Fokus 100% pada *rendering* state dan menangkap input pengguna.
    * **Dilarang keras** mengimpor `package:sqflite/sqflite.dart` atau `DatabaseHelper` di dalam file UI/Widget.
-   * **Batas Ukuran File:** Maksimal **250 baris per file**. Pecah layar menjadi komponen-komponen kecil (misal: `*_header_card.dart`, `*_list_item.dart`, `*_bottom_sheet.dart`).
+   * **Batas Ukuran File Proporsional:** Target ideal **150–300 baris**, dan batas maksimal **400 baris per file**. Pecah berdasarkan kesatuan fungsi (misal: pisahkan *Screen*, *Bottom Sheet*, dan *Card* utama) tanpa melakukan *over-fragmentation* (memecah menjadi terlalu banyak file mikro yang menyulitkan pembacaan).
    * Wajib menggunakan `context.l10n` (`lib/l10n/app_id.arb` & `app_en.arb`) untuk seluruh label dan `AppException.resolveError(err, context.l10n)` untuk seluruh pesan *error/validasi*.
 
 ## 2. Daftar Periksa Komponen Reusable (`lib/core/widgets/`)

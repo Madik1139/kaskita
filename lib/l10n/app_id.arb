@@ -10,7 +10,39 @@
   "close": "Tutup",
   "switchThemeTooltip": "Ganti Tema Terang / Gelap",
   "switchLanguageTooltip": "Ganti Bahasa (ID / EN)",
-  "phase1Badge": "v0.2.0 • FASE 1",
+  "phaseBadge": "v0.3.0 • FASE 2",
+  "navHome": "Beranda",
+  "navDebtBook": "Buku Hutang",
+  "navSummary": "Ringkasan",
+  "allWallets": "Semua Dompet",
+  "addWallet": "+ Dompet",
+  "manageCategories": "Kategori",
+  "transferAction": "Transfer",
+  "walletTypeCash": "Tunai",
+  "walletTypeBank": "Bank",
+  "walletTypeEwallet": "E-Wallet",
+  "onboardingTitle": "Atur Saldo Awal Dompet Tunai?",
+  "onboardingSubtitle": "Masukkan jumlah uang tunai yang Anda pegang saat ini, atau lewati untuk mulai dari Rp 0.",
+  "saveInitialBalance": "Simpan Saldo Awal",
+  "addWalletTitle": "Tambah Dompet Baru",
+  "editWalletTitle": "Ubah Dompet",
+  "walletNameLabel": "Nama Dompet",
+  "walletNameHint": "Contoh: BCA, Mandiri, GoPay",
+  "walletTypeLabel": "Tipe Dompet",
+  "initialBalanceLabel": "SALDO AWAL DOMPET",
+  "transferTitle": "Transfer Antar Dompet",
+  "transferSubtitle": "Mutasi saldo internal tanpa mengotori grafik pengeluaran/pemasukan.",
+  "sourceWalletLabel": "Dari Dompet (Asal)",
+  "targetWalletLabel": "Ke Dompet (Tujuan)",
+  "transferAmountLabel": "NOMINAL TRANSFER",
+  "transferNoteHint": "Catatan transfer (opsional, misal: Tarik Tunai ATM)",
+  "transferSuccessMsg": "Transfer antar dompet berhasil disimpan.",
+  "walletSavedMsg": "Dompet berhasil disimpan.",
+  "categoryManagementTitle": "Kelola Kategori Kas",
+  "expenseTab": "Pengeluaran",
+  "incomeTab": "Pemasukan",
+  "addCategoryHint": "Nama kategori kustom baru...",
+  "addCategoryBtn": "Tambah",
   "activeWalletsCount": "{count} Dompet Aktif",
   "@activeWalletsCount": {
     "placeholders": {
@@ -31,12 +63,20 @@
     }
   },
   "activeWalletBalanceLabel": "SALDO DOMPET AKTIF",
+  "selectedWalletBalanceLabel": "SALDO DOMPET ({walletName})",
+  "@selectedWalletBalanceLabel": {
+    "placeholders": {
+      "walletName": {
+        "type": "String"
+      }
+    }
+  },
   "safeToSpendLabel": "Dana Aman Siap Pakai",
   "netWorthLabel": "Kekayaan Bersih",
   "loadDemoData": "Muat Data Contoh",
   "resetDataToZero": "Reset Data (Rp0)",
   "emptyTransactionsTitle": "Belum Ada Catatan Transaksi",
-  "emptyTransactionsSubtitle": "Ketuk \"Muat Data Contoh\" di atas untuk melihat pengelompokan tanggal ala Money Manager & Talangan Teman, atau tekan tombol (+) di bawah.",
+  "emptyTransactionsSubtitle": "Gunakan tombol Transfer di atas, tambah Dompet baru, atau ketuk \"Muat Data Contoh\" untuk melihat simulasi transaksi.",
   "loadDemoDataNow": "Muat Data Contoh Sekarang",
   "quickRecord": "Catat Cepat",
   "quickInputTitle": "Input Transaksi Satu Pintu (< 5 Detik)",
@@ -52,8 +92,24 @@
       }
     }
   },
+  "transferMutationLabel": "Transfer: {fromWallet} -> {toWallet}",
+  "@transferMutationLabel": {
+    "placeholders": {
+      "fromWallet": {
+        "type": "String"
+      },
+      "toWallet": {
+        "type": "String"
+      }
+    }
+  },
   "debtBookCategoryLabel": "Buku Hutang",
+  "transferCategoryLabel": "Mutasi Kas",
   "nonCashLabel": "Non-Tunai",
+  "tabDebtPlaceholderTitle": "Modul Buku Hutang (Fase 4)",
+  "tabDebtPlaceholderSubtitle": "Akan menampilkan direktori kontak, Saldo Bersih, Cicilan FIFO, Auto-Netting, Lunas Traktiran, dan Struk Gambar.",
+  "tabSummaryPlaceholderTitle": "Modul Laporan & Pengaturan (Fase 5)",
+  "tabSummaryPlaceholderSubtitle": "Akan menampilkan Grafik Bulanan, Rem Piutang, Kunci PIN/Biometrik, Backup/Restore Lokal, dan Update OTA.",
   "badgeUnpaid": "BELUM LUNAS",
   "badgePartial": "DICICIL",
   "badgePaid": "LUNAS",
@@ -74,12 +130,16 @@
   "errUnexpectedUiTitle": "Terjadi kendala tampilan",
   "errUnexpectedGeneral": "Terjadi kesalahan yang tidak terduga. Silakan coba lagi.",
   "errDatabaseOperation": "Gagal memproses penyimpanan database lokal.",
-  "errAmountMustBePositive": "Nominal transaksi harus lebih besar dari Rp 0.",
+  "errAmountMustBePositive": "Nominal harus lebih besar dari Rp 0.",
   "errWalletRequired": "Silakan pilih dompet terlebih dahulu.",
+  "errWalletNameRequired": "Nama dompet tidak boleh kosong.",
+  "errDuplicateWalletName": "Nama dompet sudah digunakan. Gunakan nama lain.",
+  "errCannotArchiveLastWallet": "Tidak dapat menghapus/mengarsipkan satu-satunya dompet aktif.",
   "errCategoryRequired": "Silakan pilih kategori transaksi terlebih dahulu.",
+  "errCategoryNameRequired": "Nama kategori tidak boleh kosong.",
   "errContactRequired": "Silakan pilih atau masukkan nama kontak teman.",
   "errTransferSameWallet": "Dompet asal dan dompet tujuan tidak boleh sama.",
-  "errInsufficientWalletBalance": "Saldo dompet tidak mencukupi untuk transaksi ini.",
+  "errInsufficientWalletBalance": "Saldo dompet asal tidak mencukupi untuk transaksi ini.",
   "errSplitAmountExceedsTotal": "Total porsi talangan teman tidak boleh melebihi total bayar di kasir.",
   "errTransactionLockedHasInstallments": "Transaksi ini sudah memiliki riwayat cicilan. Batalkan cicilan terkait di Buku Hutang terlebih dahulu sebelum mengubah/menghapus transaksi awal.",
   "errOverpaymentExceedsRemaining": "Nominal pembayaran melebihi sisa tagihan yang belum lunas.",
@@ -96,4 +156,3 @@
   "errBackupRestoreFailed": "File cadangan tidak valid atau gagal dipulihkan.",
   "errOtaCheckFailed": "Gagal memeriksa pembaruan. Pastikan perangkat terhubung ke internet."
 }
-

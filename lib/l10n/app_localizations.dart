@@ -158,11 +158,203 @@ abstract class AppLocalizations {
   /// **'Ganti Bahasa (ID / EN)'**
   String get switchLanguageTooltip;
 
-  /// No description provided for @phase1Badge.
+  /// No description provided for @phaseBadge.
   ///
   /// In id, this message translates to:
-  /// **'v0.2.0 • FASE 1'**
-  String get phase1Badge;
+  /// **'v0.3.0 • FASE 2'**
+  String get phaseBadge;
+
+  /// No description provided for @navHome.
+  ///
+  /// In id, this message translates to:
+  /// **'Beranda'**
+  String get navHome;
+
+  /// No description provided for @navDebtBook.
+  ///
+  /// In id, this message translates to:
+  /// **'Buku Hutang'**
+  String get navDebtBook;
+
+  /// No description provided for @navSummary.
+  ///
+  /// In id, this message translates to:
+  /// **'Ringkasan'**
+  String get navSummary;
+
+  /// No description provided for @allWallets.
+  ///
+  /// In id, this message translates to:
+  /// **'Semua Dompet'**
+  String get allWallets;
+
+  /// No description provided for @addWallet.
+  ///
+  /// In id, this message translates to:
+  /// **'+ Dompet'**
+  String get addWallet;
+
+  /// No description provided for @manageCategories.
+  ///
+  /// In id, this message translates to:
+  /// **'Kategori'**
+  String get manageCategories;
+
+  /// No description provided for @transferAction.
+  ///
+  /// In id, this message translates to:
+  /// **'Transfer'**
+  String get transferAction;
+
+  /// No description provided for @walletTypeCash.
+  ///
+  /// In id, this message translates to:
+  /// **'Tunai'**
+  String get walletTypeCash;
+
+  /// No description provided for @walletTypeBank.
+  ///
+  /// In id, this message translates to:
+  /// **'Bank'**
+  String get walletTypeBank;
+
+  /// No description provided for @walletTypeEwallet.
+  ///
+  /// In id, this message translates to:
+  /// **'E-Wallet'**
+  String get walletTypeEwallet;
+
+  /// No description provided for @onboardingTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Atur Saldo Awal Dompet Tunai?'**
+  String get onboardingTitle;
+
+  /// No description provided for @onboardingSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Masukkan jumlah uang tunai yang Anda pegang saat ini, atau lewati untuk mulai dari Rp 0.'**
+  String get onboardingSubtitle;
+
+  /// No description provided for @saveInitialBalance.
+  ///
+  /// In id, this message translates to:
+  /// **'Simpan Saldo Awal'**
+  String get saveInitialBalance;
+
+  /// No description provided for @addWalletTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Tambah Dompet Baru'**
+  String get addWalletTitle;
+
+  /// No description provided for @editWalletTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah Dompet'**
+  String get editWalletTitle;
+
+  /// No description provided for @walletNameLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Nama Dompet'**
+  String get walletNameLabel;
+
+  /// No description provided for @walletNameHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Contoh: BCA, Mandiri, GoPay'**
+  String get walletNameHint;
+
+  /// No description provided for @walletTypeLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Tipe Dompet'**
+  String get walletTypeLabel;
+
+  /// No description provided for @initialBalanceLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'SALDO AWAL DOMPET'**
+  String get initialBalanceLabel;
+
+  /// No description provided for @transferTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Transfer Antar Dompet'**
+  String get transferTitle;
+
+  /// No description provided for @transferSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Mutasi saldo internal tanpa mengotori grafik pengeluaran/pemasukan.'**
+  String get transferSubtitle;
+
+  /// No description provided for @sourceWalletLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Dari Dompet (Asal)'**
+  String get sourceWalletLabel;
+
+  /// No description provided for @targetWalletLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Ke Dompet (Tujuan)'**
+  String get targetWalletLabel;
+
+  /// No description provided for @transferAmountLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'NOMINAL TRANSFER'**
+  String get transferAmountLabel;
+
+  /// No description provided for @transferNoteHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan transfer (opsional, misal: Tarik Tunai ATM)'**
+  String get transferNoteHint;
+
+  /// No description provided for @transferSuccessMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Transfer antar dompet berhasil disimpan.'**
+  String get transferSuccessMsg;
+
+  /// No description provided for @walletSavedMsg.
+  ///
+  /// In id, this message translates to:
+  /// **'Dompet berhasil disimpan.'**
+  String get walletSavedMsg;
+
+  /// No description provided for @categoryManagementTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Kelola Kategori Kas'**
+  String get categoryManagementTitle;
+
+  /// No description provided for @expenseTab.
+  ///
+  /// In id, this message translates to:
+  /// **'Pengeluaran'**
+  String get expenseTab;
+
+  /// No description provided for @incomeTab.
+  ///
+  /// In id, this message translates to:
+  /// **'Pemasukan'**
+  String get incomeTab;
+
+  /// No description provided for @addCategoryHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Nama kategori kustom baru...'**
+  String get addCategoryHint;
+
+  /// No description provided for @addCategoryBtn.
+  ///
+  /// In id, this message translates to:
+  /// **'Tambah'**
+  String get addCategoryBtn;
 
   /// No description provided for @activeWalletsCount.
   ///
@@ -181,6 +373,12 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'SALDO DOMPET AKTIF'**
   String get activeWalletBalanceLabel;
+
+  /// No description provided for @selectedWalletBalanceLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'SALDO DOMPET ({walletName})'**
+  String selectedWalletBalanceLabel(String walletName);
 
   /// No description provided for @safeToSpendLabel.
   ///
@@ -215,7 +413,7 @@ abstract class AppLocalizations {
   /// No description provided for @emptyTransactionsSubtitle.
   ///
   /// In id, this message translates to:
-  /// **'Ketuk \"Muat Data Contoh\" di atas untuk melihat pengelompokan tanggal ala Money Manager & Talangan Teman, atau tekan tombol (+) di bawah.'**
+  /// **'Gunakan tombol Transfer di atas, tambah Dompet baru, atau ketuk \"Muat Data Contoh\" untuk melihat simulasi transaksi.'**
   String get emptyTransactionsSubtitle;
 
   /// No description provided for @loadDemoDataNow.
@@ -248,17 +446,53 @@ abstract class AppLocalizations {
   /// **'{walletName} • Kas Keluar: {amount}'**
   String walletOutflowLabel(String walletName, String amount);
 
+  /// No description provided for @transferMutationLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Transfer: {fromWallet} -> {toWallet}'**
+  String transferMutationLabel(String fromWallet, String toWallet);
+
   /// No description provided for @debtBookCategoryLabel.
   ///
   /// In id, this message translates to:
   /// **'Buku Hutang'**
   String get debtBookCategoryLabel;
 
+  /// No description provided for @transferCategoryLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Mutasi Kas'**
+  String get transferCategoryLabel;
+
   /// No description provided for @nonCashLabel.
   ///
   /// In id, this message translates to:
   /// **'Non-Tunai'**
   String get nonCashLabel;
+
+  /// No description provided for @tabDebtPlaceholderTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Modul Buku Hutang (Fase 4)'**
+  String get tabDebtPlaceholderTitle;
+
+  /// No description provided for @tabDebtPlaceholderSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Akan menampilkan direktori kontak, Saldo Bersih, Cicilan FIFO, Auto-Netting, Lunas Traktiran, dan Struk Gambar.'**
+  String get tabDebtPlaceholderSubtitle;
+
+  /// No description provided for @tabSummaryPlaceholderTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Modul Laporan & Pengaturan (Fase 5)'**
+  String get tabSummaryPlaceholderTitle;
+
+  /// No description provided for @tabSummaryPlaceholderSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Akan menampilkan Grafik Bulanan, Rem Piutang, Kunci PIN/Biometrik, Backup/Restore Lokal, dan Update OTA.'**
+  String get tabSummaryPlaceholderSubtitle;
 
   /// No description provided for @badgeUnpaid.
   ///
@@ -383,7 +617,7 @@ abstract class AppLocalizations {
   /// No description provided for @errAmountMustBePositive.
   ///
   /// In id, this message translates to:
-  /// **'Nominal transaksi harus lebih besar dari Rp 0.'**
+  /// **'Nominal harus lebih besar dari Rp 0.'**
   String get errAmountMustBePositive;
 
   /// No description provided for @errWalletRequired.
@@ -392,11 +626,35 @@ abstract class AppLocalizations {
   /// **'Silakan pilih dompet terlebih dahulu.'**
   String get errWalletRequired;
 
+  /// No description provided for @errWalletNameRequired.
+  ///
+  /// In id, this message translates to:
+  /// **'Nama dompet tidak boleh kosong.'**
+  String get errWalletNameRequired;
+
+  /// No description provided for @errDuplicateWalletName.
+  ///
+  /// In id, this message translates to:
+  /// **'Nama dompet sudah digunakan. Gunakan nama lain.'**
+  String get errDuplicateWalletName;
+
+  /// No description provided for @errCannotArchiveLastWallet.
+  ///
+  /// In id, this message translates to:
+  /// **'Tidak dapat menghapus/mengarsipkan satu-satunya dompet aktif.'**
+  String get errCannotArchiveLastWallet;
+
   /// No description provided for @errCategoryRequired.
   ///
   /// In id, this message translates to:
   /// **'Silakan pilih kategori transaksi terlebih dahulu.'**
   String get errCategoryRequired;
+
+  /// No description provided for @errCategoryNameRequired.
+  ///
+  /// In id, this message translates to:
+  /// **'Nama kategori tidak boleh kosong.'**
+  String get errCategoryNameRequired;
 
   /// No description provided for @errContactRequired.
   ///
@@ -413,7 +671,7 @@ abstract class AppLocalizations {
   /// No description provided for @errInsufficientWalletBalance.
   ///
   /// In id, this message translates to:
-  /// **'Saldo dompet tidak mencukupi untuk transaksi ini.'**
+  /// **'Saldo dompet asal tidak mencukupi untuk transaksi ini.'**
   String get errInsufficientWalletBalance;
 
   /// No description provided for @errSplitAmountExceedsTotal.

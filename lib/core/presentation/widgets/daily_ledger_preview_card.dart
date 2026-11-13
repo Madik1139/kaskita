@@ -104,18 +104,33 @@ class _TransactionPreviewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = context.l10n;
+    final bool isTransfer = item.trxType == 'TRANSFER';
     final String rawWalletName = item.walletName ?? l10n.nonCashLabel;
     final String walletName =
         LocalizationHelper.localizeWalletName(rawWalletName, l10n);
-    final String categoryName = LocalizationHelper.localizeCategoryName(
-      item.categoryName,
-      l10n,
-    );
+    final String targetWalletName = item.targetWalletName != null
+        ? LocalizationHelper.localizeWalletName(item.targetWalletName!, l10n)
+        : '';
+    final String categoryName = isTransfer
+        ? l10n.transferCategoryLabel
+        : LocalizationHelper.localizeCategoryName(
+            item.categoryName,
+            l10n,
+          );
 
     final bool isIncome = item.trxType == 'INCOME';
     final bool isExpense = item.trxType == 'EXPENSE';
     final bool hasSplitTalangan =
         isExpense && item.totalWalletAmount > item.pureConsumptionAmount;
+
+    final String subtitleText = isTransfer
+        ? l10n.transferMutationLabel(walletName, targetWalletName)
+        : hasSplitTalangan
+            ? l10n.walletOutflowLabel(
+                walletName,
+                CurrencyFormatter.format(item.totalWalletAmount),
+              )
+            : '$walletName • ${item.trxDate}';
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
@@ -147,12 +162,7 @@ class _TransactionPreviewRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  hasSplitTalangan
-                      ? l10n.walletOutflowLabel(
-                          walletName,
-                          CurrencyFormatter.format(item.totalWalletAmount),
-                        )
-                      : '$walletName • ${item.trxDate}',
+                  subtitleText,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -177,3 +187,4 @@ class _TransactionPreviewRow extends StatelessWidget {
     );
   }
 }
+

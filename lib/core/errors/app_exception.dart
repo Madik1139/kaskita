@@ -9,7 +9,11 @@ enum AppErrorCode {
   databaseOperation,
   amountMustBePositive,
   walletRequired,
+  walletNameRequired,
+  duplicateWalletName,
+  cannotArchiveLastWallet,
   categoryRequired,
+  categoryNameRequired,
   contactRequired,
   transferSameWallet,
   insufficientWalletBalance,
@@ -47,8 +51,16 @@ class AppException implements Exception {
         return l10n.errAmountMustBePositive;
       case AppErrorCode.walletRequired:
         return l10n.errWalletRequired;
+      case AppErrorCode.walletNameRequired:
+        return l10n.errWalletNameRequired;
+      case AppErrorCode.duplicateWalletName:
+        return l10n.errDuplicateWalletName;
+      case AppErrorCode.cannotArchiveLastWallet:
+        return l10n.errCannotArchiveLastWallet;
       case AppErrorCode.categoryRequired:
         return l10n.errCategoryRequired;
+      case AppErrorCode.categoryNameRequired:
+        return l10n.errCategoryNameRequired;
       case AppErrorCode.contactRequired:
         return l10n.errContactRequired;
       case AppErrorCode.transferSameWallet:
@@ -94,4 +106,3 @@ class AppException implements Exception {
   @override
   String toString() => 'AppException(${code.name})';
 }
-

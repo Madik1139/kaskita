@@ -21,7 +21,7 @@ flowchart LR
 
 ## Detail Setiap Fase Pengerjaan
 
-### Fase 1: Fondasi Inti, Tema *Tactile Ledger*, Database SQLite, & Komponen Reusable (`v0.2.0`)
+### Fase 1: Fondasi Inti, Tema *Tactile Ledger*, Database SQLite, & Komponen Reusable (`v0.2.0`) — [SELESAI]
 **Fokus:** Menyiapkan lapisan `lib/core/` agar seluruh fitur memiliki fondasi database yang kokoh dan komponen UI *Anti-AI-Slop* yang konsisten.
 1. **Instalasi & Konfigurasi Dependensi (`pubspec.yaml`):**
    * Utama: `flutter_riverpod`, `sqflite`, `path`, `equatable`, `collection`, `intl`, `google_fonts`, `lucide_icons_flutter`, `table_calendar`, `fl_chart`, `flutter_local_notifications`, `timezone`, `local_auth`, `flutter_secure_storage`, `screenshot`, `share_plus`, `path_provider`, `file_picker`, `csv`, `package_info_plus`, `url_launcher`.
@@ -43,7 +43,7 @@ flowchart LR
 
 ---
 
-### Fase 2: Manajemen Dompet, Kategori, Onboarding Saldo Awal, & Kerangka Navigasi (`v0.3.0`)
+### Fase 2: Manajemen Dompet, Kategori, Onboarding Saldo Awal, & Kerangka Navigasi (`v0.3.0`) — [SELESAI]
 **Fokus:** Membangun modul `lib/features/wallets/` dan struktur navigasi utama 3 Tab.
 1. **Lapisan Data & Provider Dompet/Kategori:**
    * Model & Repository untuk CRUD `wallets` dan `categories`.

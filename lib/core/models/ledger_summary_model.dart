@@ -8,7 +8,10 @@ class LedgerPreviewItem extends Equatable {
     required this.pureConsumptionAmount,
     required this.note,
     required this.trxDate,
+    this.walletId,
+    this.targetWalletId,
     this.walletName,
+    this.targetWalletName,
     this.categoryName,
   });
 
@@ -20,7 +23,10 @@ class LedgerPreviewItem extends Equatable {
       pureConsumptionAmount: (map['pure_consumption_amount'] as int?) ?? 0,
       note: (map['note'] as String?) ?? '-',
       trxDate: (map['trx_date'] as String?) ?? '',
+      walletId: map['wallet_id'] as int?,
+      targetWalletId: map['target_wallet_id'] as int?,
       walletName: map['wallet_name'] as String?,
+      targetWalletName: map['target_wallet_name'] as String?,
       categoryName: map['category_name'] as String?,
     );
   }
@@ -31,7 +37,10 @@ class LedgerPreviewItem extends Equatable {
   final int pureConsumptionAmount;
   final String note;
   final String trxDate;
+  final int? walletId;
+  final int? targetWalletId;
   final String? walletName;
+  final String? targetWalletName;
   final String? categoryName;
 
   @override
@@ -42,7 +51,10 @@ class LedgerPreviewItem extends Equatable {
         pureConsumptionAmount,
         note,
         trxDate,
+        walletId,
+        targetWalletId,
         walletName,
+        targetWalletName,
         categoryName,
       ];
 }

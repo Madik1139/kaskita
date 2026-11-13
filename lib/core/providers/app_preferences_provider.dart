@@ -8,3 +8,4 @@ final StateProvider<ThemeMode> themeModeProvider =
 /// Provider global untuk Bahasa Aplikasi (`id` Bahasa Indonesia / `en` English).
 final StateProvider<Locale> appLocaleProvider =
     StateProvider<Locale>((Ref ref) => const Locale('id'));
+

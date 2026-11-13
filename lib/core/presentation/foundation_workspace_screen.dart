@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import '../../features/wallets/presentation/widgets/onboarding_balance_sheet.dart';
+import '../../features/wallets/providers/category_provider.dart';
+import '../../features/wallets/providers/wallet_provider.dart';
 import '../../l10n/app_localizations.dart';
 import '../errors/app_exception.dart';
 import '../models/ledger_summary_model.dart';
@@ -15,20 +18,66 @@ import 'widgets/daily_ledger_preview_card.dart';
 import 'widgets/quick_input_preview_sheet.dart';
 import 'widgets/unified_ledger_summary_card.dart';
 
-/// Layar Beranda Fase 1 (v0.2.0):
-/// 100% murni UI (mengambil state melalui Riverpod `ledgerOverviewProvider`,
-/// tanpa impor SQLite dan dipecah menjadi sub-widget modular < 200 baris).
-class FoundationWorkspaceScreen extends ConsumerWidget {
+/// Kerangka Navigasi 3 Tab & Beranda KasKita (Fase 2 - v0.3.0):
+/// 100% murni UI (mengambil state melalui Riverpod tanpa impor SQLite).
+class FoundationWorkspaceScreen extends ConsumerStatefulWidget {
   const FoundationWorkspaceScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FoundationWorkspaceScreen> createState() =>
+      _FoundationWorkspaceScreenState();
+}
+
+class _FoundationWorkspaceScreenState
+    extends ConsumerState<FoundationWorkspaceScreen> {
+  int _selectedTabIndex = 0;
+  bool _onboardingDialogOpened = false;
+
+  Future<void> _refreshAllProviders() async {
+    await ref.read(walletsProvider.notifier).refresh();
+    await ref.read(categoriesProvider.notifier).refresh();
+    await ref.read(ledgerOverviewProvider.notifier).refreshOverview();
+  }
+
+  Future<void> _handleLoadDemoData() async {
+    ref.read(selectedWalletIdProvider.notifier).state = null;
+    await ref.read(ledgerOverviewProvider.notifier).loadDemoData();
+    await ref.read(walletsProvider.notifier).refresh();
+    await ref.read(categoriesProvider.notifier).refresh();
+  }
+
+  Future<void> _handleResetAllData() async {
+    ref.read(selectedWalletIdProvider.notifier).state = null;
+    await ref.read(ledgerOverviewProvider.notifier).resetAllData();
+    await ref.read(walletsProvider.notifier).refresh();
+    await ref.read(categoriesProvider.notifier).refresh();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final ThemeMode currentTheme = ref.watch(themeModeProvider);
     final Locale currentLocale = ref.watch(appLocaleProvider);
     final AsyncValue<LedgerOverviewState> overviewAsync =
         ref.watch(ledgerOverviewProvider);
     final AppLocalizations l10n = context.l10n;
     final String langCode = currentLocale.languageCode;
+
+    ref.listen<AsyncValue<WalletsState>>(
+      walletsProvider,
+      (AsyncValue<WalletsState>? previous, AsyncValue<WalletsState> next) {
+        final WalletsState? state = next.valueOrNull;
+        if (state != null &&
+            !state.isOnboardingCompleted &&
+            !_onboardingDialogOpened) {
+          _onboardingDialogOpened = true;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              OnboardingBalanceSheet.show(context);
+            }
+          });
+        }
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +102,7 @@ class FoundationWorkspaceScreen extends ConsumerWidget {
             Text(l10n.appTitle),
             const SizedBox(width: 8),
             StatusBadge(
-              label: l10n.phase1Badge,
+              label: l10n.phaseBadge,
               variant: BadgeVariant.positive,
               compact: true,
             ),
@@ -91,74 +140,31 @@ class FoundationWorkspaceScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: overviewAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (Object err, StackTrace _) => Center(
-          child: Padding(
+      body: IndexedStack(
+        index: _selectedTabIndex,
+        children: <Widget>[
+          _buildHomeTab(context, overviewAsync, l10n),
+          Padding(
             padding: const EdgeInsets.all(16),
-            child: EmptyStateView(
-              icon: LucideIcons.triangleAlert,
-              title: l10n.errUnexpectedUiTitle,
-              subtitle: AppException.resolveError(err, l10n),
-              actionLabel: l10n.reset,
-              onActionTap: () =>
-                  ref.read(ledgerOverviewProvider.notifier).refreshOverview(),
+            child: Center(
+              child: EmptyStateView(
+                icon: LucideIcons.users,
+                title: l10n.tabDebtPlaceholderTitle,
+                subtitle: l10n.tabDebtPlaceholderSubtitle,
+              ),
             ),
           ),
-        ),
-        data: (LedgerOverviewState overview) => RefreshIndicator(
-          onRefresh: () =>
-              ref.read(ledgerOverviewProvider.notifier).refreshOverview(),
-          child: ListView(
+          Padding(
             padding: const EdgeInsets.all(16),
-            children: <Widget>[
-              UnifiedLedgerSummaryCard(overview: overview),
-              const SizedBox(height: 12),
-              TactileCard(
-                backgroundColor: AppColors.surfaceSecondary(context),
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () => ref
-                            .read(ledgerOverviewProvider.notifier)
-                            .loadDemoData(),
-                        icon: const Icon(LucideIcons.database, size: 16),
-                        label: Text(l10n.loadDemoData),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () => ref
-                            .read(ledgerOverviewProvider.notifier)
-                            .resetAllData(),
-                        icon: const Icon(LucideIcons.rotateCcw, size: 16),
-                        label: Text(l10n.resetDataToZero),
-                      ),
-                    ),
-                  ],
-                ),
+            child: Center(
+              child: EmptyStateView(
+                icon: LucideIcons.chartPie,
+                title: l10n.tabSummaryPlaceholderTitle,
+                subtitle: l10n.tabSummaryPlaceholderSubtitle,
               ),
-              const SizedBox(height: 16),
-              if (overview.recentTransactions.isEmpty)
-                EmptyStateView(
-                  icon: LucideIcons.receiptText,
-                  title: l10n.emptyTransactionsTitle,
-                  subtitle: l10n.emptyTransactionsSubtitle,
-                  actionLabel: l10n.loadDemoDataNow,
-                  onActionTap: () =>
-                      ref.read(ledgerOverviewProvider.notifier).loadDemoData(),
-                )
-              else
-                DailyLedgerPreviewCard(
-                  date: DateTime.now(),
-                  transactions: overview.recentTransactions,
-                ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => QuickInputPreviewSheet.show(context),
@@ -169,6 +175,94 @@ class FoundationWorkspaceScreen extends ConsumerWidget {
         label: Text(
           l10n.quickRecord,
           style: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedTabIndex,
+        onDestinationSelected: (int index) =>
+            setState(() => _selectedTabIndex = index),
+        destinations: <NavigationDestination>[
+          NavigationDestination(
+            icon: const Icon(LucideIcons.wallet, size: 20),
+            label: l10n.navHome,
+          ),
+          NavigationDestination(
+            icon: const Icon(LucideIcons.bookUser, size: 20),
+            label: l10n.navDebtBook,
+          ),
+          NavigationDestination(
+            icon: const Icon(LucideIcons.chartColumn, size: 20),
+            label: l10n.navSummary,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHomeTab(
+    BuildContext context,
+    AsyncValue<LedgerOverviewState> overviewAsync,
+    AppLocalizations l10n,
+  ) {
+    return overviewAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (Object err, StackTrace _) => Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: EmptyStateView(
+            icon: LucideIcons.triangleAlert,
+            title: l10n.errUnexpectedUiTitle,
+            subtitle: AppException.resolveError(err, l10n),
+            actionLabel: l10n.reset,
+            onActionTap: _refreshAllProviders,
+          ),
+        ),
+      ),
+      data: (LedgerOverviewState overview) => RefreshIndicator(
+        onRefresh: _refreshAllProviders,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 88),
+          children: <Widget>[
+            UnifiedLedgerSummaryCard(overview: overview),
+            const SizedBox(height: 12),
+            TactileCard(
+              backgroundColor: AppColors.surfaceSecondary(context),
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: _handleLoadDemoData,
+                      icon: const Icon(LucideIcons.database, size: 16),
+                      label: Text(l10n.loadDemoData),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: _handleResetAllData,
+                      icon: const Icon(LucideIcons.rotateCcw, size: 16),
+                      label: Text(l10n.resetDataToZero),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            if (overview.recentTransactions.isEmpty)
+              EmptyStateView(
+                icon: LucideIcons.receiptText,
+                title: l10n.emptyTransactionsTitle,
+                subtitle: l10n.emptyTransactionsSubtitle,
+                actionLabel: l10n.loadDemoDataNow,
+                onActionTap: _handleLoadDemoData,
+              )
+            else
+              DailyLedgerPreviewCard(
+                date: DateTime.now(),
+                transactions: overview.recentTransactions,
+              ),
+          ],
         ),
       ),
     );
