@@ -74,3 +74,4 @@ class ReportSummaryState extends Equatable {
         totalPureExpenseInMonth,
       ];
 }
+

@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchLanguageTooltip => 'Switch Language (ID / EN)';
 
   @override
-  String get phaseBadge => 'v0.6.0 • PHASE 5';
+  String get phaseBadge => 'v1.0.0';
 
   @override
   String get navHome => 'Home';

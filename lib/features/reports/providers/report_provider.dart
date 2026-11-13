@@ -35,3 +35,4 @@ final FutureProvider<ReportSummaryState> reportsProvider =
     totalPureExpenseInMonth: totalPure,
   );
 });
+

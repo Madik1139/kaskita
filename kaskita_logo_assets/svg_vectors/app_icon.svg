@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none">
+  <rect width="512" height="512" rx="115" fill="#222A35"/>
+  <defs>
+    <linearGradient id="walletGrad" x1="96" y1="128" x2="416" y2="384" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="indigoGrad" x1="160" y1="140" x2="380" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+  </defs>
+  <rect x="116" y="136" width="280" height="240" rx="40" fill="url(#walletGrad)"/>
+  <path d="M148 136V116C148 100.536 160.536 88 176 88H336C351.464 88 364 100.536 364 116V136H148Z" fill="url(#indigoGrad)"/>
+  <path d="M168 232H296M296 232L260 196M296 232L260 268" stroke="#222A35" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M280 296H152M152 296L188 260M152 296L188 332" stroke="#4F46E5" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="324" y="220" width="84" height="72" rx="24" fill="#10B981" stroke="#222A35" stroke-width="12"/>
+  <circle cx="358" cy="256" r="12" fill="#222A35"/>
+</svg>

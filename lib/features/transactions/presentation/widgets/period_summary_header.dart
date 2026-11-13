@@ -50,49 +50,65 @@ class PeriodSummaryHeader extends ConsumerWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                  visualDensity: VisualDensity.compact,
-                  onPressed: () => _shiftPeriod(ref, -1, activeSubTab),
-                  icon: const Icon(LucideIcons.chevronLeft, size: 18),
-                ),
-                Text(
-                  periodLabel,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
+            child: SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 6,
+                children: <Widget>[
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        visualDensity: VisualDensity.compact,
+                        onPressed: () => _shiftPeriod(ref, -1, activeSubTab),
+                        icon: const Icon(LucideIcons.chevronLeft, size: 18),
                       ),
-                ),
-                IconButton(
-                  visualDensity: VisualDensity.compact,
-                  onPressed: () => _shiftPeriod(ref, 1, activeSubTab),
-                  icon: const Icon(LucideIcons.chevronRight, size: 18),
-                ),
-                const Spacer(),
-                _SubTabButton(
-                  label: l10n.subTabDaily,
-                  selected: activeSubTab == LedgerViewSubTab.daily,
-                  onTap: () => ref
-                      .read(selectedLedgerSubTabProvider.notifier)
-                      .state = LedgerViewSubTab.daily,
-                ),
-                const SizedBox(width: 4),
-                _SubTabButton(
-                  label: l10n.subTabCalendar,
-                  selected: activeSubTab == LedgerViewSubTab.calendar,
-                  onTap: () => ref
-                      .read(selectedLedgerSubTabProvider.notifier)
-                      .state = LedgerViewSubTab.calendar,
-                ),
-                const SizedBox(width: 4),
-                _SubTabButton(
-                  label: l10n.subTabMonthly,
-                  selected: activeSubTab == LedgerViewSubTab.monthly,
-                  onTap: () => ref
-                      .read(selectedLedgerSubTabProvider.notifier)
-                      .state = LedgerViewSubTab.monthly,
-                ),
-              ],
+                      Text(
+                        periodLabel,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                      ),
+                      IconButton(
+                        visualDensity: VisualDensity.compact,
+                        onPressed: () => _shiftPeriod(ref, 1, activeSubTab),
+                        icon: const Icon(LucideIcons.chevronRight, size: 18),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      _SubTabButton(
+                        label: l10n.subTabDaily,
+                        selected: activeSubTab == LedgerViewSubTab.daily,
+                        onTap: () => ref
+                            .read(selectedLedgerSubTabProvider.notifier)
+                            .state = LedgerViewSubTab.daily,
+                      ),
+                      const SizedBox(width: 4),
+                      _SubTabButton(
+                        label: l10n.subTabCalendar,
+                        selected: activeSubTab == LedgerViewSubTab.calendar,
+                        onTap: () => ref
+                            .read(selectedLedgerSubTabProvider.notifier)
+                            .state = LedgerViewSubTab.calendar,
+                      ),
+                      const SizedBox(width: 4),
+                      _SubTabButton(
+                        label: l10n.subTabMonthly,
+                        selected: activeSubTab == LedgerViewSubTab.monthly,
+                        onTap: () => ref
+                            .read(selectedLedgerSubTabProvider.notifier)
+                            .state = LedgerViewSubTab.monthly,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           const Divider(),

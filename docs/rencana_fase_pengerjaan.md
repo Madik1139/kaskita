@@ -117,7 +117,7 @@ flowchart LR
 
 ---
 
-### Fase 6: Pengujian Menyeluruh (*End-to-End QA*), Optimasi Performa, & Finalisasi Rilis (`v1.0.0`)
+### Fase 6: Pengujian Menyeluruh (*End-to-End QA*), Optimasi Performa, & Finalisasi Rilis (`v1.0.0`) — **[SELESAI]**
 **Fokus:** Pemolesan akhir, pengujian beban data, dan sinkronisasi seluruh dokumentasi.
 1. Eksekusi penuh seluruh *unit test* (`flutter test`) dan analisis statis (`flutter analyze` -> 0 error/warning).
 2. Verifikasi kecepatan query (`<100ms`) dan kehalusan transisi UI pada *Light Mode* & *Dark Mode*.

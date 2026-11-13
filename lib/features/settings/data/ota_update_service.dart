@@ -84,3 +84,4 @@ class OtaUpdateService {
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }
+

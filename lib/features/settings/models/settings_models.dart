@@ -73,3 +73,4 @@ class OtaReleaseCheckResult extends Equatable {
         releaseNotes,
       ];
 }
+

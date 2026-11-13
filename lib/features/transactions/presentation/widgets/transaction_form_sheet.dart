@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../../core/errors/app_exception.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/localization_helper.dart';
 import '../../../../core/widgets/custom_numpad.dart';
-import '../../../../core/widgets/tabular_currency_text.dart';
-import '../../../../core/widgets/tactile_card.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../debts/presentation/widgets/debt_smart_alert_banners.dart';
 import '../../../debts/providers/debt_provider.dart';
@@ -20,6 +15,7 @@ import '../../models/transaction_model.dart';
 import '../../providers/transaction_provider.dart';
 import 'split_expense_section.dart';
 import 'transaction_context_selectors.dart';
+import 'transaction_form_header.dart';
 
 /// Modal Bottom Sheet Input Satu Pintu (< 5 Detik) & Edit/Hapus Transaksi.
 class TransactionFormSheet extends ConsumerStatefulWidget {
@@ -140,56 +136,44 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
       }
     }
 
-    setState(() => _isSubmitting = true);
-    try {
-      final TransactionItemModel? editing = widget.editingItem;
-      if (editing == null) {
-        await ref.read(transactionsProvider.notifier).recordTransaction(
-              trxType: _trxType,
-              walletId: effectiveWalletId,
-              totalWalletAmount: _totalWalletAmount,
-              trxDate: _trxDate,
-              categoryId: effectiveCatId,
-              note: _noteController.text,
-              isSplitTalangan: _trxType == 'EXPENSE' && _isSplitTalangan,
-              friendShareAmount: _friendShareAmount,
-              contactId: _contactId,
-              newContactName: _contactNameController.text,
-              dueDate: _dueDate,
-            );
-      } else {
-        await ref.read(transactionsProvider.notifier).updateTransaction(
-              transactionId: editing.id,
-              walletId: effectiveWalletId,
-              totalWalletAmount: _totalWalletAmount,
-              trxDate: _trxDate,
-              categoryId: effectiveCatId,
-              note: _noteController.text,
-              isSplitTalangan: _trxType == 'EXPENSE' && _isSplitTalangan,
-              friendShareAmount: _friendShareAmount,
-              contactId: _contactId,
-              newContactName: _contactNameController.text,
-              dueDate: _dueDate,
-            );
-      }
-      await ref.read(debtsDirectoryProvider.notifier).refresh();
-      if (mounted) {
-        Navigator.of(context).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.transactionSavedMsg)),
-        );
-      }
-    } catch (error) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppException.resolveError(error, l10n))),
-        );
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isSubmitting = false);
-      }
-    }
+    await _runSubmissionAction(
+      l10n: l10n,
+      successMessage: l10n.transactionSavedMsg,
+      action: () async {
+        final TransactionItemModel? editing = widget.editingItem;
+        final bool isSplit = _trxType == 'EXPENSE' && _isSplitTalangan;
+        if (editing == null) {
+          await ref.read(transactionsProvider.notifier).recordTransaction(
+                trxType: _trxType,
+                walletId: effectiveWalletId,
+                totalWalletAmount: _totalWalletAmount,
+                trxDate: _trxDate,
+                categoryId: effectiveCatId,
+                note: _noteController.text,
+                isSplitTalangan: isSplit,
+                friendShareAmount: _friendShareAmount,
+                contactId: _contactId,
+                newContactName: _contactNameController.text,
+                dueDate: _dueDate,
+              );
+        } else {
+          await ref.read(transactionsProvider.notifier).updateTransaction(
+                transactionId: editing.id,
+                walletId: effectiveWalletId,
+                totalWalletAmount: _totalWalletAmount,
+                trxDate: _trxDate,
+                categoryId: effectiveCatId,
+                note: _noteController.text,
+                isSplitTalangan: isSplit,
+                friendShareAmount: _friendShareAmount,
+                contactId: _contactId,
+                newContactName: _contactNameController.text,
+                dueDate: _dueDate,
+              );
+        }
+        await ref.read(debtsDirectoryProvider.notifier).refresh();
+      },
+    );
   }
 
   Future<void> _deleteCurrentTransaction() async {
@@ -198,16 +182,50 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
       return;
     }
     final AppLocalizations l10n = context.l10n;
+    await _runSubmissionAction(
+      l10n: l10n,
+      successMessage: l10n.transactionDeletedMsg,
+      action: () async {
+        await ref.read(transactionsProvider.notifier).deleteTransaction(
+              editing.id,
+            );
+        await ref.read(debtsDirectoryProvider.notifier).refresh();
+      },
+    );
+  }
+
+  Future<void> _applyAutoNetting(AppLocalizations l10n) async {
+    if (_contactId == null || _isSubmitting) {
+      return;
+    }
+    await _runSubmissionAction(
+      l10n: l10n,
+      successMessage: l10n.settlementSuccessMsg,
+      action: () => ref
+          .read(debtsDirectoryProvider.notifier)
+          .recordDebtWithAutoNetting(
+            contactId: _contactId!,
+            newDebtType: _trxType == 'DEBT_IN' ? 'PAYABLE' : 'RECEIVABLE',
+            amount: _totalWalletAmount,
+            date: _trxDate,
+            note: _noteController.text,
+            dueDate: _dueDate,
+          ),
+    );
+  }
+
+  Future<void> _runSubmissionAction({
+    required AppLocalizations l10n,
+    required String successMessage,
+    required Future<void> Function() action,
+  }) async {
     setState(() => _isSubmitting = true);
     try {
-      await ref.read(transactionsProvider.notifier).deleteTransaction(
-            editing.id,
-          );
-      await ref.read(debtsDirectoryProvider.notifier).refresh();
+      await action();
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.transactionDeletedMsg)),
+          SnackBar(content: Text(successMessage)),
         );
       }
     } catch (error) {
@@ -226,7 +244,6 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = context.l10n;
-    final String langCode = context.currentLanguageCode;
     final List<WalletModel> wallets =
         ref.watch(walletsProvider).valueOrNull?.wallets ?? <WalletModel>[];
     final List<CategoryModel> allCategories =
@@ -245,7 +262,6 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
         modeCategories.any((CategoryModel c) => c.id == _categoryId)
             ? _categoryId
             : (modeCategories.isNotEmpty ? modeCategories.first.id : null);
-    final bool isEditing = widget.editingItem != null;
 
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -259,120 +275,32 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text(
-                    isEditing ? l10n.editTransactionTitle : l10n.quickInputTitle,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                if (isEditing)
-                  IconButton(
-                    tooltip: l10n.delete,
-                    onPressed: _isSubmitting ? null : _deleteCurrentTransaction,
-                    icon: Icon(
-                      LucideIcons.trash2,
-                      size: 18,
-                      color: AppColors.negative(context),
-                    ),
-                  ),
-                IconButton(
-                  tooltip: l10n.close,
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(LucideIcons.x, size: 18),
-                ),
-              ],
-            ),
-            if (!isEditing) ...<Widget>[
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: <Widget>[
-                    _buildModeChip(l10n.modeExpense, 'EXPENSE'),
-                    const SizedBox(width: 6),
-                    _buildModeChip(l10n.modeIncome, 'INCOME'),
-                    const SizedBox(width: 6),
-                    _buildModeChip(l10n.modeReceivable, 'RECEIVABLE_OUT'),
-                    const SizedBox(width: 6),
-                    _buildModeChip(l10n.modePayable, 'DEBT_IN'),
-                    const SizedBox(width: 6),
-                    ActionChip(
-                      avatar: const Icon(LucideIcons.arrowLeftRight, size: 14),
-                      label: Text(l10n.modeTransfer),
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        WalletTransferSheet.show(
-                          context,
-                          wallets: wallets,
-                          initialSourceWalletId: effectiveWalletId,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-            ],
-            InkWell(
-              onTap: () => setState(() => _editingFriendShare = false),
-              borderRadius: BorderRadius.circular(8),
-              child: TactileCard(
-                backgroundColor: AppColors.surfaceSecondary(context),
-                borderColor: !_editingFriendShare
-                    ? AppColors.accent(context)
-                    : AppColors.border(context),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          l10n.transactionAmountLabel,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        const SizedBox(height: 4),
-                        InkWell(
-                          onTap: () => _pickDate(isDueDate: false),
-                          child: Row(
-                            children: <Widget>[
-                              Icon(
-                                LucideIcons.calendar,
-                                size: 13,
-                                color: AppColors.accent(context),
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                DateFormatter.mediumDate(
-                                  _trxDate,
-                                  localeCode: langCode,
-                                ),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    TabularCurrencyText(
-                      amount: _totalWalletAmount,
-                      fontSize: 28,
-                      semanticType: _trxType == 'INCOME'
-                          ? CurrencySemanticType.positive
-                          : _trxType == 'EXPENSE'
-                              ? CurrencySemanticType.negative
-                              : CurrencySemanticType.mutation,
-                    ),
-                  ],
-                ),
-              ),
+            TransactionFormHeader(
+              isEditing: widget.editingItem != null,
+              isSubmitting: _isSubmitting,
+              trxType: _trxType,
+              totalWalletAmount: _totalWalletAmount,
+              trxDate: _trxDate,
+              editingFriendShare: _editingFriendShare,
+              onSelectMode: (String mode) {
+                setState(() {
+                  _trxType = mode;
+                  _editingFriendShare = false;
+                });
+              },
+              onOpenTransfer: () {
+                Navigator.of(context).pop();
+                WalletTransferSheet.show(
+                  context,
+                  wallets: wallets,
+                  initialSourceWalletId: effectiveWalletId,
+                );
+              },
+              onFocusTotalAmount: () =>
+                  setState(() => _editingFriendShare = false),
+              onPickTrxDate: () => _pickDate(isDueDate: false),
+              onDelete: _deleteCurrentTransaction,
+              onClose: () => Navigator.of(context).pop(),
             ),
             const SizedBox(height: 8),
             TransactionContextSelectors(
@@ -398,44 +326,7 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
               selectedContact: contacts
                   .where((ContactOptionModel c) => c.id == _contactId)
                   .firstOrNull,
-              onApplyAutoNetting: () async {
-                if (_contactId == null || _isSubmitting) {
-                  return;
-                }
-                setState(() => _isSubmitting = true);
-                try {
-                  await ref
-                      .read(debtsDirectoryProvider.notifier)
-                      .recordDebtWithAutoNetting(
-                        contactId: _contactId!,
-                        newDebtType: _trxType == 'DEBT_IN'
-                            ? 'PAYABLE'
-                            : 'RECEIVABLE',
-                        amount: _totalWalletAmount,
-                        date: _trxDate,
-                        note: _noteController.text,
-                        dueDate: _dueDate,
-                      );
-                  if (context.mounted) {
-                    Navigator.of(context).pop();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.settlementSuccessMsg)),
-                    );
-                  }
-                } catch (error) {
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(AppException.resolveError(error, l10n)),
-                      ),
-                    );
-                  }
-                } finally {
-                  if (mounted) {
-                    setState(() => _isSubmitting = false);
-                  }
-                }
-              },
+              onApplyAutoNetting: () => _applyAutoNetting(l10n),
             ),
             const SizedBox(height: 8),
             TextField(
@@ -498,21 +389,6 @@ class _TransactionFormSheetState extends ConsumerState<TransactionFormSheet> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildModeChip(String label, String modeValue) {
-    final bool selected = _trxType == modeValue;
-    return ChoiceChip(
-      label: Text(label),
-      selected: selected,
-      visualDensity: VisualDensity.compact,
-      onSelected: (_) {
-        setState(() {
-          _trxType = modeValue;
-          _editingFriendShare = false;
-        });
-      },
     );
   }
 }

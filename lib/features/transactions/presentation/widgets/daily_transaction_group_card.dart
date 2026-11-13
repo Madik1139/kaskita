@@ -110,21 +110,30 @@ class DailyTransactionGroupCard extends ConsumerWidget {
                     ),
                   ],
                 ),
-                Row(
-                  children: <Widget>[
-                    TabularCurrencyText(
-                      amount: group.totalIncome,
-                      fontSize: 13,
-                      semanticType: CurrencySemanticType.positive,
-                      showPlusSign: true,
+                Flexible(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          TabularCurrencyText(
+                            amount: group.totalIncome,
+                            fontSize: 13,
+                            semanticType: CurrencySemanticType.positive,
+                            showPlusSign: true,
+                          ),
+                          const SizedBox(width: 10),
+                          TabularCurrencyText(
+                            amount: -group.totalPureExpense,
+                            fontSize: 13,
+                            semanticType: CurrencySemanticType.negative,
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(width: 10),
-                    TabularCurrencyText(
-                      amount: -group.totalPureExpense,
-                      fontSize: 13,
-                      semanticType: CurrencySemanticType.negative,
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),

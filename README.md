@@ -1,6 +1,6 @@
 # KasKita – Aplikasi Pencatat Keuangan & Buku Hutang Mandiri (Offline-First)
 
-**Versi Saat Ini:** `0.6.0+6` (Fase 5 Selesai: Grafik Bulanan `fl_chart`, Notifikasi Jatuh Tempo, Kunci PIN & Biometrik, Backup/Restore `.json`/`.db`/`.csv`, & Update OTA)  
+**Versi Saat Ini:** `1.0.0+7` (Rilis MVP v1.0.0 — Seluruh Fase 0–6 Selesai, End-to-End QA, Optimasi Performa `<100ms`, & Siap Rilis)  
 **Platform:** Android & iOS (Flutter)  
 **Penyimpanan:** 100% Lokal / *Standalone* (`SQLite`)
 
@@ -70,6 +70,7 @@ typst compile docs/user_manual.typ docs/user_manual.pdf
 - [x] Fitur Transaksi (`transactions/`): Input Satu Pintu (`+`), Talangan Teman (*Split Expense*), Rollback Edit/Hapus, & Riwayat Kas Harian/Kalender/Bulanan
 - [x] Fitur Buku Hutang (`debts/`): Kontak, Cicilan FIFO, *Auto-Netting*, Lunas via Traktiran, Rem Piutang, & *Clean Invoice Receipt*
 - [x] Fitur Laporan & Pengaturan (`reports/` & `settings/`): Grafik Bulanan, Notifikasi Jatuh Tempo, PIN/Biometrik, & Backup/Restore (`.db`/`.json`/`.csv`)
+- [x] Final QA (`v1.0.0`): Uji Regresi & E2E Light/Dark (`flutter test`), Optimasi Query `<100ms`, Audit Panjang File & Pemisahan Layer, serta Finalisasi Dokumentasi
 
 ---
 
@@ -77,6 +78,7 @@ typst compile docs/user_manual.typ docs/user_manual.pdf
 
 | Versi | Tanggal | Ringkasan Perubahan |
 | :--- | :--- | :--- |
+| **`1.0.0+7`** | 13 Nov 2026 | **Fase 6 Selesai (Rilis MVP `v1.0.0`):** Pengujian *End-to-End QA* (`test/phase6_e2e_qa_test.dart`) lintas Tab 1–3, Light/Dark Mode, Bahasa ID/EN, & Input Cepat `+`; perbaikan responsif *overflow* UI di layar `360dp` (`AppBar`, `PeriodSummaryHeader`, `DailyTransactionGroupCard`, `DebtDirectoryTabView`, `TransactionFormHeader`); *benchmark* performa SQLite **150 transaksi `<100ms`**; *refactoring* `TransactionRollbackHelper` & `TransactionFormHeader` agar 100% file `lib/` mematuhi batas `<= 400 baris` & nol logika SQLite di UI; serta `flutter test` lulus **23/23** dan `flutter analyze` **0 error**. |
 | **`0.6.0+6`** | 13 Nov 2026 | **Fase 5 Selesai:** Implementasi modul `lib/features/reports/` dan `lib/features/settings/` (Tab 3 *Ringkasan & Pengaturan*), **Grafik Batang 6 Bulan (`fl_chart`)** membandingkan *Konsumsi Murni* vs *Uang Tertahan di Teman*, **Rincian Pengeluaran per Kategori** (% + *tabular Rupiah*), **Notifikasi Pengingat Jatuh Tempo** otomatis (H-1 & Hari-H pukul 09.00 via `flutter_local_notifications` & `timezone`), **Kunci Aplikasi (PIN 6 Digit di `FlutterSecureStorage` & Biometrik via `local_auth`)** serta persistensi Tema & Bahasa di `app_settings`, **Backup/Restore SQLite (`.json`/`.db` dengan validasi `schema_version`) & Ekspor Laporan (`.csv`)**, **Cek Update OTA GitHub Releases**, serta penambahan *unit test* Fase 5 (`flutter test` lulus 100% - 21/21 test). |
 | **`0.5.0+5`** | 13 Nov 2026 | **Fase 4 Selesai:** Implementasi modul `lib/features/debts/` (Tab 2 *Buku Hutang*), **Direktori Kontak** dengan satu angka **Saldo Bersih ($B_{\text{kontak}}$)** dan evaluasi otomatis **Trust Badge (`GOOD`, `LATE`, `WARNING`)**, **Halaman Detail Kontak** dengan **Pelunasan/Cicilan Otomatis FIFO** maupun **Pilih Tagihan Spesifik**, pembatalan cicilan (*rollback*), **Saling Silang Saldo Otomatis (*Auto-Netting*)**, **Lunas via Barang/Traktiran (`ITEM_TREAT`)** beserta opsi catat ke konsumsi harian, **Indikator & Banner Peringatan Rem Piutang (*Lending Cap*)**, **Bagikan Struk Tagihan Bersih (*Clean Invoice Receipt* PNG)** via `RepaintBoundary` & `share_plus`, serta penambahan *unit/widget test* Fase 4 (`flutter test` lulus 100% - 17/17 test). |
 | **`0.4.0+4`** | 13 Nov 2026 | **Fase 3 Selesai:** Implementasi modul `lib/features/transactions/`, **Input Satu Pintu (`< 5 Detik`)** dengan 5 mode (`Pengeluaran`, `Pemasukan`, `Piutang`, `Hutang`, `Transfer`), fitur **"Sekalian Talangi Teman" (*Inline Split Expense*)** beserta tombol **Bagi Rata (50:50)**, **Tampilan Beranda Gaya *Money Manager (Realbyte)*** (Navigasi Periode, Ringkasan 3 Kolom, Sub-Tab `Harian`, `Kalender` interaktif dengan `TableCalendar`, dan `Bulanan` dengan rincian mingguan *expandable*), **Edit & Hapus Transaksi dengan Rollback Otomatis** serta proteksi kunci jika sudah ada cicilan, dan penambahan *unit test* Fase 3 (`flutter test` lulus 100% - 13/13 test). |

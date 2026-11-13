@@ -13,7 +13,7 @@
   paper: "a4",
   margin: (x: 2.0cm, y: 2.2cm),
   header: align(right)[
-    #text(size: 8.5pt, fill: rgb("#686B73"))[KasKita – Buku Panduan Pengguna & Layout Antarmuka (v0.6.0)]
+    #text(size: 8.5pt, fill: rgb("#686B73"))[KasKita – Buku Panduan Pengguna & Layout Antarmuka (v1.0.0)]
   ],
   footer: context [
     #line(length: 100%, stroke: 0.5pt + rgb("#E4E2DD"))
@@ -458,7 +458,7 @@ Di *Tab 3 (Ringkasan & Pengaturan)*, Anda dapat memantau kesehatan finansial, me
   inset: 10pt,
   [
     #block(fill: rgb("#141518"), width: 100%, inset: 5pt, radius: 3pt)[
-      #text(fill: white, weight: "bold", size: 8pt)[Preview Tab 3: Ringkasan & Pengaturan (v0.6.0)]
+      #text(fill: white, weight: "bold", size: 8pt)[Preview Tab 3: Ringkasan & Pengaturan (v1.0.0)]
     ]
     #v(6pt)
     #grid(

@@ -42,13 +42,24 @@ final AsyncNotifierProvider<SettingsNotifier, AppSecurityConfigModel>
 );
 
 class SettingsNotifier extends AsyncNotifier<AppSecurityConfigModel> {
+  bool _syncedInitialPreferences = false;
+  bool _userOverrodeTheme = false;
+  bool _userOverrodeLocale = false;
+
   @override
   Future<AppSecurityConfigModel> build() async {
     final AppSecurityService security = ref.read(appSecurityServiceProvider);
-    final ThemeMode savedTheme = await security.loadSavedThemeMode();
-    final Locale savedLocale = await security.loadSavedLocale();
-    ref.read(themeModeProvider.notifier).state = savedTheme;
-    ref.read(appLocaleProvider.notifier).state = savedLocale;
+    if (!_syncedInitialPreferences) {
+      _syncedInitialPreferences = true;
+      final ThemeMode savedTheme = await security.loadSavedThemeMode();
+      final Locale savedLocale = await security.loadSavedLocale();
+      if (!_userOverrodeTheme) {
+        ref.read(themeModeProvider.notifier).state = savedTheme;
+      }
+      if (!_userOverrodeLocale) {
+        ref.read(appLocaleProvider.notifier).state = savedLocale;
+      }
+    }
 
     final AppSecurityConfigModel config = await security.getSecurityConfig();
     if (config.appLockEnabled) {
@@ -64,11 +75,15 @@ class SettingsNotifier extends AsyncNotifier<AppSecurityConfigModel> {
   }
 
   Future<void> saveThemeMode(ThemeMode mode) async {
+    _userOverrodeTheme = true;
+    _syncedInitialPreferences = true;
     ref.read(themeModeProvider.notifier).state = mode;
     await ref.read(appSecurityServiceProvider).saveThemeMode(mode);
   }
 
   Future<void> saveLocale(Locale locale) async {
+    _userOverrodeLocale = true;
+    _syncedInitialPreferences = true;
     ref.read(appLocaleProvider.notifier).state = locale;
     await ref.read(appSecurityServiceProvider).saveLocale(locale);
   }
@@ -128,3 +143,4 @@ class SettingsNotifier extends AsyncNotifier<AppSecurityConfigModel> {
     return restored;
   }
 }
+

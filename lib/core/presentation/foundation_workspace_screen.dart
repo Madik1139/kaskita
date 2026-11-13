@@ -118,10 +118,16 @@ class _FoundationWorkspaceScreenState
             const SizedBox(width: 10),
             Text(l10n.appTitle),
             const SizedBox(width: 8),
-            StatusBadge(
-              label: l10n.phaseBadge,
-              variant: BadgeVariant.positive,
-              compact: true,
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: StatusBadge(
+                  label: l10n.phaseBadge,
+                  variant: BadgeVariant.positive,
+                  compact: true,
+                ),
+              ),
             ),
           ],
         ),

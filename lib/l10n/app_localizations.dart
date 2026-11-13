@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @phaseBadge.
   ///
   /// In id, this message translates to:
-  /// **'v0.6.0 • FASE 5'**
+  /// **'v1.0.0'**
   String get phaseBadge;
 
   /// No description provided for @navHome.

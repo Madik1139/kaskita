@@ -39,7 +39,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get switchLanguageTooltip => 'Ganti Bahasa (ID / EN)';
 
   @override
-  String get phaseBadge => 'v0.6.0 • FASE 5';
+  String get phaseBadge => 'v1.0.0';
 
   @override
   String get navHome => 'Beranda';
