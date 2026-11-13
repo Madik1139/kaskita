@@ -100,19 +100,13 @@ class _FoundationWorkspaceScreenState
       appBar: AppBar(
         title: Row(
           children: <Widget>[
-            Container(
-              width: 28,
-              height: 28,
-              decoration: BoxDecoration(
-                color: AppColors.accent(context),
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Icon(
-                LucideIcons.bookOpen,
-                size: 16,
-                color: AppColors.isDark(context)
-                    ? AppColors.darkBackground
-                    : Colors.white,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Image.asset(
+                'assets/icons/app_icon_1024.png',
+                width: 28,
+                height: 28,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(width: 10),

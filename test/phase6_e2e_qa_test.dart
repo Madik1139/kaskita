@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:kaskita/app.dart';
 import 'package:kaskita/core/data/ledger_overview_repository.dart';
 import 'package:kaskita/core/database/database_helper.dart';
@@ -16,7 +15,6 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  GoogleFonts.config.allowRuntimeFetching = false;
 
   setUpAll(() {
     sqfliteFfiInit();

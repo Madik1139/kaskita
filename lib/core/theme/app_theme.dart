@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class AppTheme {
   AppTheme._();
+
+  static const String fontFamilyName = 'PlusJakartaSans';
 
   static const List<FontFeature> tabularFigures = <FontFeature>[
     FontFeature.tabularFigures(),
@@ -28,16 +29,19 @@ class AppTheme {
     final Color negative =
         isDark ? AppColors.darkNegative : AppColors.lightNegative;
 
-    final TextTheme baseTextTheme = GoogleFonts.plusJakartaSansTextTheme(
-      ThemeData(brightness: brightness).textTheme,
-    ).apply(
-      bodyColor: textPri,
-      displayColor: textPri,
-    );
+    final TextTheme baseTextTheme = ThemeData(
+      brightness: brightness,
+      fontFamily: fontFamilyName,
+    ).textTheme.apply(
+          fontFamily: fontFamilyName,
+          bodyColor: textPri,
+          displayColor: textPri,
+        );
 
     return ThemeData(
       useMaterial3: true,
       brightness: brightness,
+      fontFamily: fontFamilyName,
       scaffoldBackgroundColor: bg,
       colorScheme: ColorScheme(
         brightness: brightness,
